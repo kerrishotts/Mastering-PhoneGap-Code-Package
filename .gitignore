@@ -1,3 +1,5 @@
 .idea
 .kas
-*/app
+*/build
+*/node_modules
+*.swp
