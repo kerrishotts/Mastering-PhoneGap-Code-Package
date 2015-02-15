@@ -77,7 +77,7 @@ var bump = require("gulp-bump");
 var replace = require("gulp-replace-task");
 var merge = require("merge-stream");
 var rimraf = require("rimraf");
-var toES5 = require("gulp-6to5");
+var babel = require("gulp-babel");
 var sourcemaps = require("gulp-sourcemaps");
 var uglify = require("gulp-uglify");
 var jshint = require("gulp-jshint");
@@ -469,7 +469,7 @@ var projectTasks = {
             .pipe(performSubstitutions())
             .pipe(plumber())
             .pipe(BUILD_MODE === "debug" ? sourcemaps.init() : gutil.noop())
-            .pipe(toES5())
+            .pipe(babel())
             .pipe(concat("app.js"))
             .pipe(BUILD_MODE === "debug" ? sourcemaps.write() : gutil.noop())
             .pipe(BUILD_MODE === "release" ? uglify() : gutil.noop())
