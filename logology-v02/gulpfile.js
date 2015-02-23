@@ -196,7 +196,7 @@ function performSubstitutions() {
      */
     function transformCordovaAssets(t, which) {
         var templates = ['<' + t + ' src="{{{SRC}}}" platform="{{{PLATFORM}}}" {{{DENSITY}}} {{{W}}} {{{H}}} />',
-            '<' + t + ' src="{{{SRC}}}" gap:platform="{{{PLATFORM}}}" {{{QUALIFIER}}} {{{W}}} {{{H}}} />"'
+            '<' + t + ' src="{{{SRC}}}" gap:platform="{{{PLATFORM}}}" {{{QUALIFIER}}} {{{W}}} {{{H}}} />'
         ];
         var template = templates[which];
         var str = "";

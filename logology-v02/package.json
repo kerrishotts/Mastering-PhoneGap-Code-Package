@@ -219,7 +219,7 @@
       "deployment-target": "7.0",
       "detect-data-types": "false",
       "SupressesIncrementalRendering": "true",
-      "android-minSdkVersion": "14",
+      "android-minSdkVersion": "12",
       "android-installLocation": "auto",
       "android-windowSoftInputMode": "adjustResize"
     },
