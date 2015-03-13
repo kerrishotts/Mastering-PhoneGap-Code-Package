@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
+    <title>Chapter 4, Example 4: Responsive Full Screen Images</title>
+    <style>
+        body {
+            background-color: white;
+            margin: 0; padding: 0;
+        }
+        .fancy-heading {
+            background: #789 url('./header-1024.jpg') no-repeat right 33% / cover;
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        @media only screen and (min-width: 1025px) {
+            .fancy-heading {
+                background-image: url('./header-2000.jpg');
+            }
+        }
+        @media only screen and (min-width: 513px) and (-webkit-min-device-pixel-ratio: 1.5) {
+            .fancy-heading {
+                background-image: url('./header-2000.jpg');
+            }
+        }
+        .fancy-heading h1 {
+            box-sizing: border-box;
+            font: normal 10vw Helvetica, sans-serif;
+            text-align: right;
+            color: white;
+            text-shadow: 0 5px 5px black;
+            background-image: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75));
+            position: absolute;
+            bottom: 0px;
+            left: 0; right: 0;
+            padding: 10px; margin: 0;
+        }
+        @media only screen and (min-width: 1024px) {
+            .fancy-heading h1 {
+                font-size: 77pt;
+            }
+        }
+        p {
+            margin: 1em auto;
+            padding: 0 1em;
+            font: 16pt/1.3em Georgia;
+            max-width: 30em;
+            -ms-word-break: break-all;
+            word-break: break-all;
+            word-break: break-word;
+            /* for webkit; nonstandard */
+            -webkit-hyphens: auto;
+            moz-hyphens: auto;
+            -ms-hyphens: auto;
+            hyphens: auto;
+            -webkit-hyphenate-character: '\2010';
+            -moz-hyphenate-character: '\2010';
+            -ms-hyphenate-character: '\2010';
+            hyphenate-character: '\2010';
+        }
+        p:first-line {
+            font-variant: small-caps;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fancy-heading">
+        <h1>Mastering PhoneGap</h1>
+    </div>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras elementum erat nunc, vitae semper mauris mattis at. Nunc molestie lacus at neque volutpat, porta condimentum justo placerat. Sed malesuada quam nec urna lacinia, in tincidunt massa ullamcorper.
+        Cras porttitor, mi eu eleifend elementum, urna arcu commodo lectus, nec ultricies erat tortor vel magna. Sed varius dolor nisl, ut laoreet ante vestibulum quis. Quisque ex metus, vestibulum eget sagittis ac, pellentesque in odio. Duis sollicitudin
+        tristique arcu vel lobortis.</p>
+    <p>Integer blandit maximus eros at auctor. Donec lectus leo, consequat pellentesque elit et, laoreet sagittis ligula. Nullam quis varius turpis. Etiam mattis enim metus. Aliquam eget lobortis tellus. Nunc ex augue, iaculis in metus et, sagittis pretium
+        ipsum. Proin augue odio, porta eget dolor interdum, sagittis vehicula ex. Mauris at lacus laoreet, fringilla arcu id, bibendum velit. Proin venenatis, mi sed porttitor lobortis, mi enim tincidunt libero, eget aliquam lectus sem non magna.</p>
+    <p>Vivamus in eleifend sapien, sed ullamcorper libero. Donec eros ex, finibus sit amet orci vel, faucibus ullamcorper dolor. Nam nec enim risus. Sed sit amet neque libero. Quisque viverra mi a nibh posuere viverra. Nam lobortis elit nec turpis lobortis,
+        vitae consectetur justo tempus. In hac habitasse platea dictumst. Nulla id ipsum rutrum, sollicitudin nisl nec, iaculis elit. Phasellus consequat erat sit amet mollis sollicitudin. Fusce sodales finibus metus, vel dignissim dui scelerisque eget.
+        Duis dapibus, justo ac aliquet convallis, augue nisi tempor nulla, eget mollis sem ex at arcu. Suspendisse at augue eros. Integer lacinia lacus at vulputate semper.</p>
+    <p>Nulla viverra placerat augue vitae vehicula. Etiam in vestibulum odio. Nam sit amet lacus id nisi consectetur placerat ac sit amet orci. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer id orci et
+        turpis lobortis ultrices. Donec aliquam fringilla leo, non ultricies odio varius at. Donec bibendum, dolor nec dapibus porttitor, erat nunc cursus risus, vitae fringilla eros sapien ac quam. Nam faucibus, ex in imperdiet gravida, mi orci fermentum
+        mauris, non eleifend tortor nisi quis libero. Praesent eget dapibus felis. Fusce nibh purus, lacinia et euismod sit amet, pellentesque ac nunc. Integer in imperdiet tellus. Phasellus commodo malesuada nisi, nec hendrerit turpis dapibus in. Suspendisse
+        eget lacinia neque. Nulla ultricies suscipit felis.</p>
+    <p>Phasellus sapien tellus, ultrices at dictum non, egestas aliquet erat. In sit amet ante id ipsum consequat congue. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus sapien risus, varius in tortor
+        quis, iaculis varius ligula. Maecenas rutrum purus nec dolor sagittis, id accumsan risus malesuada. Mauris feugiat turpis eu metus lacinia congue. Phasellus ac nunc ut ipsum gravida fringilla. Duis eget consequat purus. Maecenas iaculis a lorem
+        at pulvinar. Maecenas sed metus at ipsum accumsan facilisis sed quis lorem. Proin justo libero, lobortis sit amet ligula eget, convallis luctus nibh. Ut placerat, dolor sed iaculis hendrerit, risus erat tristique mi, sit amet posuere augue magna
+        at urna. Quisque id quam turpis. Pellentesque maximus justo et euismod tristique. In blandit, felis dapibus gravida lobortis, nisi nulla consequat ligula, vitae accumsan arcu diam vel magna.</p>
+</body>
+
+</html>

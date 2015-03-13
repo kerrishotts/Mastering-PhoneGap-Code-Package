@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
+    <title>Chapter 4, Example 2: Responsive Icons</title>
+    <style>
+        body {
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .icon {
+            width: 32px;
+            height: 32px;
+            background: url('./calendar.png') no-repeat center center / 32px 32px;
+            display: inline-block;
+        }
+        .icon-masked {
+            width: 32px;
+            height: 32px;
+            background-color: brown;
+            -webkit-mask: url('./calendar.png') no-repeat center center / 32px 32px;
+            z-webkit-mask-size: 32px 32px;
+            display: inline-block;
+        }
+        .icon-img {
+            width: 32px;
+            height: 32px;
+        }
+        @media only screen and (-webkit-min-device-pixel-ratio: 1.01),
+        only screen and (min-resolution: 1.01dppx),
+        only screen and (min-resolution: 193dpi)
+        {
+            .icon {
+                background-image: url('./calendar@2x.png');
+            }
+            .icon-masked {
+                -webkit-mask-image: url('./calendar@2x.png');
+            }
+        }
+        @media only screen and (-webkit-min-device-pixel-ratio: 2.01),
+        only screen and (min-resolution: 2.01dppx),
+        only screen and (min-resolution: 289dpi)
+        {
+            .icon {
+                background-image: url('./calendar@3x.png');
+            }
+            .icon-masked {
+                -webkit-mask-image: url('./calendar@3x.png');
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Responsive Icons</h1>
+    <h2>No width/height:</h2>
+    <p>
+        <img src="./calendar.png" />32x32</p>
+    <p>
+        <img src="./calendar@2x.png" />64x64</p>
+    <p>
+        <img src="./calendar@3x.png" />96x96</p>
+    <h2>Responsive Icons:</h2>
+    <p>
+        <img src="./calendar@3x.png" class="icon-img" />Responsive-ish icon using IMG and specifying height and width</p>
+    <p>
+        <img src="./calendar.png" srcset="./calendar.png 1x, ./calendar@2x.png 2x, ./calendar@3x.png 3x" />Responsive icon using IMG Source Set</p>
+    <p><span class="icon"></span> Responsive icon using Background Image</p>
+    <p><span class="icon-masked"></span> Responsive icon using Mask</p>
+</body>
+
+</html>

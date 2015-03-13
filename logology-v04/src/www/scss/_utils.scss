@@ -1,0 +1,37 @@
+//
+// convenience utilities
+///////////////////////////////////////////////////////////////////////////////
+
+@mixin size($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin origin($top, $left) {
+  top: $top;
+  left: $left;
+}
+
+@mixin rectTLBR($top, $left, $bottom, $right) {
+  @include origin($top, $left);
+  right: $right;
+  bottom: $bottom;
+}
+
+@mixin rectTLWH($top, $left, $width, $height) {
+  @include origin($top, $left);
+  @include size($width, $height);
+}
+
+@mixin fillWidth() {
+  left: 0;
+  right: 0;
+}
+
+@mixin pinToTop() {
+  top: 0;
+}
+
+@mixin pinToBottom() {
+  bottom: 0;
+}

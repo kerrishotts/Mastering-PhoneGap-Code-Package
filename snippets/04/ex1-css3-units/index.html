@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
+    <title>CSS3 Units</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        html {
+            font-size: 100%;
+        }
+        body {
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        .y-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+        .y-navigation-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3rem;
+            padding: 0 1rem;
+            background-color: #EA1;
+            font: 1.25rem/3rem"Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: white;
+            box-shadow: 0 1px 4px #AEAAA1;
+            z-index: 1;
+        }
+        .y-scroll-container {
+            position: absolute;
+            top: 3rem;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .y-content-body {
+            font: -apple-system-body;
+        }
+        .y-content-body p {
+            padding: 0;
+            margin: 1rem;
+        }
+        .ex {
+            background-color: #1AE;
+            margin: 1rem;
+            padding: 1rem;
+            line-height: 1rem;
+            color: white;
+        }
+        .ex1 {
+            width: 75vw;
+        }
+        .ex2 {
+            width: 33vw;
+        }
+        .ex3 {
+            width: 50vh;
+        }
+        .ex4 {
+            width: 50vmin;
+        }
+        .ex5 {
+            width: 50vmax;
+        }
+        .ex6 {
+            width: calc(75vw + 10px);
+        }
+        .em-ex {
+            font-size: 32px;
+        }
+        .half-em {
+            font-size: 0.5em;
+        }
+        .half-rem {
+            font-size: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="y-container">
+        <div class="y-navigation-bar">
+            Mastering PhoneGap
+        </div>
+        <div class="y-scroll-container">
+            <div class="y-content-body">
+                <p>This demonstration is an example of using the CSS3 root em and viewport units.</p>
+                <div class="ex ex1">This element is 75vw wide.</div>
+                <div class="ex ex6">This element is 75vw + 10px wide.</div>
+                <div class="ex ex2">This element is 33vw wide.</div>
+                <div class="ex ex3">This element is 50vh wide.</div>
+                <div class="ex ex4">This element is 50vmin wide.</div>
+                <div class="ex ex5">This element is 50vmax wide.</div>
+                <div class="em-ex">
+                    <div class="half-em">
+                        <p>The quick brown fox jumped over the lazy dog.</p>
+                        <div class="half-em">
+                            <p>The quick brown fox jumped over the lazy dog.</p>
+                            <div class="half-em">
+                                <p>The quick brown fox jumped over the lazy dog.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="em-ex">
+                    <div class="half-rem">
+                        <p>The quick brown fox jumped over the lazy dog.</p>
+                        <div class="half-rem">
+                            <p>The quick brown fox jumped over the lazy dog.</p>
+                            <div class="half-rem">
+                                <p>The quick brown fox jumped over the lazy dog.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

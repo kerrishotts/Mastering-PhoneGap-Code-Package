@@ -1,0 +1,64 @@
+@import "prefixes", "utils", "theme";
+
+div {
+  @include box-sizing(border-box);
+}
+
+%ui-absolute {
+  position: absolute;
+}
+
+%ui-relative {
+  position: relative;
+}
+
+%ui-container {
+  @include rectTLBR(0, 0, 0, 0);
+}
+
+.ui-container {
+  @extend %ui-absolute;
+  @extend %ui-container;
+}
+
+.ui-view-container {
+  @extend %ui-absolute;
+  @extend %ui-container;
+  border: $thin-border;
+  background-color: $view-background-color;
+  font: $content-text-font;
+}
+
+.ui-scroll-container {
+  @extend %ui-absolute;
+  @extend %ui-container;
+  overflow: auto;
+  padding: $bar-height $ui-gutter;
+}
+
+%ui-bar {
+  @extend %ui-absolute;
+  @include fillWidth();
+  background-color: $bar-background-color;
+  color: $bar-text-color;
+  line-height: $bar-height;
+  height: $bar-height;
+  padding: 0 $ui-gutter;
+  z-index: 1;
+}
+
+.ui-navigation-bar, .ui-tool-bar {
+  @extend %ui-bar;
+}
+
+.ui-navigation-bar {
+  @include pinToTop();
+  border-bottom: $thin-border;
+  font: $text-title-weight #{$text-title-size}/#{$bar-height} $font;
+  text-align: center;
+}
+
+.ui-tool-bar {
+  @include pinToBottom();
+  border-top: $thin-border;
+}

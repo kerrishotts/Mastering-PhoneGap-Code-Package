@@ -35,3 +35,4 @@ export var app = {
 
 //document.addEventListener("deviceready", startApp, false);
 document.addEventListener("DOMContentLoaded", app.start, false);
+
