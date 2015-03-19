@@ -2,69 +2,10 @@
 <html>
 
 <head>
+    <!--base-->
     <meta charset="utf-8">
     <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
     <title>Chapter 4, Example 3: Responsive Header Images</title>
-    <style>
-        body {
-            background-color: white;
-            margin: 0; padding: 0;
-        }
-        .fancy-heading {
-            background: #789 url('./header-1024.jpg') no-repeat right 33% / cover;
-            width: 100%;
-            height: 25vw; min-height: 250px;
-            position: relative;
-        }
-        @media only screen and (min-width: 1025px) {
-            .fancy-heading {
-                background-image: url('./header-2000.jpg');
-            }
-        }
-        @media only screen and (min-width: 513px) and (-webkit-min-device-pixel-ratio: 1.5) {
-            .fancy-heading {
-                background-image: url('./header-2000.jpg');
-            }
-        }
-        .fancy-heading h1 {
-            box-sizing: border-box;
-            font: normal 10vw Helvetica, sans-serif;
-            text-align: right;
-            color: white;
-            text-shadow: 0 5px 5px black;
-            background-image: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75));
-            position: absolute;
-            bottom: 0px;
-            left: 0; right: 0;
-            padding: 10px; margin: 0;
-        }
-        @media only screen and (min-width: 1024px) {
-            .fancy-heading h1 {
-                font-size: 77pt;
-            }
-        }
-        p {
-            margin: 1em auto;
-            padding: 0 1em;
-            font: 16pt/1.3em Georgia;
-            max-width: 30em;
-            -ms-word-break: break-all;
-            word-break: break-all;
-            word-break: break-word;
-            /* for webkit; nonstandard */
-            -webkit-hyphens: auto;
-            moz-hyphens: auto;
-            -ms-hyphens: auto;
-            hyphens: auto;
-            -webkit-hyphenate-character: '\2010';
-            -moz-hyphenate-character: '\2010';
-            -ms-hyphenate-character: '\2010';
-            hyphenate-character: '\2010';
-        }
-        p:first-line {
-            font-variant: small-caps;
-        }
-    </style>
 </head>
 
 <body>

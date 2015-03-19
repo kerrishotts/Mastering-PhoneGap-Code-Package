@@ -1,0 +1,21 @@
+{
+  "name": "Mastering-PhoneGap-Snippets",
+  "version": "1.0.0",
+  "description": "Snippets related to Mastering PhoneGap",
+  "main": "index.js",
+  "scripts": {
+    "prereq": "nugget https://raw.githubusercontent.com/medialize/sass.js/master/dist/sass.min.js",
+    "start": "beefy index.js 5000"
+  },
+  "author": "Kerri Shotts <kerrishotts@gmail.com> (http://www.photokandy.com)",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer-core": "^5.1.7",
+    "babel": "^4.7.16",
+    "beefy": "^2.1.3",
+    "brace": "^0.5.0",
+    "browserify": "^9.0.3",
+    "nugget": "^1.4.1",
+    "xhr": "^2.0.1"
+  }
+}

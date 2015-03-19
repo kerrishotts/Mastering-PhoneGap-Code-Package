@@ -1,0 +1,47 @@
+
+.ui-view-container, .ui-navigation-bar, .ui-tool-bar, .ui-scroll-container {
+    box-sizing: border-box;
+    position: absolute;
+}
+.ui-view-container, .ui-scroll-container {
+    top: 0; left: 0;
+    bottom: 0; right: 0;
+}
+.ui-navigation-bar, .ui-tool-bar {
+    background-color: rgba(255,255,255,.95);
+    color: #333;
+    height: 50px;
+    left: 0; right: 0;
+    padding: 0 10px;
+    z-index: 1;
+}
+.ui-navigation-bar, .ui-tool-bar, .ui-tool-bar a {
+    line-height: 50px;
+}
+.ui-view-container {
+    border: 1px solid black;
+    background-color: #EEE;
+    font: 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 10px;
+    padding: 10px;
+}
+.ui-navigation-bar {
+    border-bottom: 1px solid black;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    top: 0;
+}
+.ui-scroll-container {
+    overflow: auto;
+    padding: 50px 10px;
+}
+.ui-tool-bar {
+    border-top: 1px solid black;
+    bottom: 0;
+}
+.ui-tool-bar a {
+    color: #369;
+    display: inline-block;
+    text-decoration: none;
+}

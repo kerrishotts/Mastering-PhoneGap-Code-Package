@@ -1,0 +1,12 @@
+.some-element {
+   width: (960px / 12) * 7;
+}
+
+.some-element {
+  width: 500px / 20;
+}
+
+.some-element {
+  width: ((960px / 12) * 7) / 960px * 100%;
+}
+
