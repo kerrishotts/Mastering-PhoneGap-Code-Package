@@ -6,35 +6,62 @@
     <link rel="stylesheet" href="./style.css" />
     <script type="text/javascript" src="./sass.min.js"></script>
     <script defer type="text/javascript" src="./index.js"></script>
+     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 </head>
 
 <body>
 
     <div class="container">
 
-        <nav> Mastering PhoneGap Examples
+        <nav>Mastering PhoneGap Examples
             <select id="chapters"></select>
             <select id="examples">
                 <option>- select a chapter first-</option>
-            </select>
+              </select>
+            <span>
+              <span id="toggleES6Editor">ES6</span> |
+              <span id="toggleES5Editor">ES5</span> |
+              <span id="toggleSCSSEditor">SCSS</span> |
+              <span id="toggleCSSEditor">CSS</span> |
+              <span id="toggleHTMLEditor">HTML</span>
+            </span>
         </nav>
 
         <div class="code-and-results">
-            <div class="editors">
-                <div id="es6-editor"></div>
-                <div id="es5-editor"></div>
-                <div id="scss-editor"></div>
-                <div id="css-editor"></div>
-                <div id="html-editor"></div>
+          <div class="editors">
+                  <div id="es6-editor-group" class="group-with-heading">
+                    <div class="group-heading">ES6</div>
+                    <div class="editor" id="es6-editor"></div>
+                  </div>
+                  <div id="es5-editor-group" class="group-with-heading" hidden>
+                    <div class="group-heading">ES5</div>
+                    <div class="editor" id="es5-editor"></div>
+                  </div>
+                  <div id="scss-editor-group" class="group-with-heading">
+                    <div class="group-heading">SCSS</div>
+                    <div class="editor" id="scss-editor"></div>
+                  </div>
+                  <div id="css-editor-group" class="group-with-heading" hidden>
+                    <div class="group-heading">CSS</div>
+                    <div class="editor" id="css-editor"></div>
+                  </div>
+                <div id="html-editor-group" class="group-with-heading">
+                    <div class="group-heading">HTML5</div>
+                    <div class="editor" id="html-editor"></div>
+                </div>
             </div>
             <div class="results">
-              <iframe id="results"></iframe>
-                <div id="consoleOutput"></div>
+                <div id="results-group" class="group-with-heading">
+                    <div class="group-heading">Results</div>
+                    <iframe id="results"></iframe>
+                </div>
+                <div id="console-group" class="group-with-heading">
+                    <div class="group-heading">JavaScript Console</div>
+                    <div id="consoleOutput"></div>
+                </div>
             </div>
         </div>
-
     </div>
-
 </body>
 
 </html>

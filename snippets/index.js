@@ -55,8 +55,10 @@ function renderResults() {
         doc = el.contentDocument,
         docStyle, docScript, docHead, docBody;
 
+    var docBase = example && example.base;
+
     doc.open();
-    doc.write(htmlEditor.getValue().replace("<!--base-->", "<base href='" + example.base + "/' />"));
+    doc.write(htmlEditor.getValue().replace("<!--base-->", "<base href='" + docBase + "/' />"));
     doc.close();
 
     docHead = doc.getElementsByTagName("head")[0];
@@ -99,7 +101,8 @@ function configureSelectElements() {
         var selectedChapter = chapterSelect.selectedIndex,
             selectedExample = exampleSelect.selectedIndex,
             example = chapters[selectedChapter].examples[selectedExample],
-            layout = ["es6","scss","html"], allEditors = ["es6", "es5", "scss", "css", "html"];
+            layout = ["es6", "scss", "html"],
+            allEditors = ["es6", "es5", "scss", "css", "html"];
         if (example.base) {
             consoleOutput.innerHTML = "";
             cssEditor.setValue("");
@@ -112,14 +115,14 @@ function configureSelectElements() {
             if (example.layout) {
                 layout = example.layout.split(",");
             }
-            allEditors.forEach(function (editor) {
-              document.getElementById(editor + "-editor").style.display = "none";
+            allEditors.forEach(function(editor) {
+                document.getElementById(editor + "-editor-group").classList.add("hidden");
             });
-            layout.forEach(function (editor) {
-              document.getElementById(editor + "-editor").style.display = "block";
+            layout.forEach(function(editor) {
+                document.getElementById(editor + "-editor-group").classList.remove("hidden");
             });
-            [es5Editor, es6Editor, cssEditor, scssEditor, htmlEditor].forEach (function(editor) {
-              editor.resize();
+            [es5Editor, es6Editor, cssEditor, scssEditor, htmlEditor].forEach(function(editor) {
+                editor.resize();
             });
         }
     }
@@ -139,6 +142,12 @@ function configureSelectElements() {
 
     chapterSelect.addEventListener("change", populateExamples, false);
     exampleSelect.addEventListener("change", loadExample, false);
+
+    return {
+        populateExamples: populateExamples,
+        populateChapters: populateChapters,
+        loadExample: loadExample
+    };
 }
 
 function configureEditors() {
@@ -204,5 +213,54 @@ function configureEditors() {
     });
 }
 
-configureSelectElements();
+var selects = configureSelectElements();
 configureEditors();
+
+// if we have any parameters, parse them
+
+function parseQueryString() {
+    var queryString = window.location.search,
+        queryArgs;
+    if (queryString.length > 0) {
+        queryArgs = queryString.substr(1).split("&");
+        queryArgs.forEach(function(argKV, i) {
+            setTimeout(function() {
+                var argKVArr = argKV.split("="),
+                    argKey = argKVArr[0],
+                    argValue = argKVArr[1];
+                switch (argKey) {
+                    case "ch":
+                        chapterSelect.selectedIndex = parseInt(argValue, 10);
+                        selects.populateExamples.call(chapterSelect);
+                        break;
+                    case "ex":
+                        exampleSelect.selectedIndex = parseInt(argValue, 10);
+                        selects.loadExample();
+                        break;
+                    case "editors":
+                        if (argValue === "no") {
+                            document.querySelector(".editors").classList.add("hidden");
+                        }
+                        break;
+                }
+            }, i*100);
+        });
+    }
+}
+
+document.addEventListener("DOMContentLoaded", parseQueryString, false);
+
+function toggleVisibility() {
+  this.classList.toggle("hidden");
+            [es5Editor, es6Editor, cssEditor, scssEditor, htmlEditor].forEach(function(editor) {
+                editor.resize();
+            });
+}
+
+[["toggleES6Editor","es6-editor-group"],
+ ["toggleES5Editor","es5-editor-group"],
+ ["toggleSCSSEditor","scss-editor-group"],
+ ["toggleCSSEditor","css-editor-group"],
+ ["toggleHTMLEditor", "html-editor-group"]].forEach(function (toggler) {
+  document.getElementById(toggler[0]).addEventListener("click", toggleVisibility.bind(document.getElementById(toggler[1])), false);
+});
