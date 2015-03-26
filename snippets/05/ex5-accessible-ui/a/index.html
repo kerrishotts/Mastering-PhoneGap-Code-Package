@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--base-->
+    <meta charset="UTF-8">
+    <title>CodePen - ch4/ex5: Responsive Flex for UI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no'">
+</head>
+
+<body>
+
+    <y-container>
+        <y-nav class="y-navigation-bar">
+            <y-widget-group>
+                <y-menu-button>Menu</y-menu-button>
+            </y-widget-group>
+            <y-widget-group class="y-flex">
+                <y-title>Logology</y-title>
+            </y-widget-group>
+            <y-widget-group class="y-group-align-right">
+                <label>
+                    <y-search-button>Search</y-search-button>
+                    <input type="text" />
+                </label>
+            </y-widget-group>
+        </y-nav>
+        <y-scroll-container>
+            <y-list>
+                <y-list-item>
+                    <y-list-actions>
+                        <div>Favorite</div>
+                        <div>More</div>
+                        <div>More</div>
+                        <div>More</div>
+                    </y-list-actions>
+                    <y-list-contents>
+                        <div>1.</div>
+                        <div class="y-flex">This is a long list item, but it supports text wrapping appropriately without awkward line-height issues. It will go on for as long as you like.</div>
+                        <y-indicator/>
+                    </y-list-contents>
+                </y-list-item>
+                <y-list-item>
+                    <y-list-contents>
+                        <div class="y-flex">Aardvark</div>
+                        <y-indicator/>
+                    </y-list-contents>
+                </y-list-item>
+                <y-list-item>
+                    <y-list-contents>
+                        <div class="y-flex">Aardvark</div>
+                        <y-indicator/>
+                    </y-list-contents>
+                </y-list-item>
+                <y-list-item>
+                    <y-list-contents>
+                        <div class="y-flex">Aardvark</div>
+                        <y-indicator/>
+                    </y-list-contents>
+                </y-list-item>
+            </y-list>
+        </y-scroll-container>
+    </y-container>
+
+</body>
+
+</html>
