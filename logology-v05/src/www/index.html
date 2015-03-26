@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="./css/app.css">
+    <script src="cordova.js" type="text/javascript"></script>
+    <script src="./js/app/app.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="mainWindow" is="y-container">
+        <nav is="y-nav" class="y-navigation-bar">
+            <div is="y-widget-group">
+                <button is="y-menu-glyph" title="Tap to open sidebar">Menu</button>
+            </div>
+            <div is="y-widget-group" class="y-flex">
+                <h1 is="y-title">Logology</h1>
+            </div>
+            <div is="y-widget-group" class="y-group-align-right">
+                <label role="search">
+                    <div is="y-search-glyph">Search</div>
+                    <input type="text" />
+                </label>
+            </div>
+        </nav>
+        <main is="y-scroll-container">
+            <ul is="y-list" >
+                <li is="y-list-item">
+                    <button style="-webkit-transform: translateX(-30%);" is="y-list-contents" onclick="console.log('hi');">
+                        <div>1.</div>
+                        <div class="y-flex">This is a long list item, but it supports text wrapping appropriately without awkward line-height issues. It will go on for as long as you like.</div>
+                        <div is="y-indicator"></div>
+                    </button>
+                    <div is="y-list-actions" >
+                        <button is="y-fav-glyph" title="Save this item as a favoite.">Favorite</button>
+                        <button is="y-share-glyph" title="Share this item with a friend.">Share</button>
+                        <button is="y-make-note-glyph" title="Write or edit a note.">Note</button>
+                    </div>
+                </li>
+                <li is="y-list-item">
+                    <button is="y-list-contents" onclick="console.log('me');">
+                        <div class="y-flex">Aardvark</div>
+                        <div is="y-indicator"></div>
+                    </button>
+                </li>
+                <li is="y-list-item">
+                    <button is="y-list-contents">
+                        <div class="y-flex">Aardvark</div>
+                        <div is="y-indicator"></div>
+                    </button>
+                </li>
+                <li is="y-list-item">
+                    <button is="y-list-contents">
+                        <div class="y-flex">Aardvark</div>
+                        <div is="y-indicator"></div>
+                    </button>
+                </li>
+            </ul>
+        </main>
+  </body>
+</html>

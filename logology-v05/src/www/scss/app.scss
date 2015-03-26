@@ -1,0 +1,275 @@
+@import "reset";
+
+$font-stack: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
+$dp2: "only screen and (-webkit-min-device-pixel-ratio: 1.01 ), only screen and (min-resolution: 1.01dppx), only screen and (min-resolution: 191dpi)";
+$tint-color: #EA1;
+$tint-active-color: #EEEAE1;
+$tint-border-color: #DEDAD1;
+$tint-active-color-darker: #CECAC1;
+html {
+  font-size: 100%;
+  * {
+    box-sizing: border-box;
+  }
+}
+body {
+  margin: 0; padding: 0;
+  font-family: $font-stack;
+}
+
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 0;
+  background-color: transparent;
+  font-family: $font-stack;
+  font-size: 1em;
+  line-height: normal;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  color: currentColor;
+  outline: none;
+  &:active, &:focus {
+    background-color: rgba(0,0,0,0.25);
+  }
+}
+
+y-container, [is="y-container"] {
+  position: absolute;
+  top: 0; left: 0;
+  bottom: 0; right: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+y-scroll-container, [is="y-scroll-container"] {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+
+y-nav, [is="y-nav"] {
+  position: relative;
+  background: #EA1;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  box-shadow: 0 0 6px #8E8A81;
+  padding: 0 0.5rem;
+  z-index: 9;
+  line-height: 3rem;
+}
+
+y-title, [is="y-title"] {
+  margin: 0; padding: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  width: 100%;
+  whitespace: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+y-widget-group, [is="y-widget-group"] {
+  margin: 0 0.25rem;
+  position: relative;
+  flex:0 0 auto;
+  display: flex;
+  align-items: stretch;
+  y-menu-glyph, [is="y-menu-glyph"] {
+      margin: 0 -0.5rem 0 -0.75rem;
+  }
+  * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  label input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 0;
+    border-bottom: 1px solid white;
+    padding: 0; margin: 0.5rem 0;
+    height: 2rem;
+    background-color: transparent;
+    color: white;
+    outline: 0;
+    min-width: 100px;
+    width: 25vw;
+    transition: width 0.4s ease-in-out;
+    font-size: 1rem;
+    border-radius: 0;
+    &:focus {
+      width: 50vw;
+    }
+  }
+}
+
+.y-flex {
+  flex: 1 !important;
+}
+
+.y-group-align-right {
+  text-align: right !important;
+}
+
+y-icon-text, [is="y-icon-text"] {
+  display: inline-block;
+  position: relative;
+  &:before {
+    vertical-align: middle;
+    margin: auto;
+    min-width: 2rem; 
+    min-height: 2rem;
+    display: inline-block;
+    padding: 0.5rem;
+    content: '';
+    background-color: currentColor;
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    mask-size: 2rem 2rem;
+  }
+}
+
+y-icon, [is="y-icon"] {
+  @extend y-icon-text;
+  font-size: 0;
+  padding:0 !important;
+}
+
+$glyphs: (search, magnifying-glass),
+         (menu, menu),
+         (fav, bookmark),
+         (make-note, pencil),
+         (share, share)
+         ;
+
+@each $icon, $glyph in $glyphs {
+    y-#{$icon}-glyph, [is="y-#{$icon}-glyph"] {
+        @extend y-icon;
+        &:before {
+            mask-image: url( ../img/#{$glyph}.png);
+            @media #{$dp2} {
+                mask-image: url( ../img/#{$glyph}@2x.png);
+            }
+        }
+    }
+    y-#{$icon}-text-glyph, [is="y-#{$icon}-text-glyph"] {
+        @extend y-icon-text;
+        &:before {
+            mask-image: url( ../img/#{$glyph}.png);
+            @media #{$dp2} {
+                mask-image: url( ../img/#{$glyph}@2x.png);
+            }
+        }
+    }
+}
+
+
+y-list, [is="y-list"] {
+  display: flex; 
+  flex-wrap: wrap;
+  align-items: stretch;
+  list-style: none outside none;
+  margin: 0;
+  padding: 0;
+}
+
+y-list-item, [is="y-list-item"] {
+  display: flex;
+  border-bottom: 1px solid $tint-border-color;
+  border-right: 1px solid $tint-border-color;
+  flex: 1 1 320px;
+  position: relative;
+  overflow: hidden;
+}
+y-list-actions, [is="y-list-actions"] {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 0; bottom: 0; right: 0;
+  color: white;
+  background-color: $tint-active-color-darker;
+  * {
+    margin: 0;
+    padding: 0 0.5rem;
+  }
+}
+y-list-contents, [is="y-list-contents"] {
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 1;
+  margin: 0;
+  padding: 1rem;
+  background-color: white;
+  width: 100%;
+  * {
+    flex: 0 0 auto;
+  }
+  &:active, &:focus {
+    background-color: $tint-active-color;
+  }
+}
+
+y-indicator, [is="y-indicator"] {
+  @extend y-icon;
+  width: 1rem; height: 1rem;
+  margin: auto;
+  padding: 0;
+  &:before {
+    padding: 0;
+    position: absolute;
+    top: -0.5rem;
+    mask-image: url(../img/chevron-right-thick.png);
+    background-color: $tint-color;
+    @media #{$dp2} {
+      mask-image: url(../img/chevron-right-thick@2x.png);
+    }
+  }
+}
+
+[hidden] {
+    display: none;
+}
+
+y-alert-container, [is="y-alert-container"] {
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background-color: rgba(0,0,0,0.33);
+    z-index:999999;
+    display: flex;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    line-height: normal;
+  &.visible {
+      opacity: 1;
+  }
+  y-alert-dialog, [is="y-alert-dialog"] {
+      margin: auto;
+      min-width: 240px;
+      max-width: 50vw;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 2rem rgba(0,0,0,0.5);
+    h1 {
+        margin: 0; padding: 0.5rem;
+        font-size: 1.25rem;
+        font-weight: bold;
+        text-align: left;
+        background-color: $tint-color;
+        color: white;
+    }
+    p {
+        padding: 0.5rem;
+    }
+    button {
+        padding: 0.5rem;
+        text-align: center;
+        border-top: 1px solid $tint-border-color;
+    }
+  }
+}
