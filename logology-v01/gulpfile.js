@@ -308,7 +308,7 @@ var cordovaTasks = {
      */
     removePlugins: function removePlugins() {
         gutil.log("Removing plugins...");
-        return cordova.plugins("add", pkg.cordova.plugins.reverse())
+        return cordova.plugins("rm", pkg.cordova.plugins.reverse())
             .then(logDone);
     },
     /**
