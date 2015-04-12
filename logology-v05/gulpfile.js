@@ -234,7 +234,7 @@ var projectTasks = {
                 standalone: "app"
             })
             .transform(babelify.configure({
-              experimental: true
+                stage: 0
             }))
             .bundle()
             .on("error", gutil.log.bind(gutil, "Browserify Error"))

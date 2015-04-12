@@ -1,0 +1,8 @@
+{
+    "root": {
+        "app:title": "Logology",
+        "icon:menu": "Menu",
+        "icon:search": "Search",
+        "general:tap-to-reveal-the-sidebar": "Tap to reveal the sidebar"
+    }
+}

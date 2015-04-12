@@ -8,11 +8,18 @@
  *
  *****************************************************************************/
 
-/*globals MobileAccessibility*/
+/*globals MobileAccessibility, cordova, setImmediate*/
 
-import 'babel/polyfill';
-import h from 'yasmf-h';
-
+import "babel/polyfill";
+import h from "yasmf-h";
+import Emitter from "yasmf-emitter";
+import GCS from "../lib/grandCentralStation";
+import SoftKeyboard from "../lib/SoftKeyboard";
+import L from "./localization/localization";
+import Settings from "./models/Settings";
+import Dictionaries from "./models/Dictionaries";
+import StarterDictionary from "./models/StarterDictionary";
+/*
 function simpleAlert() {
     let outerDiv = document.createElement("div"),
         innerDiv = document.createElement("div"),
@@ -51,21 +58,61 @@ function simpleAlert() {
         }, 400);
     }, false);
 }
+*/
 
-export let app = {
-    start: function start() {
-        MobileAccessibility.usePreferredTextZoom(true);
+import SearchViewController from "./controllers/SearchViewController";
 
-        function getTextZoomCallback(textZoom) {
-            console.log('WebView text should be scaled to the preferred value ' + textZoom + '%')
-        }
-
-        MobileAccessibility.getTextZoom(getTextZoomCallback);
-
-        document.querySelector("[is='y-menu-glyph']").addEventListener("click", simpleAlert, false);
+class App extends Emitter {
+    init() {
+        //document.addEventListener("deviceready", this.start.bind(this), false);
+        document.addEventListener("DOMContentLoaded", this.start.bind(this), false);
+        this.GCS = GCS;
+        GCS.on("APP:startupFailure", this.onStartupFailure, this);
     }
-};
 
-document.addEventListener("deviceready", app.start, false);
-//document.addEventListener("DOMContentLoaded", app.start, false);
+    onStartupFailure(sender, notice, err) {
+        console.log(`Startup failure ${err}`);
+    }
+
+    async start() {
+
+//        try {
+
+            // zoom our text for accessibility
+            if (typeof MobileAccessibility !== "undefined") {
+                MobileAccessibility.usePreferredTextZoom(true);
+            }
+
+            // load localization information
+            let locale = await L.loadLocale();
+            this.locale = locale;
+            this.L = L;
+            L.loadTranslations(require("./localization/root/messages"));
+
+            // load settings
+            this.settings = new Settings();
+
+            // create dictionaries list
+            this.dictionaries = new Dictionaries();
+            this.dictionaries.addDictionary(StarterDictionary);
+
+            this.searchViewController = new SearchViewController({model: new StarterDictionary()});
+            this.searchViewController.renderElement = document.getElementById("mainWindow");
+
+            // tell everyone that the app has started
+            GCS.emit("APP:started");
+            this.emit("started");
+ /*       } catch (err) {
+            GCS.emit("APP:startupFailure", err);
+            this.emit("startupFailure", err);
+        }*/
+
+        //document.querySelector("[is='y-menu-glyph']").addEventListener("click", simpleAlert, false);
+        //let softKeyboard = new SoftKeyboard({selectors: [".ui-scroll-container", "[is='y-scroll-container']", "y-scroll-container"]});
+    }
+}
+
+let app = new App();
+export default app;
+
 

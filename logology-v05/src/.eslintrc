@@ -1,7 +1,5 @@
 {
-    "settings": {
-        "ecmascript": 6
-    },
+    "parser": "babel-eslint",
     "globals": {
         "require": false,
         "console": false,
@@ -23,9 +21,11 @@
         "Hammer": false,
         "require": false,
         "module": true,
-        "clearTimeout": false
+        "clearTimeout": false,
+        "setImmediate": false
     },
     "rules": {
+        "strict": 0,
         "no-underscore-dangle": 0,
         "new-cap": 0,
         "no-console": 0,
