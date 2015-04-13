@@ -15,7 +15,7 @@ var chapters = require("./chapters");
 
 var es5Editor, es6Editor, scssEditor, cssEditor, htmlEditor;
 
-var oldConsole = console;
+//var oldConsole = console;
 var resultsFrame = document.getElementById("results");
 var consoleOutput = document.getElementById("consoleOutput");
 
@@ -29,13 +29,15 @@ function Console() {
         var div = document.createElement("div");
         div.textContent = "[" + level + "] " + JSON.stringify(data, null, 2);
         consoleOutput.appendChild(div);
-    };
-    ["log", "info", "debug", "warn", "error"].forEach(function(level) {
+    }
+    ["log", "info", "debug", "warn", "error" ].forEach(function(level) {
         console[level] = _print.bind(console, level);
     });
     return console;
 }
-console = Console();
+function clearConsole() {
+    consoleOutput.innerHTML = "";
+}
 resultsFrame.contentWindow.console = Console();
 
 function populateEditor(err, resp, data) {
@@ -57,22 +59,47 @@ function renderResults() {
 
     var docBase = example && example.base;
 
+    clearConsole();
+
+    doc.console = Console();
     doc.open();
+
+    doc.addEventListener("DOMContentLoaded", function installStylesAndScripts() {
+        doc.removeEventListener("DOMContentLoaded", installStylesAndScripts);
+        docHead = doc.getElementsByTagName("head")[0];
+        docBody = doc.getElementsByTagName("body")[0];
+
+        docStyle = doc.createElement("style");
+        docScript = doc.createElement("script");
+
+        docStyle.textContent = cssEditor.getValue();
+        docScript.textContent = ";(function () { try { " + es5Editor.getValue() + "\n } catch(err) { console.log(err.message); } })();";
+        docScript.setAttribute("type", "text/javascript");
+
+        docHead.appendChild(docStyle);
+
+        // before we insert our script, we need to process any extant script tags in the HTML
+        var docScripts = [].slice.call(doc.getElementsByTagName("script"), 0),
+            sN, pN, nSN;
+        for (var i = 0, l = docScripts.length; i < l; i++) {
+            sN = docScripts[i];
+            pN = sN.parentNode;
+            pN.removeChild(sN);
+            nSN = doc.createElement("script");
+            nSN.setAttribute("src", sN.getAttribute("src"));
+            pN.appendChild(nSN);
+        }
+        docBody.appendChild(docScript);
+
+        setTimeout(function() {
+            var deviceReady = doc.createEvent("Event");
+            deviceReady.initEvent("deviceready", true, true);
+            doc.dispatchEvent(deviceReady);
+        }, 500);
+    }, false);
+
     doc.write(htmlEditor.getValue().replace("<!--base-->", "<base href='" + docBase + "/' />"));
     doc.close();
-
-    docHead = doc.getElementsByTagName("head")[0];
-    docBody = doc.getElementsByTagName("body")[0];
-
-    docStyle = doc.createElement("style");
-    docScript = doc.createElement("script");
-
-    docStyle.textContent = cssEditor.getValue();
-    docScript.textContent = ";(function () { try { " + es5Editor.getValue() + "\n } catch(err) { console.log(err.message); } })();";
-    docScript.setAttribute("type", "text/javascript");
-
-    docHead.appendChild(docStyle);
-    docBody.appendChild(docScript);
 }
 
 function configureSelectElements() {
@@ -162,8 +189,9 @@ function configureEditors() {
         }
 
         var editor = ace.edit(el);
+        editor.$blockScrolling = Infinity;
         editor.getSession().setMode(mode);
-        editor.setTheme('ace/theme/monokai');
+        editor.setTheme("ace/theme/monokai");
 
         if (typeof changeHandler === "function") {
             editor.on("change", function() {
@@ -187,9 +215,7 @@ function configureEditors() {
         mode: "ace/mode/javascript",
         el: "es6-editor",
         onchange: function() {
-            es5Editor.setValue(babel.transform(this.getValue()).code);
-            es5Editor.clearSelection();
-            es5Editor.scrollToLine(0);
+            es5Editor.setValue(babel.transform(this.getValue()).code, {stage:0}, -1);
         }
     });
     cssEditor = createEditor({
@@ -201,9 +227,7 @@ function configureEditors() {
         mode: "ace/mode/scss",
         el: "scss-editor",
         onchange: function() {
-            cssEditor.setValue(autoprefixer.process(Sass.compile(this.getValue())).css);
-            cssEditor.clearSelection();
-            cssEditor.scrollToLine(0);
+            cssEditor.setValue(autoprefixer.process(Sass.compile(this.getValue())).css, -1);
         }
     });
     htmlEditor = createEditor({
@@ -243,7 +267,7 @@ function parseQueryString() {
                         }
                         break;
                 }
-            }, i*100);
+            }, i * 100);
         });
     }
 }
@@ -257,10 +281,10 @@ function toggleVisibility() {
             });
 }
 
-[["toggleES6Editor","es6-editor-group"],
- ["toggleES5Editor","es5-editor-group"],
- ["toggleSCSSEditor","scss-editor-group"],
- ["toggleCSSEditor","css-editor-group"],
+[["toggleES6Editor", "es6-editor-group"],
+ ["toggleES5Editor", "es5-editor-group"],
+ ["toggleSCSSEditor", "scss-editor-group"],
+ ["toggleCSSEditor", "css-editor-group"],
  ["toggleHTMLEditor", "html-editor-group"]].forEach(function (toggler) {
   document.getElementById(toggler[0]).addEventListener("click", toggleVisibility.bind(document.getElementById(toggler[1])), false);
 });
