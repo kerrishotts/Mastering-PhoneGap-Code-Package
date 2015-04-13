@@ -1,0 +1,20 @@
+module.exports = [
+  { name: "- select an example -" },
+  { name: "Example 1: Creating a Database",           base: "06/ex1-create-database/vanilla", layout: "es6,html", html: true, js: true },
+  { name: "Example 1: Creating a Database (Promise)", base: "06/ex1-create-database/promise",  layout: "es6,html", html: true, js: true },
+  { name: "Example 1: Creating a Database (Treo)",    base: "06/ex1-create-database/treo",  layout: "es6,html", html: true, js: true },
+  { name: "Example 2: Creating an Object Store",      base: "06/ex2-create-store/vanilla",  layout: "es6,html", html: true, js: true },
+  { name: "Example 2: Creating an Object Store (Treo)", base: "06/ex2-create-store/treo", layout: "es6,html", html: true, js: true },
+  { name: "Example 3: Database Upgrades",             base: "06/ex3-upgrade-database/vanilla", layout: "es6,html", html: true, js: true },
+  { name: "Example 3: Database Upgrades (Treo)",      base: "06/ex3-upgrade-database/treo", layout: "es6,html", html: true, js: true },
+  { name: "Example 4: Storing Objects",               base: "06/ex4-store-objects/vanilla", layout: "es6,html", html: true, js: true },
+  { name: "Example 4: Storing Objects (Treo)",        base: "06/ex4-store-objects/treo",    layout: "es6,html", html: true, js: true },
+  { name: "Example 5: Deleting Objects",              base: "06/ex5-delete-objects/vanilla", layout: "es6,html", html: true, js: true },
+  { name: "Example 5: Deleting Objects (Treo)",       base: "06/ex5-delete-objects/treo",   layout: "es6,html", html: true, js: true },
+  { name: "Example 6: Querying Data",                 base: "06/ex6-query-data/vanilla",    layout: "es6,html", html: true, js: true },
+  { name: "Example 6: Querying Data (Treo)",          base: "06/ex6-query-data/treo",       layout: "es6,html", html: true, js: true },
+  { name: "Example 7: Using Indexes",                 base: "06/ex7-indexes/vanilla",       layout: "es6,html", html: true, js: true },
+  { name: "Example 7: Using Indexes (Treo)",          base: "06/ex7-indexes/treo",          layout: "es6,html", html: true, js: true },
+  { name: "Example 8: Using Cursors",                 base: "06/ex8-cursors/vanilla",       layout: "es6,html", html: true, js: true },
+  { name: "Example 8: Using Cursors (Treo)",          base: "06/ex8-cursors/treo",          layout: "es6,html", html: true, js: true }
+];

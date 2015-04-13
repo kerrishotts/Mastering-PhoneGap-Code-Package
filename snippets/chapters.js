@@ -5,7 +5,7 @@ module.exports = [
   {name: "3: Sassy CSS",                  examples: require("./03")},
   {name: "4: More Responsive Design",     examples: require("./04")},
   {name: "5: Accessibility",              examples: require("./05")},
-  {name: "6: IndexedDB",                  examples: []},
+  {name: "6: IndexedDB",                  examples: require("./06")},
   {name: "7: SQLite",                     examples: []},
   {name: "8: File Transfer",              examples: []},
   {name: "9: In-App Purchases",           examples: []},
