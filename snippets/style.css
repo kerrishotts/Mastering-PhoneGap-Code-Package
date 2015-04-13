@@ -20,6 +20,30 @@ body {
 nav {
   line-height: 2em;
   overflow: hidden;
+  background-color: #FC3;
+  padding: 0.5em;
+  font-size: 90%;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+nav > h1 {
+    font-weight: bold;
+    font-size: 90%;
+    margin: 0;
+    margin-right: 1em;
+}
+nav > span {
+  text-align: right;
+  -webkit-flex: 1 1 auto;
+  -moz-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 .code-and-results {
   overflow: auto;
