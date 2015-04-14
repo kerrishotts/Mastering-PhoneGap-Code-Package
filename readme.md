@@ -180,3 +180,7 @@ OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 OTHER DEALINGS IN THE SOFTWARE.
 ```
 
+### WordNet License
+
+Portions of this repository use definitions from WordNet. See [./LICENSE-WordNet.md](WordNet License).
+
