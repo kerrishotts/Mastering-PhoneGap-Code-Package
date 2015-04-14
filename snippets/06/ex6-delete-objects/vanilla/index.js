@@ -48,9 +48,59 @@ function upgradeDatabase(db, oldVersion) {
     }
 }
 
+function deleteAnObject(db) {
+    let req = db.transaction(["definition"], "readwrite").objectStore("definition")
+                .delete("02124272");
+    req.onerror = function (evt) {
+        console.log("[DB] An error occurred: " + evt.target.error);
+        db.close();
+    };
+    req.onsuccess = function () {
+        console.log("Deleted the entry.");
+        db.close();
+    };
+
+}
+
+function findADefinition(db) {
+    let req = db.transaction(["definition"]).objectStore("definition")
+                .get("02124272");
+    req.onerror = function (evt) {
+        console.log("[DB] An error occurred: " + evt.target.error);
+        db.close();
+    };
+    req.onsuccess = function (evt) {
+        let definition = evt.target.result;
+        if (!definition) {
+            console.log("Couldn't find the desired entry.");
+        } else {
+            console.log(JSON.stringify(definition, null, 2));
+        }
+        deleteAnObject(db);
+    };
+}
+
 function gotADatabase(db) {
-    console.log(db.version);
-    db.close();
+    // Definitions from WordNet. See LICENSE-WordNet.md in package root.
+    let definitions = [
+        {wordNetRef: "02124272", lemmas: ["cat", "true cat"], partOfSpeech: "noun", semantics: "noun.animal",
+            gloss: "feline mammal usually having thick soft fur and no ability to roar: domestic cats; wildcats"},
+        {wordNetRef: "02130460", lemmas: ["cat", "big cat"], partOfSpeech: "noun", semantics: "noun.animal",
+            gloss: "any of several large cats typically able to roar and living in the wild"},
+        {wordNetRef: "02085443", lemmas: ["aardvark", "ant bear", "anteater", "Orycteropus afer"], partOfSpeech: "noun", sematics: "noun.animal",
+            gloss: "nocturnal burrowing mammal of the grasslands of Africa that feeds on termites; sole extant representative of the order Tubulidentata"}
+    ];
+    let transaction = db.transaction(["definition"], "readwrite");
+    transaction.onerror = function(evt) {
+        console.log("[DB] Transaction got an error: " + evt.target.error);
+        db.close();
+    };
+    transaction.oncomplete = function() {
+        console.log("[DB] All entries added.");
+        findADefinition(db);
+    };
+    let definitionStore = transaction.objectStore("definition");
+    definitions.forEach(definition => definitionStore.put(definition));
 }
 
 let deleteReq = indexedDB.deleteDatabase("StarterDictionary");

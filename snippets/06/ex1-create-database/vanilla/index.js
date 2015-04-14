@@ -10,12 +10,12 @@ if (!indexedDB) {
 function openDatabase({name, version, onopen, onerror}) {
     let req = indexedDB.open(name, version);
     req.onerror = function(evt) {
-        console.log("[DB] Encountered an error opening the database:", evt.target.errorCode);
+        console.log("[DB] Encountered an error opening the database:", evt.target.error);
     };
     req.onsuccess = function() {
         let db = this.result;
         db.onerror = onerror || function(dbEvent) {
-            console.log("[DB] Encountered a database error:", dbEvent.target.errorCode);
+            console.log("[DB] Encountered a database error:", dbEvent.target.error);
         };
         onopen(db);
     };

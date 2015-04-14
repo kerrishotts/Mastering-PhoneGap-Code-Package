@@ -8,7 +8,7 @@ let schema = treo.schema()
              .addIndex("lemmas", "lemmas", {unique: false, multiEntry:true});
 
 let db = treo("StarterDictionary", schema);
-db.use(promise());
 db.use(webSQL());
+db.use(promise());
 
 console.log(db.version);

@@ -11,7 +11,7 @@ let schema = treo.schema()
              .addStore("notes", {autoIncrement: true});
 
 let db = treo("StarterDictionary", schema);
-db.use(promise());
 db.use(webSQL());
+db.use(promise());
 
 console.log(db.version);

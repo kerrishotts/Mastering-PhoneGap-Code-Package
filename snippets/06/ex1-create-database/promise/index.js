@@ -11,12 +11,12 @@ function openDatabase({name, version, onerror}) {
     return new Promise((resolve, reject) => {
         let req = indexedDB.open(name, version);
         req.onerror = function(evt) {
-            reject(evt.target.errorCode);
+            reject(evt.target.error);
         };
         req.onsuccess = function() {
             let db = this.result;
             db.onerror = onerror || function(dbEvent) {
-                console.log("[DB] Encountered a database error:", dbEvent.target.errorCode);
+                console.log("[DB] Encountered a database error:", dbEvent.target.error);
             };
             resolve(db);
         };
