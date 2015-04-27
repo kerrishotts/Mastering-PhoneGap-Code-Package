@@ -16,14 +16,13 @@ var chapters = require("./chapters");
 var es5Editor, es6Editor, scssEditor, cssEditor, htmlEditor;
 
 //var oldConsole = console;
-var resultsFrame = document.getElementById("results");
 var consoleOutput = document.getElementById("consoleOutput");
 
 var chapterSelect = document.getElementById("chapters"),
     exampleSelect = document.getElementById("examples");
 
 function Console() {
-    var console = {};
+    var console = this;
 
     function _print(level, data) {
         var div = document.createElement("div");
@@ -38,7 +37,6 @@ function Console() {
 function clearConsole() {
     consoleOutput.innerHTML = "";
 }
-resultsFrame.contentWindow.console = Console();
 
 function populateEditor(err, resp, data) {
     if (!err) {
@@ -53,53 +51,63 @@ function renderResults() {
         selectedExample = exampleSelect.selectedIndex,
         example = chapters[selectedChapter].examples[selectedExample];
 
-    var el = resultsFrame,
-        doc = el.contentDocument,
-        docStyle, docScript, docHead, docBody;
+    var el = document.createElement("iframe");
+    var resultsFrame = document.getElementById("results");
+    var resultsParent = resultsFrame.parentElement;
+    el.setAttribute("id", "results");
+    resultsParent.removeChild(resultsFrame);
+    resultsParent.appendChild(el);
+    setTimeout( function() {
+        var doc = el.contentDocument,
+            docStyle, docScript, docHead, docBody;
 
-    var docBase = example && example.base;
+        var docBase = example && example.base;
 
-    clearConsole();
+        clearConsole();
 
-    doc.console = Console();
-    doc.open();
+        doc.open();
 
-    doc.addEventListener("DOMContentLoaded", function installStylesAndScripts() {
-        doc.removeEventListener("DOMContentLoaded", installStylesAndScripts);
-        docHead = doc.getElementsByTagName("head")[0];
-        docBody = doc.getElementsByTagName("body")[0];
+        doc.addEventListener("DOMContentLoaded", function installStylesAndScripts() {
+            doc.removeEventListener("DOMContentLoaded", installStylesAndScripts);
+            docHead = doc.getElementsByTagName("head")[0];
+            docBody = doc.getElementsByTagName("body")[0];
 
-        docStyle = doc.createElement("style");
-        docScript = doc.createElement("script");
+            docStyle = doc.createElement("style");
+            docScript = doc.createElement("script");
 
-        docStyle.textContent = cssEditor.getValue();
-        docScript.textContent = ";(function () { try { " + es5Editor.getValue() + "\n } catch(err) { console.log(err.message); } })();";
-        docScript.setAttribute("type", "text/javascript");
+            docStyle.textContent = cssEditor.getValue();
+            docScript.textContent = ";(function () { try { " + es5Editor.getValue() + "\n } catch(err) { console.log(err.message); } })();";
+            docScript.setAttribute("type", "text/javascript");
 
-        docHead.appendChild(docStyle);
+            docHead.appendChild(docStyle);
 
-        // before we insert our script, we need to process any extant script tags in the HTML
-        var docScripts = [].slice.call(doc.getElementsByTagName("script"), 0),
-            sN, pN, nSN;
-        for (var i = 0, l = docScripts.length; i < l; i++) {
-            sN = docScripts[i];
-            pN = sN.parentNode;
-            pN.removeChild(sN);
-            nSN = doc.createElement("script");
-            nSN.setAttribute("src", sN.getAttribute("src"));
-            pN.appendChild(nSN);
-        }
-        docBody.appendChild(docScript);
+            // before we insert our script, we need to process any extant script tags in the HTML
+            var docScripts = [].slice.call(doc.getElementsByTagName("script"), 0),
+                sN, pN, nSN;
+            for (var i = 0, l = docScripts.length; i < l; i++) {
+                sN = docScripts[i];
+                pN = sN.parentNode;
+                pN.removeChild(sN);
+                nSN = doc.createElement("script");
+                nSN.setAttribute("src", sN.getAttribute("src"));
+                pN.appendChild(nSN);
+            }
+            docBody.appendChild(docScript);
+
+            setTimeout(function() {
+                var deviceReady = doc.createEvent("Event");
+                deviceReady.initEvent("deviceready", true, true);
+                doc.dispatchEvent(deviceReady);
+            }, 500);
+        }, false);
+
+        doc.write(htmlEditor.getValue().replace("<!--base-->", "<base href='" + docBase + "/' />"));
+        doc.close();
 
         setTimeout(function() {
-            var deviceReady = doc.createEvent("Event");
-            deviceReady.initEvent("deviceready", true, true);
-            doc.dispatchEvent(deviceReady);
-        }, 500);
-    }, false);
-
-    doc.write(htmlEditor.getValue().replace("<!--base-->", "<base href='" + docBase + "/' />"));
-    doc.close();
+            document.getElementById("results").contentWindow.console = new Console();
+        }, 0);
+    }, 0);
 }
 
 function configureSelectElements() {
@@ -215,7 +223,7 @@ function configureEditors() {
         mode: "ace/mode/javascript",
         el: "es6-editor",
         onchange: function() {
-            es5Editor.setValue(babel.transform(this.getValue()).code, {stage:0}, -1);
+            es5Editor.setValue(babel.transform(this.getValue(), {stage:0}).code, -1);
         }
     });
     cssEditor = createEditor({
