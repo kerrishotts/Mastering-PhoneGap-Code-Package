@@ -39,7 +39,7 @@
  *   linting, or style checks.
  *
  * lint
- *   lints the source code using jshint (+ES6)
+ *   lints the source code using eslint (+ES6)
  *
  * code-style
  *   checks the code style using jscs (+ES6)
@@ -50,7 +50,7 @@
  * watch [--port 8080 [--lrport ####]] [--mode debug|release]
  *   Start a live-reload server. Static content at --port; the lr server
  *   is at --lrport. Not all livereload plugins can listen on an arbitrary
- *   port, so if it doesn't work, be sure the specified port matches that
+ *   port, so if it doesn"t work, be sure the specified port matches that
  *   of your livereload plugin.
  *
  * pgserve [--pgport 3000]
@@ -80,7 +80,7 @@ var rimraf = require("rimraf");
 //var toES5 = require("gulp-6to5");
 var sourcemaps = require("gulp-sourcemaps");
 var uglify = require("gulp-uglify");
-var jshint = require("gulp-jshint");
+var eslint = require("gulp-eslint");
 var jscs = require("gulp-jscs");
 var plumber = require("gulp-plumber");
 var livereload = require("gulp-livereload");
@@ -102,7 +102,9 @@ var CONFIG_DIR = path.join(__dirname, "config");
 var CORDOVA_CONFIG = path.join(SOURCE_DIR, "config.xml");
 
 var PLATFORM = gutil.env.platform ? gutil.env.platform : "ios"; // or android
+var BUILD_PLATFORMS = (gutil.env.for ? gutil.env.for : "ios,android").split(",");
 var BUILD_MODE = gutil.env.mode ? gutil.env.mode : "debug"; // or release
+var TARGET_DEVICE = gutil.env.target ? "--target=" + gutil.env.target : "";
 var LR_PORT = parseInt(gutil.env.lrport ? gutil.env.lrport : "35729", 10);
 var SERVE_PORT = parseInt(gutil.env.port ? gutil.env.port : "8080", 10);
 var PG_PORT = parseInt(gutil.env.pgport ? gutil.env.pgport : "3000", 10);
@@ -116,7 +118,6 @@ var cordovaTasks = new cordova.CordovaTasks({pkg: pkg, basePath: __dirname, buil
 function logDone() {
     gutil.log("... Done!");
 }
-
 /**
  * Increment the version in package.json
  * using importance to specify which portion of the version
@@ -144,19 +145,19 @@ var projectTasks = {
      * Emulates the app using the specified platform
      */
     emulateCordova: function emulateCordova() {
-        return cordovaTasks.emulate({buildMode: BUILD_MODE, platform: PLATFORM});
+        return cordovaTasks.emulate({buildMode: BUILD_MODE, platform: PLATFORM, options: [TARGET_DEVICE]});
     },
     /**
      * runs the app on the specified platform
      */
     runCordova: function runCordova() {
-        return cordovaTasks.run({buildMode: BUILD_MODE, platform: PLATFORM});
+        return cordovaTasks.run({buildMode: BUILD_MODE, platform: PLATFORM, options: [TARGET_DEVICE]});
     },
     /**
      * Builds the cordova portion of the project
      */
     buildCordova: function buildCordova() {
-        return cordovaTasks.build({buildMode: BUILD_MODE});
+        return cordovaTasks.build({buildMode: BUILD_MODE, platforms: BUILD_PLATFORMS});
     },
     /**
      * Prepares the cordova portion of the project
@@ -179,7 +180,7 @@ var projectTasks = {
         return cordovaTasks.copyConfig();
     },
     /**
-     * Copies all the assets that don't need any substitutions from
+     * Copies all the assets that don"t need any substitutions from
      * src to build.
      */
     copyAssets: function copyAssets() {
@@ -244,7 +245,7 @@ var projectTasks = {
             .pipe(isRelease ? gutil.noop() : sourcemaps.init({
                 loadMaps: true
             })) // loads map from browserify file
-            .pipe(isRelease ? uglify({preserveComments:"some"}) : gutil.noop())
+            .pipe(isRelease ? uglify({preserveComments: "some"}) : gutil.noop())
             .pipe(isRelease ? gutil.noop() : sourcemaps.write()) // writes .map file
             .pipe(gulp.dest(path.join(BUILD_DIR, "www", "js", "app")))
             .pipe(livereload());
@@ -261,14 +262,13 @@ var projectTasks = {
             }));
     },
     /**
-     * Checks our code using jshint. Config file should be in CONFIGDIR/
-     * jshint.json
+     * Checks our code using eslint.
      */
     lintCode: function lintCode() {
-        return gulp.src(["./src/www/js/app/**/*"])
-            .pipe(jshint(path.join(CONFIG_DIR, "jshint.json")))
-            .pipe(jshint.reporter('default'))
-            .pipe(jshint.reporter('fail'));
+        return gulp.src(["./src/www/js/app/**/*.js"])
+            .pipe(eslint(path.join(CONFIG_DIR, "eslint.json")))
+            .pipe(eslint.format())
+            .pipe(eslint.failOnError());
     },
     /**
      * Start a local HTTP server on SERVE_PORT, serving build/www
@@ -278,7 +278,7 @@ var projectTasks = {
         http.createServer(
             st({
                 path: path.join(BUILD_DIR, "www"),
-                index: 'index.html',
+                index: "index.html",
                 cache: false
             })
         ).listen(SERVE_PORT, done);
@@ -295,7 +295,7 @@ var projectTasks = {
         gulp.watch(["./src/www/**/*"], ["copy"]);
     },
     /**
-     * Start a PG serve app (doesn't currently work
+     * Start a PG serve app (doesn"t currently work
      * because they use process.cwd, and that interferes with gulp.
      */
     pgserve: function pgserve() {

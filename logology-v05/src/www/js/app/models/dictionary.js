@@ -1,5 +1,4 @@
 "use strict";
-
 // jscs:disable
 import Emitter from "yasmf-emitter";
 import Definition from "./Definition";
