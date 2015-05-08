@@ -1,0 +1,350 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Mastering PhoneGap Mobile Application Development by kerrishotts</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Mastering PhoneGap Mobile Application Development</h1>
+        <p>Code bundle for Mastering PhoneGap Mobile Application Development</p>
+
+        <p class="view"><a href="https://github.com/kerrishotts/Mastering-PhoneGap-Code-Package">View the Project on GitHub <small>kerrishotts/Mastering-PhoneGap-Code-Package</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/kerrishotts/Mastering-PhoneGap-Code-Package/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/kerrishotts/Mastering-PhoneGap-Code-Package/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/kerrishotts/Mastering-PhoneGap-Code-Package">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="mastering-phonegap-code-bundle" class="anchor" href="#mastering-phonegap-code-bundle" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mastering PhoneGap Code Bundle</h1>
+
+<p>This repository stores the code for the book entitled Mastering PhoneGap Mobile Application Development published by
+Packt Publishing. You can purchase the book at
+<a href="http://www.packtpub.com/mastering_phonegap-mobile-application-development-hotshot/book">Packt's Site</a>. If you obtained
+the code package from Packt, you may wish to download the package from GitHub in order to receive the most recent changes.
+The package is available at <a href="https://github.com/kerrishotts/Mastering-PhoneGap-Code-Package">https://github.com/kerrishotts/Mastering-PhoneGap-Code-Package</a></p>
+
+<blockquote>
+<p><strong>NOTE:</strong> This book is under active development. As such, the contents of this repository are not yet finalized.</p>
+</blockquote>
+
+<p>The code herein is not a complete Cordova project. The build artifacts (namely the <code>platforms</code>, <code>plugins</code>, etc., directories)
+are ignored. Only the <code>src</code> directory,<code>config.xml</code>, and assets for each project are provided. In order to execute any of these
+projects, you'll need to create a new Cordova project and copy the relevant files from this repository into your project.</p>
+
+<blockquote>
+<p>You should also check out <a href="./notes.md">notes.md</a> within this repository -- there are important issues and discussions of
+which you should be aware.</p>
+</blockquote>
+
+<h1>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table of Contents</h1>
+
+<ul>
+<li><a href="#chapterproject-lookup">Chapter/Project Lookup</a></li>
+<li><a href="#application-demos">Application Demos</a></li>
+<li><a href="#useful-directories">Useful Directories</a></li>
+<li><a href="#useful-scripts">Useful Scripts</a></li>
+<li><a href="#using-phonegap-build">Using PhoneGap Build</a></li>
+<li><a href="#additional-project-information">Additional Project Information</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+
+<h2>
+<a id="chapterproject-lookup" class="anchor" href="#chapterproject-lookup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter/Project Lookup</h2>
+
+<table>
+<thead>
+<tr>
+<th align="right">Chapter</th>
+<th align="left">Title</th>
+<th align="left">Project</th>
+<th align="left">App.io Demo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">1</td>
+<td align="left">Task Automation</td>
+<td align="left"><a href="#v1">LogologyV1</a></td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="left">Modules</td>
+<td align="left"><a href="#v2">LogologyV2</a></td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="left">Sassy CSS</td>
+<td align="left"><a href="#v3">LogologyV3</a></td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="left">More Responsive Design</td>
+<td align="left"><a href="#v4">LogologyV4</a></td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="left">Accessibility</td>
+<td align="left"><a href="#v5">LogologyV5</a></td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td align="left">IndexedDB</td>
+<td align="left"><a href="#v6">LogologyV6</a></td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td align="left">SQLite</td>
+<td align="left"><a href="#v7">LogologyV7</a></td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="left">File Transfer</td>
+<td align="left"><a href="#v8">LogologyV8</a></td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td align="left">In-App Purchases</td>
+<td align="left"><a href="#v9">LogologyV9</a></td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td align="left">Developing Custom Plugins</td>
+<td align="left"><a href="#v10">LogologyV10</a></td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td align="left">Graphical Assets</td>
+<td align="left"><a href="#v11">LogologyV11</a></td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td align="left">Deployment</td>
+<td align="left"><a href="#v12">LogologyV12</a></td>
+<td align="left">
+<a href="https://app.io/kAxEF4">Demo</a> (offsite)</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="application-demos" class="anchor" href="#application-demos" aria-hidden="true"><span class="octicon octicon-link"></span></a>Application Demos</h2>
+
+<p>I've taken the time to upload the final versions of Logology to <a href="http://www.app.io">App.io</a>.
+<strong>Note:</strong> It is not possible to simulate all aspects of each app; pay attention to what features are not available.</p>
+
+<ul>
+<li>
+<a href="https://app.io/kAxEF4">Logology V12</a> (offsite)
+
+<ul>
+<li>The simulator does not provide for in-app purchases or accessibility settings.</li>
+</ul>
+</li>
+</ul>
+
+<h2>
+<a id="useful-directories" class="anchor" href="#useful-directories" aria-hidden="true"><span class="octicon octicon-link"></span></a>Useful Directories</h2>
+
+<p>Other than the actual code for each project, the following directories may be of interest to you:</p>
+
+<ul>
+<li>
+<code>/design</code>
+
+<ul>
+<li>Contains icons and splash screen for each project. Also contains design documents for each project in PDF and
+OmniGraffle format.</li>
+</ul>
+</li>
+<li>
+<code>/template</code>
+
+<ul>
+<li>Contains the template we used to create each project (<code>cordova create ... --copy-from ./template</code>).</li>
+</ul>
+</li>
+<li>
+<code>/framework</code>
+
+<ul>
+<li>Contains the version of the YASMF-Next framework that was used to build the projects. You are welcome to update the
+framework version at any time, but it is always possible that new framework versions might break the apps.</li>
+</ul>
+</li>
+</ul>
+
+<h2>
+<a id="useful-scripts" class="anchor" href="#useful-scripts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Useful Scripts</h2>
+
+<p>Contained within the top level of this project are several useful scripts. <strong>NOTE:</strong> Your use of these scripts is at
+your own risk. Neither the author of the book and code nor Packt Publishing can be held liable for the use, abuse,
+or misuse of these scripts.</p>
+
+<h2>
+<a id="using-phonegap-build" class="anchor" href="#using-phonegap-build" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using PhoneGap Build</h2>
+
+<p>The projects as delivered are <em>Cordova</em> projects. In order to utilize them with PhoneGap build, you will need to follow these steps:</p>
+
+<ul>
+<li>Copy <code>config.xml</code> from the application root to the <code>www</code> directory.</li>
+<li>Add the required plugins to <code>config.xml</code>, using the form:</li>
+</ul>
+
+<pre><code>&lt;gap:plugin name="reverse.domain.id"/&gt;
+</code></pre>
+
+<ul>
+<li>If you want to add the icon and splash screen assets to the project, you'll need to copy the appropriate icons from the <code>design</code> directory into the project's <code>www</code> directory, and then update <code>config.xml</code> using <a href="http://docs.build.phonegap.com/en_US/configuring_icons_and_splash.md.html#Icons%20and%20Splash%20Screens">these directions</a>.</li>
+<li>Upload the project to PhoneGap Build by using <code>phonegap remote build android</code> (or <code>ios</code>).</li>
+</ul>
+
+<h2>
+<a id="additional-project-information" class="anchor" href="#additional-project-information" aria-hidden="true"><span class="octicon octicon-link"></span></a>Additional Project Information</h2>
+
+<h3>
+<a id="logology-v1" class="anchor" href="#logology-v1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logology V1</h3>
+
+<h4>
+<a id="plugins-required" class="anchor" href="#plugins-required" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugins Required</h4>
+
+<pre><code></code></pre>
+<h3>
+<a id="logology-v2" class="anchor" href="#logology-v2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logology V2</h3>
+
+<h4>
+<a id="plugins-required-1" class="anchor" href="#plugins-required-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugins Required</h4>
+
+<pre><code></code></pre>
+<h3>
+<a id="logology-v3" class="anchor" href="#logology-v3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logology V3</h3>
+
+<h4>
+<a id="plugins-required-2" class="anchor" href="#plugins-required-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugins Required</h4>
+
+<pre><code></code></pre>
+<h3>
+<a id="logology-v4" class="anchor" href="#logology-v4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logology V4</h3>
+
+<h4>
+<a id="plugins-required-3" class="anchor" href="#plugins-required-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugins Required</h4>
+
+<pre><code></code></pre>
+<h3>
+<a id="logology-v5" class="anchor" href="#logology-v5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logology V5</h3>
+
+<h4>
+<a id="plugins-required-4" class="anchor" href="#plugins-required-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugins Required</h4>
+
+<pre><code></code></pre>
+<h3>
+<a id="logology-v6" class="anchor" href="#logology-v6" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logology V6</h3>
+
+<h4>
+<a id="plugins-required-5" class="anchor" href="#plugins-required-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugins Required</h4>
+
+<pre><code></code></pre>
+<h3>
+<a id="logology-v7" class="anchor" href="#logology-v7" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logology V7</h3>
+
+<h4>
+<a id="plugins-required-6" class="anchor" href="#plugins-required-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugins Required</h4>
+
+<pre><code></code></pre>
+<h3>
+<a id="logology-v8" class="anchor" href="#logology-v8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logology V8</h3>
+
+<h4>
+<a id="plugins-required-7" class="anchor" href="#plugins-required-7" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugins Required</h4>
+
+<pre><code></code></pre>
+<h3>
+<a id="logology-v9" class="anchor" href="#logology-v9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logology V9</h3>
+
+<h4>
+<a id="plugins-required-8" class="anchor" href="#plugins-required-8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugins Required</h4>
+
+<pre><code></code></pre>
+<h3>
+<a id="logology-v10" class="anchor" href="#logology-v10" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logology V10</h3>
+
+<h4>
+<a id="plugins-required-9" class="anchor" href="#plugins-required-9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugins Required</h4>
+
+<pre><code></code></pre>
+<h3>
+<a id="logology-v11" class="anchor" href="#logology-v11" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logology V11</h3>
+
+<h4>
+<a id="plugins-required-10" class="anchor" href="#plugins-required-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugins Required</h4>
+
+<pre><code></code></pre>
+<h3>
+<a id="logology-v12" class="anchor" href="#logology-v12" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logology V12</h3>
+
+<h4>
+<a id="plugins-required-11" class="anchor" href="#plugins-required-11" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugins Required</h4>
+
+<pre><code></code></pre>
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>The code herein is licensed under the MIT license. You are free to with it as you will, provided the
+requirements of said license are met.</p>
+
+<pre><code>Copyright (c) 2015 Packt Publishing
+Permission is hereby granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following
+conditions:
+The above copyright notice and this permission notice shall be included in all copies
+or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+</code></pre>
+
+<h3>
+<a id="wordnet-license" class="anchor" href="#wordnet-license" aria-hidden="true"><span class="octicon octicon-link"></span></a>WordNet License</h3>
+
+<p>Portions of this repository use definitions from WordNet. See <a href="WordNet%20License">./LICENSE-WordNet.md</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/kerrishotts">kerrishotts</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
