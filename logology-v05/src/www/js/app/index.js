@@ -8,7 +8,7 @@
  *
  *****************************************************************************/
 
-/*globals MobileAccessibility, cordova, setImmediate*/
+/*globals MobileAccessibility, setImmediate*/
 
 import "babel/polyfill";
 import h from "yasmf-h";
