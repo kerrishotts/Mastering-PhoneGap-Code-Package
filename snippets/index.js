@@ -46,7 +46,10 @@ function populateEditor(err, resp, data) {
     }
 }
 
-function renderResults() {
+function _renderResults() {
+
+    console.log("[INFO] Rendering code changes");
+
     var selectedChapter = chapterSelect.selectedIndex,
         selectedExample = exampleSelect.selectedIndex,
         example = chapters[selectedChapter].examples[selectedExample];
@@ -59,9 +62,15 @@ function renderResults() {
     resultsParent.appendChild(el);
     setTimeout( function() {
         var doc = el.contentDocument,
+            win = el.contentWindow,
             docStyle, docScript, docHead, docBody;
 
         var docBase = example && example.base;
+        if (docBase) {
+            if (docBase.substr(docBase.length-1) !== "/") {
+                docBase += "/";
+            }
+        }
 
         clearConsole();
 
@@ -80,7 +89,7 @@ function renderResults() {
             docScript.setAttribute("type", "text/javascript");
 
             docHead.appendChild(docStyle);
-
+/*
             // before we insert our script, we need to process any extant script tags in the HTML
             var docScripts = [].slice.call(doc.getElementsByTagName("script"), 0),
                 sN, pN, nSN;
@@ -91,23 +100,41 @@ function renderResults() {
                 nSN = doc.createElement("script");
                 nSN.setAttribute("src", sN.getAttribute("src"));
                 pN.appendChild(nSN);
-            }
+
+                console.log("Inserted script tag with " + sN.getAttribute("src"));
+            } */
             docBody.appendChild(docScript);
 
             setTimeout(function() {
-                var deviceReady = doc.createEvent("Event");
-                deviceReady.initEvent("deviceready", true, true);
-                doc.dispatchEvent(deviceReady);
+                if (!win.cordova) {
+                    // simulate Cordova deviceReady event, but only if cordova isn't defined
+                    var deviceReady = doc.createEvent("Event");
+                    deviceReady.initEvent("deviceready", true, true);
+                    doc.dispatchEvent(deviceReady);
+                }
             }, 500);
         }, false);
 
-        doc.write(htmlEditor.getValue().replace("<!--base-->", "<base href='" + docBase + "/' />"));
+        doc.write(htmlEditor.getValue().replace("<!--base-->", "<base href='" + docBase + "' />"));
         doc.close();
 
         setTimeout(function() {
             document.getElementById("results").contentWindow.console = new Console();
         }, 0);
     }, 0);
+}
+
+var renderTimer;
+function renderResults() {
+    if (renderTimer) {
+        console.log("[INFO] Delaying render");
+        clearTimeout(renderTimer);
+        renderTimer = null;
+    }
+    renderTimer = setTimeout(function() {
+        renderTimer = null;
+        _renderResults();
+    }, 1000);
 }
 
 function configureSelectElements() {
