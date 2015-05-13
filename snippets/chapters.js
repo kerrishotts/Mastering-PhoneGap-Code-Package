@@ -7,7 +7,7 @@ module.exports = [
   {name: "5: Accessibility",              examples: require("./05")},
   {name: "6: IndexedDB",                  examples: require("./06")},
   {name: "7: SQLite",                     examples: require("./07")},
-  {name: "8: File Transfer",              examples: []},
+  {name: "8: File Transfer",              examples: require("./08")},
   {name: "9: In-App Purchases",           examples: []},
   {name: "10: Developing Custom Plugins", examples: []},
   {name: "11: Graphical Assets",          examples: []},
