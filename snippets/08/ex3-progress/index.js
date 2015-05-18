@@ -1,8 +1,8 @@
+/*globals FileTransfer*/
 function reportProgress(progressEvent) {
     if (progressEvent.lengthComputable) {
-        console.log("Progress " + ((progressEvent.loaded / progressEvent.total) * 100));
-    } else {
-        console.log("Working...");
+        document.getElementById("progressBar").setAttribute("value",
+          (progressEvent.loaded / progressEvent.total));
     }
 }
 
@@ -14,16 +14,14 @@ function downloadSuccess(entry) {
     console.log(`Download completed successfully. ${JSON.stringify(entry, null, 2)}`);
 }
 
-
-
 function go() {
-    let assetURL = "http://kerrishotts.github.io/Mastering-PhoneGap-Code-Package/index.html";
-    let downloadLocation = "cdvfile://localhost/temporary/index.html";
+    let assetURL = "https://github.com/kerrishotts/Mastering-PhoneGap-Code-Package/zipball/master";
+    let downloadLocation = "cdvfile://localhost/temporary/index.zip";
     console.log(`getting ready to download ${assetURL}`);
 
     let fileTransfer = new FileTransfer();
+    fileTransfer.onprogress = reportProgress;
     fileTransfer.download( assetURL, downloadLocation, downloadSuccess, downloadError);
 }
 
 document.addEventListener("deviceready", go);
-

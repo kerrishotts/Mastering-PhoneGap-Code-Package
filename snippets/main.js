@@ -14,7 +14,7 @@ console.log("Launching Chrome");
 var c = chrome_runner.runChrome({
   args:["--no-first-run", "--no-default-browser-check",
         "--disable-translate", "--disable-default-apps",
-        "--disable-web-security", "--user-data-dir=tmp",
-        "http://localhost:5000"],
+        "--disable-web-security", "--user-data-dir=tmp", "http://localhost:5000/"
+  ],
   processOptions:{stdio: "inherit"}
 });
