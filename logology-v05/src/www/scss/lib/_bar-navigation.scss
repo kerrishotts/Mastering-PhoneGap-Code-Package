@@ -1,0 +1,23 @@
+y-nav, [is="y-nav"] {
+  position: relative;
+  background: $tint-color;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  box-shadow: 0 0 6px #8E8A81;
+  padding: 0 0.5rem;
+  z-index: 9;
+  line-height: 3rem;
+}
+
+y-title, [is="y-title"] {
+  margin: 0; padding: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  width: 100%;
+  whitespace: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,18 @@
+html {
+  font-size: 100%;
+  * {
+    box-sizing: border-box;
+  }
+}
+body {
+  margin: 0; padding: 0;
+  font-family: $font-stack;
+}
+
+[hidden] {
+  display: none;
+}
+
+.y-flex {
+  flex: 1 !important;
+}

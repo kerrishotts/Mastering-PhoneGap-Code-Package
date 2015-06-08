@@ -1,0 +1,17 @@
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 0;
+  background-color: transparent;
+  font-family: $font-stack;
+  font-size: 1em;
+  line-height: normal;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  color: currentColor;
+  outline: none;
+  &:active, &:focus {
+    background-color: rgba(0,0,0,0.25);
+  }
+}

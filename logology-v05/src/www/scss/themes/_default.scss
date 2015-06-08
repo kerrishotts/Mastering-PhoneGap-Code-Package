@@ -1,0 +1,58 @@
+body.theme-default {
+
+  $font-stack: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  $dp2: "only screen and (-webkit-min-device-pixel-ratio: 1.01 ), only screen and (min-resolution: 1.01dppx), only screen and (min-resolution: 191dpi)";
+  $tint-color: #EA1;
+  $tint-active-color: #EEEAE1;
+  $tint-border-color: #DEDAD1;
+  $tint-active-color-darker: #CECAC1;
+
+  font-family: $font-stack;
+
+  //button
+  button {
+    font-family: $font-stack;
+  }
+
+  //nav
+  y-nav, [is="y-nav"] {
+    background: $tint-color;
+    color: white;
+    box-shadow: 0 0 6px #8E8A81;
+  }
+
+  //lists
+  y-list-item, [is="y-list-item"] {
+    border-bottom: 1px solid $tint-border-color;
+    border-right: 1px solid $tint-border-color;
+  }
+
+  y-list-actions, [is="y-list-actions"] {
+    background-color: $tint-active-color-darker;
+  }
+  y-list-contents, [is="y-list-contents"] {
+    &:active, &:focus {
+      background-color: $tint-active-color;
+    }
+  }
+
+  y-indicator, [is="y-indicator"] {
+    &:before {
+      background-color: $tint-color;
+    }
+  }
+
+  // alerts
+  y-alert-container, [is="y-alert-container"] {
+    y-alert-dialog, [is="y-alert-dialog"] {
+      h1 {
+        background-color: $tint-color;
+        color: white;
+      }
+      button {
+        border-top: 1px solid $tint-border-color;
+      }
+    }
+  }
+
+}
