@@ -1,0 +1,20 @@
+{
+  "libs": [
+    "browser",
+    "ecma5",
+    "ecma6"
+  ],
+  "loadEagerly": [
+    "/Users/kerrishotts/Documents/Mobile/Mastering-PhoneGap-Code-Package/logology-v05/src/www/js/**/*.js"
+  ],
+  "dontLoad": [],
+  "plugins": {
+    "complete_strings": {},
+    "node": {},
+    "lint": {},
+    "requirejs": {},
+    "doc_comment": {
+      "fullDocs": true
+    }
+  }
+}
