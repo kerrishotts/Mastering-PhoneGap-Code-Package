@@ -16,9 +16,16 @@ import Emitter from "yasmf-emitter";
 import GCS from "../lib/grandCentralStation";
 import SoftKeyboard from "../lib/SoftKeyboard";
 import L from "./localization/localization";
+
+import Theme from "../lib/Theme";
+import ThemeManager from "../lib/ThemeManager";
+
+import NavigationViewController from "../lib/NavigationViewController.js";
+
 import Settings from "./models/Settings";
 import Dictionaries from "./models/Dictionaries";
 import StarterDictionary from "./models/StarterDictionary";
+
 /*
 function simpleAlert() {
     let outerDiv = document.createElement("div"),
@@ -63,7 +70,8 @@ function simpleAlert() {
 import SearchViewController from "./controllers/SearchViewController";
 
 class App extends Emitter {
-    init() {
+    constructor() {
+        super();
         //document.addEventListener("deviceready", this.start.bind(this), false);
         document.addEventListener("DOMContentLoaded", this.start.bind(this), false);
         this.GCS = GCS;
@@ -89,6 +97,11 @@ class App extends Emitter {
             this.L = L;
             L.loadTranslations(require("./localization/root/messages"));
 
+            // load theme
+            this.theme = new Theme();
+            this.themeManager = new ThemeManager();
+            this.themeManager.currentTheme = this.theme;
+
             // load settings
             this.settings = new Settings();
 
@@ -97,7 +110,12 @@ class App extends Emitter {
             this.dictionaries.addDictionary(StarterDictionary);
 
             this.searchViewController = new SearchViewController({model: new StarterDictionary()});
-            this.searchViewController.renderElement = document.getElementById("mainWindow");
+            this.searchViewController2 = new SearchViewController({model: new StarterDictionary()});
+            //this.searchViewController.renderElement = document.getElementById("mainWindow");
+
+            this.navigationViewController = new NavigationViewController({subviews: [this.searchViewController],
+                                                                          themeManager: this.themeManager,
+                                                                          renderElement: document.getElementById("mainWindow")});
 
             // tell everyone that the app has started
             GCS.emit("APP:started");
@@ -108,11 +126,9 @@ class App extends Emitter {
         }*/
 
         //document.querySelector("[is='y-menu-glyph']").addEventListener("click", simpleAlert, false);
-        //let softKeyboard = new SoftKeyboard({selectors: [".ui-scroll-container", "[is='y-scroll-container']", "y-scroll-container"]});
+        this.softKeyboard = new SoftKeyboard({selectors: [".ui-scroll-container", "[is='y-scroll-container']", "y-scroll-container"]});
     }
 }
 
 let app = new App();
 export default app;
-
-
