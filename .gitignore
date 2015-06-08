@@ -4,3 +4,4 @@
 */node_modules
 *.swp
 .settings
+logology-v05/.sublime-gulp.cache
