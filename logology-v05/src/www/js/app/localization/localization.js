@@ -1,6 +1,6 @@
 "use strict";
 
-import Localization from "../../lib/Localization";
+import Localization from "yasmf-localization";
 
 let localization = new Localization();
 
