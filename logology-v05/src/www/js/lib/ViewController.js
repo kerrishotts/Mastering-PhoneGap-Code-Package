@@ -7,7 +7,7 @@ import View from "./View";
 const _controller = Symbol();
 
 export default class ViewController extends View {
-    constructor(options) {
+    constructor(options = {}) {
         super(options);
         let {view} = options;
         this[_controller] = new Controller(options);
@@ -28,7 +28,7 @@ export default class ViewController extends View {
         if (this.controller) {
             this.controller.destroy();
         }
-        this.controller = null;
+        this[_controller] = null;
         super.destroy();
     }
 
