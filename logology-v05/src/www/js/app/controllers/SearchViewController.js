@@ -4,7 +4,7 @@ import ViewController from "../../lib/ViewController";
 import SearchView from "../views/SearchView";
 
 import h from "yasmf-h";
-import el from "../templates/el";
+//import el from "../templates/el";
 import navigationBar from "../templates/widgets/bars/navigation";
 import widgetGroup from "../templates/widgets/group";
 import glyph from "../templates/widgets/glyph";
@@ -20,7 +20,7 @@ export default class SearchViewController extends ViewController {
             {selector: "input:label[role='search'] input", emit: "searchChanged"}
         ];
     }
-    onSearchChanged(sender, notice, target, e) {
+    onSearchChanged(sender, notice, target/*, e*/) {
         console.log(target.value);
     }
     template() {
