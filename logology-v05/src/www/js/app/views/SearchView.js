@@ -1,27 +1,26 @@
 "use strict";
 
-import h from "yasmf-h";
-import el from "../templates/el";
+//import h from "yasmf-h";
+//import el from "../templates/el";
+//import L from "../localization/localization";
 
 import scrollContainer from "../templates/widgets/scrollContainer";
 import lemmaList from "./lemmaList";
-const kp = require("keypather")();
-
-import L from "../localization/localization";
-
 import View from "../../lib/View";
+
+const kp = require("keypather")();
 
 export default class SearchView extends View {
     get TARGET_SELECTORS() {
         return [
-            {selector: "tap:ul li button", emit:"listItemTapped"},
+            {selector: "tap:ul li > button", emit:"listItemTapped"},
             {selector: "panstart panmove panend:ul li", emit:"listItemPanned"}
         ];
     }
     template() {
         return scrollContainer({contents: lemmaList(kp.get(this, "controller.model.sortedIndex"))});
     }
-    onListItemTapped(sender, notice, listItem, evt) {
+    onListItemTapped(sender, notice, listItem/*, evt*/) {
         listItem.style.backgroundColor = "blue";
     }
     onListItemPanned(sender, notice, listItem, evt) {
@@ -41,7 +40,7 @@ export default class SearchView extends View {
                 startX = panItem.getAttribute("data-y-pan-start-x");
                 if (startX !== "" && startX !== null) {
                     curX = evt.center.x;
-                    deltaX = curX-startX;
+                    deltaX = curX - startX;
                     panItem.style.webkitTransform = `translateX(${deltaX}px)`;
                 }
                 break;
@@ -49,11 +48,11 @@ export default class SearchView extends View {
                 startX = panItem.getAttribute("data-y-pan-start-x");
                 if (startX !== "" && startX !== null) {
                     curX = evt.center.x;
-                    deltaX = curX-startX;
+                    deltaX = curX - startX;
                     if (actionWidth + deltaX < actionWidth / 2) { state = 1; }
                     panItem.removeAttribute("data-y-pan-start-x");
                     panItem.style.webkitTransition = "-webkit-transform 0.1s linear";
-                    panItem.style.webkitTransform = `translateX(${state===0 ? 0 : -actionWidth}px)`;
+                    panItem.style.webkitTransform = `translateX(${state === 0 ? 0 : -actionWidth}px)`;
                     setTimeout(() => {
                         panItem.style.webkitTransition = "";
                         if (state === 0) { panItem.style.webkitTransform = ""; }
@@ -63,4 +62,3 @@ export default class SearchView extends View {
         }
     }
 }
-
