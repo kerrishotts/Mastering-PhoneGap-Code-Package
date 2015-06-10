@@ -34,9 +34,9 @@
         "global-strict": 0,
         "no-loop-func": 0,
         "key-spacing": 0,
+        "comma-spacing": 0,
         "no-unused-vars": [
-            1,
-            {
+            0, {
                 "vars": "all",
                 "args": "after-used"
             }
