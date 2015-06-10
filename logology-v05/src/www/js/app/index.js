@@ -12,6 +12,9 @@
 
 import "babel/polyfill";
 import h from "yasmf-h";
+
+//h.useDomMerging = true;
+
 import Emitter from "yasmf-emitter";
 import GCS from "../lib/grandCentralStation";
 import SoftKeyboard from "../lib/SoftKeyboard";
