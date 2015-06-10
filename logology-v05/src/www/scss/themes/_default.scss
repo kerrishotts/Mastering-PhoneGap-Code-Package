@@ -1,7 +1,6 @@
-body.theme-default {
-
+.theme-default {
   $font-stack: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  $dp2: "only screen and (-webkit-min-device-pixel-ratio: 1.01 ), only screen and (min-resolution: 1.01dppx), only screen and (min-resolution: 191dpi)";
+  $dp2: "only screen and (-webkit-min-device-pixel-ratio: 1.01), only screen and (min-resolution: 1.01dppx), only screen and (min-resolution: 191dpi)";
   $tint-color: #EA1;
   $tint-active-color: #EEEAE1;
   $tint-border-color: #DEDAD1;
@@ -30,6 +29,7 @@ body.theme-default {
   y-list-actions, [is="y-list-actions"] {
     background-color: $tint-active-color-darker;
   }
+
   y-list-contents, [is="y-list-contents"] {
     &:active, &:focus {
       background-color: $tint-active-color;
@@ -49,10 +49,96 @@ body.theme-default {
         background-color: $tint-color;
         color: white;
       }
+
       button {
         border-top: 1px solid $tint-border-color;
       }
     }
   }
+
+    // animations
+    //
+    // view        -100<----0 leaving    0<----100 entering
+    //                          in                    in
+    //             entering -100---->0   leaving 0---->100
+    //                out                  out
+    //
+    // setup
+    .default-anims-view-leave-in, .default-anims-view-leave-out,
+    .default-anims-view-enter-in, .default-anims-view-enter-out {
+        transition: transform .3s linear;
+        visibility: visible;
+
+        y-nav *, [is="y-nav"] * {
+            transition: opacity .3s linear;
+        }
+    }
+
+    .default-anims-view-leave-out, .default-anims-view-leave-in {
+        y-nav *, [is="y-nav"] * {
+            opacity: 1;
+        }
+    }
+
+    .default-anims-view-enter-in, .default-anims-view-enter-out {
+        y-nav *, [is="y-nav"] * {
+            opacity: 0;
+        }
+    }
+
+    .default-anims-view-enter-in {
+        transform: translate3d(100%, 0, 20px);
+    }
+
+    .default-anims-view-leave-out {
+        transform: translate3d(0, 0, 20px);
+    }
+
+    .default-anims-view-enter-out {
+        transform: translate3d(-100%, 0, 10px);
+    }
+
+    .default-anims-view-leave-in {
+        transform: translate3d(0, 0, 10px);
+    }
+
+    // perform/hold animation
+    .default-animd-view-leave-out, .default-animd-view-leave-in, .default-animh-view-leave-out, .default-animh-view-leave-in {
+        y-nav *, [is="y-nav"] * {
+            opacity: 0;
+        }
+    }
+
+    .default-animd-view-enter-in, .default-animd-view-enter-out, .default-animh-view-enter-in, .default-animh-view-enter-out {
+        y-nav *, [is="y-nav"] * {
+            opacity: 1;
+        }
+    }
+
+    .default-animd-view-enter-in, .default-animh-view-enter-in {
+        transform: translate3d(0, 0, 20px);
+    }
+
+    .default-animd-view-leave-in, .default-animh-view-leave-in {
+        transform: translate3d(-100%, 0, 10px);
+    }
+
+    .default-animd-view-enter-out, .default-animh-view-enter-out {
+        transform: translate3d(0, 0, 10px);
+    }
+
+    .default-animd-view-leave-out, .default-animh-view-leave-out {
+        transform: translate3d(100%, 0, 20px);
+    }
+
+    .default-animh-view-enter-in, .default-animh-view-enter-out {
+        visibility: visible;
+    }
+
+    .default-animh-view-leave-in, .default-animh-view-leave-out {
+        visibility: hidden;
+    }
+
+
 
 }

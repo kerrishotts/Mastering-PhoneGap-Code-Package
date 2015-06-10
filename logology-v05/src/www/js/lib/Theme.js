@@ -35,12 +35,22 @@ export default class Theme extends Emitter {
 
 ///mark: CSS classes
 
-    get CLASS_VIEW_BEFORE_EXIT()/*: string*/ { return this.namespace + "before-view-exit"; }
-    get CLASS_VIEW_DOING_EXIT()/*: string*/ { return this.namespace + "doing-view-exit"; }
-    get CLASS_VIEW_AFTER_EXIT()/*: string*/ { return this.namespace + "after-view-exit"; }
-    get CLASS_VIEW_BEFORE_ENTER()/*: string*/ { return this.namespace + "before-view-enter"; }
-    get CLASS_VIEW_DOING_ENTER()/*: string*/ { return this.namespace + "doing-view-enter"; }
-    get CLASS_VIEW_AFTER_ENTER()/*: string*/ { return this.namespace + "after-view-enter"; }
+    /*
+     * Here anims == animation startion, animd == animation doing, animh = animation hold
+     */
+    get CLASS_VIEW_ANIMS_LEAVE_IN()/*: string*/ { return this.namespace + "anims-view-leave-in"; }
+    get CLASS_VIEW_ANIMD_LEAVE_IN()/*: string*/ { return this.namespace + "animd-view-leave-in"; }
+    get CLASS_VIEW_ANIMH_LEAVE_IN()/*: string*/ { return this.namespace + "animh-view-leave-in"; }
+    get CLASS_VIEW_ANIMS_ENTER_IN()/*: string*/ { return this.namespace + "anims-view-enter-in"; }
+    get CLASS_VIEW_ANIMD_ENTER_IN()/*: string*/ { return this.namespace + "animd-view-enter-in"; }
+    get CLASS_VIEW_ANIMH_ENTER_IN()/*: string*/ { return this.namespace + "animh-view-enter-in"; }
+    get CLASS_VIEW_ANIMS_LEAVE_OUT()/*: string*/ { return this.namespace + "anims-view-leave-out"; }
+    get CLASS_VIEW_ANIMD_LEAVE_OUT()/*: string*/ { return this.namespace + "animd-view-leave-out"; }
+    get CLASS_VIEW_ANIMH_LEAVE_OUT()/*: string*/ { return this.namespace + "animh-view-leave-out"; }
+    get CLASS_VIEW_ANIMS_ENTER_OUT()/*: string*/ { return this.namespace + "anims-view-enter-out"; }
+    get CLASS_VIEW_ANIMD_ENTER_OUT()/*: string*/ { return this.namespace + "animd-view-enter-out"; }
+    get CLASS_VIEW_ANIMH_ENTER_OUT()/*: string*/ { return this.namespace + "animh-view-enter-out"; }
+
 ///mark: animations
 
     addClearClassToElement(c, e) {
@@ -65,37 +75,43 @@ export default class Theme extends Emitter {
         }
     }
 
-    animateElementWithBeforeDoingAfter ( [e, before, doing, after], cb ) {
+    animateElementWithAnimSequence ( [e, setup, doing, hold], cb ) {
         this.clearElementClasses(e);
-        e.classList.add(before);
+        e.classList.add(setup);
         setImmediate( () => {
             e.classList.add(doing);
             this.addClearClassToElement(doing, e);
             setTimeout(() => {
-                e.classList.remove(before);
-                e.classList.add(after);
-                this.addClearClassToElement(after, e);
+                e.classList.remove(setup);
+                e.classList.remove(doing);
+                e.classList.add(hold);
+                this.addClearClassToElement(hold, e);
                 cb();
             }, this.ANIMATION_TIMING);
         });
     }
 
-    animateViewHierarchyPush({enteringViewElement/*: Node*/, exitingViewElement/*: Node*/} = {})/*: Promise*/ {
+    animateViewHierarchyPush({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/} = {})/*: Promise*/ {
         return new Promise((resolve) => {
-            [ [ exitingViewElement, this.CLASS_VIEW_BEFORE_EXIT, this.CLASS_VIEW_DOING_EXIT, this.CLASS_VIEW_AFTER_EXIT ],
-              [ enteringViewElement, this.CLASS_VIEW_BEFORE_ENTER, this.CLASS_VIEW_DOING_ENTER, this.CLASS_VIEW_AFTER_ENTER ] ]
-                .forEach( arr => this.animateElementWithBeforeDoingAfter( arr, resolve) );
+            [ [ leavingViewElement, this.CLASS_VIEW_ANIMS_LEAVE_IN, this.CLASS_VIEW_ANIMD_LEAVE_IN, this.CLASS_VIEW_ANIMH_LEAVE_IN ],
+              [ enteringViewElement, this.CLASS_VIEW_ANIMS_ENTER_IN, this.CLASS_VIEW_ANIMD_ENTER_IN, this.CLASS_VIEW_ANIMH_ENTER_IN ] ]
+                .forEach( arr => this.animateElementWithAnimSequence( arr, resolve) );
         });
     }
-    animateViewHierarchyPop({enteringViewElement/*: Node*/, exitingViewElement/*: Node*/} = {})/*: Promise*/ {
+    animateViewHierarchyPop({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/} = {})/*: Promise*/ {
+        return new Promise((resolve) => {
+            [ [ leavingViewElement, this.CLASS_VIEW_ANIMS_LEAVE_OUT, this.CLASS_VIEW_ANIMD_LEAVE_OUT, this.CLASS_VIEW_ANIMH_LEAVE_OUT ],
+              [ enteringViewElement, this.CLASS_VIEW_ANIMS_ENTER_OUT, this.CLASS_VIEW_ANIMD_ENTER_OUT, this.CLASS_VIEW_ANIMH_ENTER_OUT ] ]
+                .forEach( arr => this.animateElementWithAnimSequence( arr, resolve) );
+        });
     }
-    animateModalViewEnter({enteringViewElement/*: Node*/, exitingViewElement/*: Node*/} = {})/*: Promise*/ {
+    animateModalViewEnter({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/} = {})/*: Promise*/ {
     }
-    animateModalViewExit({enteringViewElement/*: Node*/, exitingViewElement/*: Node*/} = {})/*: Promise*/ {
+    animateModalViewExit({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/} = {})/*: Promise*/ {
     }
     animateAlertViewEnter({enteringViewElement/*: Node*/})/*: Promise*/ {
     }
-    animateAlertViewExit({exitingViewElement/*: Node*/})/*: Promise*/ {
+    animateAlertViewExit({leavingViewElement/*: Node*/})/*: Promise*/ {
     }
     animateSplitViewSidebarEnter({splitViewElement/*: Node*/})/*: Promise*/ {
     }
