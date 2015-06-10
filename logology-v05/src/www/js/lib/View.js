@@ -139,7 +139,7 @@ export default class View extends Emitter {
             this.parentView.renderTo(options);
         } else {
             if ((targetEl = (this.renderElement || (this.elementTree && this.elementTree.parentNode)))) {
-                h.renderTo(this.render(), targetEl );
+                h.renderTo(this.render(), targetEl);
             }
         }
     }
@@ -150,7 +150,8 @@ export default class View extends Emitter {
      */
     render()/*: Node|Array*/ {
         if (this.elementTree) {
-            h.renderTo(Array.from(this.template().children), this.elementTree);
+            //h.renderTo(Array.from(this.template().children), this.elementTree);
+            h.renderTo(this.template(), this.elementTree);
         } else {
             this.elementTree = this.template();
         }
@@ -306,7 +307,7 @@ export default class View extends Emitter {
         if (v.parentView !== this) {
             v.emitSync("willChangeParentView", this);
             if (v.parentView) {
-                v[_parentView].removeView(v);
+                v[_parentView].removeSubview(v);
             }
             v[_parentView] = null;
         }
@@ -320,7 +321,7 @@ export default class View extends Emitter {
      * @param  {View} v View to remove
      * @emits willRemoveSubview, willRemoveFromParent, didRemoveFromParent, didRemoveView
      */
-    removeView(v/*: View*/)/*: void*/ {
+    removeSubview(v/*: View*/)/*: void*/ {
         let idx;
         this.emitSync("willRemoveSubview", v);
         if ((idx = this[_subviews].indexOf(v)) > -1) {
@@ -410,7 +411,7 @@ export default class View extends Emitter {
 ///mark: cleanup
     destroy() {
         this.emitSync("willDestroy");
-        this[_subviews].forEach(view => this.removeView(view));
+        this[_subviews].forEach(view => this.removeSubview(view));
         this[_subviews] = [];
         this.renderElement = null;
         this[_hammer].destroy();
