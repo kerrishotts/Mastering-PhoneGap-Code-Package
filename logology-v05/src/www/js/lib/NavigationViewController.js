@@ -44,6 +44,15 @@ export default class NavigationViewController extends ViewController {
         }
     }
 
+    get viewUnderTopView()/*: View*/ {
+        const subviews = this.subviews;
+        if (subviews.length > 1 ) {
+            return subviews[subviews.length - 2];
+        } else {
+            return null;
+        }
+    }
+
     get rootView()/*: View*/ {
         const subviews = this.subviews;
         if (subviews.length > 0) {
@@ -65,28 +74,48 @@ export default class NavigationViewController extends ViewController {
     }
 
     push(v/*: View*/)/*: Promise*/ {
-        let exitingView = this.topView;
+        let leavingView = this.topView;
         let enteringView = v;
-
-        let exitingViewElement = exitingView.elementTree;
-        let enteringViewElement = enteringView.elementTree;
 
         this.addSubview(v);
         this.render();
 
-        let themeManager = this.themeManager;
+        let leavingViewElement = leavingView.elementTree;//.parentNode;
+        let enteringViewElement = enteringView.elementTree;//.parentNode;
 
-        if (themeManager) {
-            if (themeManager.currentTheme) {
-                return themeManager.currentTheme.animateViewHierarchyPush({enteringViewElement, exitingViewElement});
-            }
+        let themeManager = this.themeManager;
+        if (themeManager && themeManager.currentTheme) {
+            return themeManager.currentTheme.animateViewHierarchyPush({enteringViewElement, leavingViewElement});
         }
 
         return Promise.reject("No theme manager, or no current theme. Can't push.");
     }
 
-    pop()/*: void*/ {
+    pop(/*: void*/)/*: Promise*/ {
 
+        if (this.subviews.length < 2) {
+            return Promise.resolve(); // can't pop anything!
+        }
+
+        let leavingView = this.topView;
+        let enteringView = this.viewUnderTopView;
+
+        let leavingViewElement = leavingView.elementTree;//.parentNode;
+        let enteringViewElement = enteringView.elementTree;//.parentNode;
+
+
+        let themeManager = this.themeManager;
+        if (themeManager && themeManager.currentTheme) {
+            return themeManager.currentTheme.animateViewHierarchyPop({enteringViewElement, leavingViewElement})
+            .then(() => {
+                console.log("hi");
+                this.removeSubview(leavingView);
+                this.render();
+                console.log("bye");
+            });
+        }
+
+        return Promise.reject("No theme manager, or no current theme. Can't pop.");
     }
 
     popToRoot() /*: void*/ {
