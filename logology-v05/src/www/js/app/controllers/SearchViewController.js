@@ -24,7 +24,7 @@ export default class SearchViewController extends ViewController {
         console.log(target.value);
     }
     template() {
-        return h.el("main.SearchViewController?is=y-search-view-controller", [
+        return h.el("main.SearchViewController y-container?is=y-search-view-controller", [
             navigationBar({contents:[
                 widgetGroup({contents:[
                     glyph({icon:"menu", contents: L.T("icon:menu"), title: L.T("general:tap-to-reveal-the-sidebar")})
