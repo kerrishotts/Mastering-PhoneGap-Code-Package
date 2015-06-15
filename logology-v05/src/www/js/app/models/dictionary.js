@@ -40,7 +40,7 @@ export default class Dictionary extends Emitter {
         // sort the index and cache it for future reference
         this[_sortedIndex] = Array.from(this[_index])
                                   .map(([k]) => k)
-                                  .sort((a, b) => (a===b ? 0 : (a<b ? -1 : 1)));
+                                  .sort((a, b) => (a === b ? 0 : (a < b ? -1 : 1)));
         return this[_sortedIndex];
     }
 
@@ -58,7 +58,7 @@ export default class Dictionary extends Emitter {
         }
         return Array.from(entry)
                     .map(wordNetRef=>this[_definitions].get(wordNetRef))
-                    .sort((a, b) => (a.wordNetRef===b.wordNetRef ? 0 : (a.wordNetRef<b.wordNetRef ? -1 : 1)));
+                    .sort((a, b) => (a.wordNetRef === b.wordNetRef ? 0 : (a.wordNetRef < b.wordNetRef ? -1 : 1)));
     }
 }
 Dictionary.meta = {
