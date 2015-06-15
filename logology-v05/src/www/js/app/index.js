@@ -13,7 +13,7 @@
 import "babel/polyfill";
 import h from "yasmf-h";
 
-//h.useDomMerging = true;
+import once from "once";
 
 import Emitter from "yasmf-emitter";
 import GCS from "../lib/grandCentralStation";
@@ -23,7 +23,8 @@ import L from "./localization/localization";
 import Theme from "../lib/Theme";
 import ThemeManager from "../lib/ThemeManager";
 
-import NavigationViewController from "../lib/NavigationViewController.js";
+import NavigationViewController from "../lib/NavigationViewController";
+import SplitViewController from "../lib/SplitViewController";
 
 import Settings from "./models/Settings";
 import Dictionaries from "./models/Dictionaries";
@@ -75,10 +76,15 @@ import SearchViewController from "./controllers/SearchViewController";
 class App extends Emitter {
     constructor() {
         super();
-        //document.addEventListener("deviceready", this.start.bind(this), false);
-        document.addEventListener("DOMContentLoaded", this.start.bind(this), false);
-        this.GCS = GCS;
+        let startAppOnce = once(this.start.bind(this));
+        document.addEventListener("deviceready", this.startAppOnce, false);
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(startAppOnce, 1000);
+        }, false);
         GCS.on("APP:startupFailure", this.onStartupFailure, this);
+
+        // DEBUG: debugging only
+        this.GCS = GCS;
     }
 
     onStartupFailure(sender, notice, err) {
@@ -87,17 +93,17 @@ class App extends Emitter {
 
     async start() {
 
-//        try {
-
+        try {
             // zoom our text for accessibility
             if (typeof MobileAccessibility !== "undefined") {
                 MobileAccessibility.usePreferredTextZoom(true);
             }
 
             // load localization information
-            let locale = await L.loadLocale();
-            this.locale = locale;
-            this.L = L;
+            this.locale = await L.loadLocale();
+
+            this.L = L; // DEBUG: testing only
+
             L.loadTranslations(require("./localization/root/messages"));
 
             // load theme
@@ -114,19 +120,25 @@ class App extends Emitter {
 
             this.searchViewController = new SearchViewController({model: new StarterDictionary()});
             this.searchViewController2 = new SearchViewController({model: new StarterDictionary()});
-            //this.searchViewController.renderElement = document.getElementById("mainWindow");
 
+            /*
             this.navigationViewController = new NavigationViewController({subviews: [this.searchViewController],
                                                                           themeManager: this.themeManager,
                                                                           renderElement: document.getElementById("mainWindow")});
-
+            this.navigationViewController.visible = true;
+            */
+            this.splitViewController = new SplitViewController({subviews: [this.searchViewController,
+                                                                           this.searchViewController2],
+                                                                themeManager: this.themeManager,
+                                                                renderElement: document.getElementById("mainWindow")});
+            this.splitViewController.visible = true;
             // tell everyone that the app has started
             GCS.emit("APP:started");
             this.emit("started");
- /*       } catch (err) {
+        } catch (err) {
             GCS.emit("APP:startupFailure", err);
             this.emit("startupFailure", err);
-        }*/
+        }
 
         //document.querySelector("[is='y-menu-glyph']").addEventListener("click", simpleAlert, false);
         this.softKeyboard = new SoftKeyboard({selectors: [".ui-scroll-container", "[is='y-scroll-container']", "y-scroll-container"]});
