@@ -11,7 +11,7 @@ export default class SplitViewController extends ViewController {
     }
     template()/*: Node*/ {
         return h.el("main.SplitViewController?is=y-split-view-controller",
-            this.renderSubviews().map( elTree => h.el("div.split-view-wrapper?is=y-split-view-wrapper", elTree)));
+            this.renderSubviews().map( elTree => h.el("div.y-split-view-wrapper?is=y-split-view-wrapper", elTree)));
     }
 
 /// mark: quick view access
@@ -70,4 +70,3 @@ export default class SplitViewController extends ViewController {
     }
 
 }
-
