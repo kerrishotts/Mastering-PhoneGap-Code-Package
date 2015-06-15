@@ -72,6 +72,7 @@ function simpleAlert() {
 */
 
 import SearchViewController from "./controllers/SearchViewController";
+import MenuViewController from "./controllers/MenuViewController";
 
 class App extends Emitter {
     constructor() {
@@ -94,6 +95,7 @@ class App extends Emitter {
     async start() {
 
         try {
+            let rootElement = document.getElementById("rootContainer");
             // zoom our text for accessibility
             if (typeof MobileAccessibility !== "undefined") {
                 MobileAccessibility.usePreferredTextZoom(true);
@@ -107,9 +109,8 @@ class App extends Emitter {
             L.loadTranslations(require("./localization/root/messages"));
 
             // load theme
-            this.theme = new Theme();
             this.themeManager = new ThemeManager();
-            this.themeManager.currentTheme = this.theme;
+            this.themeManager.currentTheme = new Theme();
 
             // load settings
             this.settings = new Settings();
@@ -118,19 +119,13 @@ class App extends Emitter {
             this.dictionaries = new Dictionaries();
             this.dictionaries.addDictionary(StarterDictionary);
 
-            this.searchViewController = new SearchViewController({model: new StarterDictionary()});
+            let svc = new SearchViewController({model: new StarterDictionary()});
+            let mvc = new MenuViewController({model: this.dictionaries});
             this.searchViewController2 = new SearchViewController({model: new StarterDictionary()});
 
-            /*
-            this.navigationViewController = new NavigationViewController({subviews: [this.searchViewController],
-                                                                          themeManager: this.themeManager,
-                                                                          renderElement: document.getElementById("mainWindow")});
-            this.navigationViewController.visible = true;
-            */
-            this.splitViewController = new SplitViewController({subviews: [this.searchViewController,
-                                                                           this.searchViewController2],
-                                                                themeManager: this.themeManager,
-                                                                renderElement: document.getElementById("mainWindow")});
+            let nvc = new NavigationViewController({subviews: [svc]});
+
+            this.splitViewController = new SplitViewController( {subviews: [mvc, nvc], themeManager: this.themeManager, renderElement: rootElement});
             this.splitViewController.visible = true;
             // tell everyone that the app has started
             GCS.emit("APP:started");
