@@ -101,35 +101,40 @@ export default class Theme extends Emitter {
         }
     }
 
-    animateElementWithAnimSequence ( [e, setup, doing, hold], cb ) {
-        this.clearElementClasses(e);
-        e.classList.add(setup);
-        setImmediate( () => {
-            e.classList.add(doing);
-            this.addClearClassToElement(doing, e);
-            setTimeout(() => {
+    animateElementWithAnimSequence ( [e, setup, doing, hold], { animate/*: boolean*/ = true } = {} ) {
+        return new Promise((resolve) => {
+            let finalAnimationStep = () => {
                 e.classList.remove(setup);
                 e.classList.remove(doing);
                 e.classList.add(hold);
                 this.addClearClassToElement(hold, e);
-                cb();
-            }, this.ANIMATION_TIMING);
+                resolve();
+            };
+            this.clearElementClasses(e);
+            if (animate) {
+                e.classList.add(setup);
+                setImmediate( () => {
+                    e.classList.add(doing);
+                    this.addClearClassToElement(doing, e);
+                    setTimeout(finalAnimationStep, this.ANIMATION_TIMING);
+                });
+            } else {
+                finalAnimationStep();
+            }
         });
     }
 
-    animateViewHierarchyPush({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/} = {})/*: Promise*/ {
-        return new Promise((resolve) => {
+    animateViewHierarchyPush({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/, options} = {})/*: Promise*/ {
+        return Promise.all(
             [ [ leavingViewElement, this.CLASS_VIEW_ANIMS_LEAVE_IN, this.CLASS_VIEW_ANIMD_LEAVE_IN, this.CLASS_VIEW_ANIMH_LEAVE_IN ],
               [ enteringViewElement, this.CLASS_VIEW_ANIMS_ENTER_IN, this.CLASS_VIEW_ANIMD_ENTER_IN, this.CLASS_VIEW_ANIMH_ENTER_IN ] ]
-                .forEach( arr => this.animateElementWithAnimSequence( arr, resolve) );
-        });
+                .map( arr => this.animateElementWithAnimSequence(arr, options)));
     }
-    animateViewHierarchyPop({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/} = {})/*: Promise*/ {
-        return new Promise((resolve) => {
+    animateViewHierarchyPop({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/, options} = {})/*: Promise*/ {
+        return Promise.all(
             [ [ leavingViewElement, this.CLASS_VIEW_ANIMS_LEAVE_OUT, this.CLASS_VIEW_ANIMD_LEAVE_OUT, this.CLASS_VIEW_ANIMH_LEAVE_OUT ],
               [ enteringViewElement, this.CLASS_VIEW_ANIMS_ENTER_OUT, this.CLASS_VIEW_ANIMD_ENTER_OUT, this.CLASS_VIEW_ANIMH_ENTER_OUT ] ]
-                .forEach( arr => this.animateElementWithAnimSequence( arr, resolve) );
-        });
+                .map( arr => this.animateElementWithAnimSequence(arr, options)));
     }
     animateModalViewEnter({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/} = {})/*: Promise*/ {
     }
