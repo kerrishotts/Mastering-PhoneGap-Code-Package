@@ -6,7 +6,37 @@ import h from "yasmf-h";
 import Hammer from "hammerjs";
 import matchesSelector from "matches-selector";
 
-
+h.renderTo = function renderTo(n, el, idx) {
+    if (!idx) {
+        idx = 0;
+    }
+    if (n instanceof Array) {
+        let elNodeCount = el.children.length;
+        for (let i = 0, l = n.length; i < l; i++) {
+            if (n[i] !== undefined && n[i] !== null) {
+                renderTo(n[i], el, i);
+            }
+        }
+        for (let i = n.length; i< elNodeCount; i++) {
+            el.removeChild(el.childNodes[i]);
+        }
+    } else {
+        if (n === undefined || n === null || el === undefined || el === null) {
+            return;
+        }
+        var elid = [null, null];
+        if (el.hasChildNodes() && idx < el.childNodes.length) {
+            elid[0] = el.childNodes[idx].getAttribute("id");
+            if (h.useDomMerging) {
+                transform(el, el.childNodes[idx], n);
+            } else {
+                el.replaceChild(n, el.childNodes[idx]);
+            }
+        } else {
+            el.appendChild(n);
+        }
+    }
+}
 /******************************************************************************
  *
  * VIEW
@@ -41,7 +71,11 @@ const _subviews = Symbol(),
       _hammer = Symbol(),
       _renderElement = Symbol(),
       _targetSelectors = Symbol(),
-      _themeManager = Symbol();
+      _themeManager = Symbol(),
+      _visible = Symbol(),
+      _display = Symbol(),
+      _attached = Symbol(),
+      _scrollTop = Symbol();
 
 /**
  * Remove the view's tree from the render element.
@@ -52,6 +86,7 @@ function removeTreeFromElement()/*: void*/ {
     this.emitSync("willDetachFromParent");
     this[_renderElement].removeChild(this.elementTree);
     this[_renderElement] = null;
+    this[_attached] = false;
     this.emit("didDetachFromParent");
 }
 
@@ -63,9 +98,35 @@ function removeTreeFromElement()/*: void*/ {
 function addTreeToElement()/*: void*/ {
     this.emitSync("willAttachToParent");
     this[_renderElement].appendChild(this.elementTree);
+    this[_attached] = true;
     this.emit("didAttachToParent");
 }
 
+/**
+ * Finds an element starting from the starting target and progressing up the DOM tree until
+ * an element matching the specified selector is located. Searching stops once stoppingAt is
+ * reached.
+ *
+ * This is used by triggerTargetSelectors so as to find the element that we need to pass to
+ * event handlers. Should the app want a list item, it's possible the event was actually
+ * triggered from a DIV deeply nested within. This lets us find the list item and pass that
+ * on as appropriate. The original target is still accessible.
+ *
+ * Return `null` if there is no match located.
+ *
+ * @param {string} selector
+ * @param {Node} startingTarget
+ * @param {Node} stoppingAt
+ * @returns {Node}
+ */
+function findElementMatchingSelectorLocally(selector/*: string*/, startingTarget/*: Node*/, stoppingAt/*: Node*/)/*: Node*/ {
+    let curTarget = startingTarget;
+    let matches = false;
+    while (curTarget && !(matches = matchesSelector(curTarget, selector)) && (curTarget !== stoppingAt)) {
+        curTarget = curTarget.parentNode;
+    }
+    return (matches ? curTarget : null);
+}
 /**
  * Given an event, this triggers all the target selectors
  *
@@ -82,17 +143,11 @@ function triggerTargetSelectors(e/*: Event*/)/*: void*/ {
         let [eventFilters, selector] = eventAndSelector.split(":");
         selector = selector.trim();
         eventFilters = eventFilters.trim().split(" ");
-        if (eventFilters) {
-            if (eventFilters.indexOf(e.type) > -1) {
-                let matches = false;
-                let curTarget = e.target;
-                while (curTarget && !(matches = matchesSelector(curTarget, selector)) && !(curTarget === this.elementTree)) {
-                    curTarget = curTarget.parentNode;
-                }
-                if (matches) {
-                    for (let emit of emitSet) {
-                        this.emit(emit, curTarget, e);
-                    }
+        if (eventFilters && eventFilters.indexOf(e.type) > -1) {
+            let curTarget = findElementMatchingSelectorLocally(selector, e.target, this.elementTree);
+            if (curTarget) {
+                for (let emit of emitSet) {
+                    this.emit(emit, curTarget, e);
                 }
             }
         }
@@ -115,6 +170,11 @@ export default class View extends Emitter {
         if (this.TARGET_SELECTORS) {
             this.addTargetSelectors(this.TARGET_SELECTORS);
         }
+        this[_scrollTop] = 0;
+        this[_attached] = false;
+        this[_visible] = undefined; // use parent if we have one
+        this[_display] = true;
+
         if (!deferRendering) { setImmediate(this.render.bind(this)); }
     }
 
@@ -150,10 +210,15 @@ export default class View extends Emitter {
      */
     render()/*: Node|Array*/ {
         if (this.elementTree) {
-            //h.renderTo(Array.from(this.template().children), this.elementTree);
-            h.renderTo(this.template(), this.elementTree);
+            h.renderTo(Array.from(this.template().children), this.elementTree);
+            //h.renderTo(this.template(), this.elementTree);
         } else {
             this.elementTree = this.template();
+        }
+        if (this.themeManager && this.themeManager.currentTheme) {
+            // make sure we handle visibility and display
+            this.themeManager.currentTheme.markElementVisibility(this.elementTree, this.visible || false);
+            this.themeManager.currentTheme.markElementDisplay(this.elementTree, this[_display]);
         }
         return this.elementTree;
     }
@@ -314,6 +379,7 @@ export default class View extends Emitter {
         v[_parentView] = this;
         v.emit("didChangeParentView");
         this.emit("didAddSubview", v);
+        this.emitSync("render");
     }
 
     /**
@@ -331,6 +397,7 @@ export default class View extends Emitter {
             v.emit("didRemoveFromParent");
         }
         this.emit("didRemoveView", v);
+        this.emitSync("render");
     }
 
 ///mark: element tree property and handling
@@ -407,9 +474,42 @@ export default class View extends Emitter {
         this.emit("themeManagerChanged");
         this.subviews.forEach(view => view.emit("themeManagerChanged", v));
     }
+/// mark: attached
+    get attached()/*: boolean*/ {
+        return this[_attached];
+    }
+/// mark: in DOM
+    get inDOM()/*: boolean*/ {
+        return document.contains(this.elementTree);
+    }
+/// mark: visibility and display
+    get visible()/*: boolean*/ {
+        if (this[_visible] === undefined && this.parentView) {
+            return this.parentView.visible;
+        }
+        return this[_visible];
+    }
+    set visible(v/*: boolean*/)/*: void*/ {
+        this[_visible] = v;
+        if (this.themeManager && this.themeManager.currentTheme) {
+            this.themeManager.currentTheme.markElementVisibility(this.elementTree, v);
+        }
+        this.emitSync("render");
+    }
+
+    get displayed()/*: boolean*/ {
+        return this[_display];
+    }
+    set displayed(d/*: boolean*/)/*: void*/ {
+        this[_display] = d;
+        if (this.themeManager && this.themeManager.currentTheme) {
+            this.themeManager.currentTheme.markElementDisplay(this.elementTree, d);
+        }
+        this.emitSync("render");
+    }
 
 ///mark: cleanup
-    destroy() {
+    destroy()/*: void*/ {
         this.emitSync("willDestroy");
         this[_subviews].forEach(view => this.removeSubview(view));
         this[_subviews] = [];
