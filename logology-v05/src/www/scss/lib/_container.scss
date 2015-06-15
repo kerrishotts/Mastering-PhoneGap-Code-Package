@@ -1,4 +1,5 @@
-y-container, [is="y-container"] {
+y-root, [is="y-root"], .y-root,
+y-container, [is="y-container"], .y-container {
   position: absolute;
   top: 0; left: 0;
   bottom: 0; right: 0;
@@ -6,7 +7,14 @@ y-container, [is="y-container"] {
   flex-direction: column;
 }
 
-y-scroll-container, [is="y-scroll-container"] {
+.y-test-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+y-scroll-container, [is="y-scroll-container"], .y-scroll-container {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   flex: 1;

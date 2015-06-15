@@ -139,6 +139,20 @@
         visibility: hidden;
     }
 
+    .default-visible {
+      visibility: visible;
+    }
 
+    .default-not-visible {
+      visibility: hidden;
+    }
+
+  .default-displayed {
+    // no rules
+  }
+
+  .default-not-displayed {
+    display: none;
+  }
 
 }
