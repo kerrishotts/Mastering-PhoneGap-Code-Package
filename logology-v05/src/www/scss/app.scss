@@ -6,6 +6,7 @@ $tint-color: #EA1;
 $tint-active-color: #EEEAE1;
 $tint-border-color: #DEDAD1;
 $tint-active-color-darker: #CECAC1;
+$view-background-color: #EEEAE1;
 
 @import "./lib/base";
 @import "./lib/button";
@@ -17,5 +18,6 @@ $tint-active-color-darker: #CECAC1;
 @import "./lib/alert";
 
 @import "./lib/navigation-view-controller";
+@import "./lib/split-view-controller";
 
 @import "./themes/default";
