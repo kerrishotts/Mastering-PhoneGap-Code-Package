@@ -6,7 +6,7 @@ y-nav, [is="y-nav"] {
   flex-wrap: wrap;
   flex: 0 0 auto;
   justify-content: flex-end;
-  box-shadow: 0 0 6px #8E8A81;
+  border-bottom: 3px solid $tint-border-color;
   padding: 0 0.5rem;
   z-index: 9;
   line-height: 3rem;
