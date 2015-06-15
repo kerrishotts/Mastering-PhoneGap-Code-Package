@@ -5,6 +5,7 @@
   $tint-active-color: #EEEAE1;
   $tint-border-color: #DEDAD1;
   $tint-active-color-darker: #CECAC1;
+  $view-background-color: #EEEAE1;
 
   font-family: $font-stack;
 
@@ -17,7 +18,6 @@
   y-nav, [is="y-nav"] {
     background: $tint-color;
     color: white;
-    box-shadow: 0 0 6px #8E8A81;
   }
 
   //lists
