@@ -5,6 +5,7 @@ y-list, [is="y-list"] {
   list-style: none outside none;
   margin: 0;
   padding: 0;
+  padding-bottom: 100vh;
 }
 
 y-list-item, [is="y-list-item"] {
@@ -15,6 +16,7 @@ y-list-item, [is="y-list-item"] {
   position: relative;
   overflow: hidden;
 }
+
 y-list-actions, [is="y-list-actions"] {
   display: flex;
   align-items: stretch;
@@ -23,11 +25,13 @@ y-list-actions, [is="y-list-actions"] {
   top: 0; bottom: 0; right: 0;
   color: white;
   background-color: $tint-active-color-darker;
+
   * {
     margin: 0;
-    padding: 0 0.5rem;
+    padding: 0 .5rem;
   }
 }
+
 y-list-contents, [is="y-list-contents"] {
   display: flex;
   flex-wrap: wrap;
@@ -36,9 +40,11 @@ y-list-contents, [is="y-list-contents"] {
   padding: 1rem;
   background-color: white;
   width: 100%;
+
   * {
     flex: 0 0 auto;
   }
+
   &:active, &:focus {
     background-color: $tint-active-color;
   }
@@ -49,14 +55,15 @@ y-indicator, [is="y-indicator"] {
   width: 1rem; height: 1rem;
   margin: auto;
   padding: 0;
+
   &:before {
     padding: 0;
     position: absolute;
-    top: -0.5rem;
-    mask-image: url(../img/chevron-right-thick.png);
+    top: -.5rem;
+    mask-image: url('../img/chevron-right-thick.png');
     background-color: $tint-color;
     @media #{$dp2} {
-      mask-image: url(../img/chevron-right-thick@2x.png);
+      mask-image: url('../img/chevron-right-thick@2x.png');
     }
   }
 }
