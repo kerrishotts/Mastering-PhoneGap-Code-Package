@@ -30,7 +30,7 @@ export default class NavigationViewController extends ViewController {
     }
     template()/*: Node*/ {
         return h.el("main.NavigationViewController?is=y-navigation-view-controller",
-            this.renderSubviews().map( elTree => h.el("div.navigation-wrapper?is=y-navigation-wrapper", elTree)));
+            this.renderSubviews().map( elTree => h.el("div.y-navigation-wrapper?is=y-navigation-wrapper", elTree)));
     }
 
 ///mark: top and root view properties
@@ -73,7 +73,7 @@ export default class NavigationViewController extends ViewController {
 
     }
 
-    push(v/*: View*/)/*: Promise*/ {
+    push(v/*: View*/, options = {})/*: Promise*/ {
         let leavingView = this.topView;
         let enteringView = v;
         enteringView.visible = undefined;
@@ -85,7 +85,7 @@ export default class NavigationViewController extends ViewController {
 
         let themeManager = this.themeManager;
         if (themeManager && themeManager.currentTheme) {
-            return themeManager.currentTheme.animateViewHierarchyPush({enteringViewElement, leavingViewElement})
+            return themeManager.currentTheme.animateViewHierarchyPush({enteringViewElement, leavingViewElement, options})
                 .then(() => {
                     leavingView.visible = false;
                 });
@@ -94,7 +94,7 @@ export default class NavigationViewController extends ViewController {
         return Promise.reject("No theme manager, or no current theme. Can't push.");
     }
 
-    pop()/*: Promise*/ {
+    pop(options = {})/*: Promise*/ {
 
         if (this.subviews.length < 2) {
             return Promise.resolve(); // can't pop anything!
@@ -110,7 +110,7 @@ export default class NavigationViewController extends ViewController {
 
         let themeManager = this.themeManager;
         if (themeManager && themeManager.currentTheme) {
-            return themeManager.currentTheme.animateViewHierarchyPop({enteringViewElement, leavingViewElement})
+            return themeManager.currentTheme.animateViewHierarchyPop({enteringViewElement, leavingViewElement, options})
             .then(() => {
                 leavingView.visible = false;
                 this.removeSubview(leavingView);
