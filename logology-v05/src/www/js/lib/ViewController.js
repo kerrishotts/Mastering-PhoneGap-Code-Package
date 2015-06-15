@@ -3,6 +3,8 @@
 import Controller from "./Controller";
 import View from "./View";
 
+import h from "yasmf-h";
+
 // private properties
 const _controller = Symbol();
 
@@ -12,6 +14,11 @@ export default class ViewController extends View {
         let {view} = options;
         this[_controller] = new Controller(options);
         if (view) { this.addSubview(view); }
+    }
+
+    template() {
+        return h.el("main.ViewController y-container?is=y-view-controller",
+                    this.renderSubviews());
     }
 
     get controller() {
