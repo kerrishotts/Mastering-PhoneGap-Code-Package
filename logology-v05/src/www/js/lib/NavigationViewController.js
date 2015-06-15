@@ -76,22 +76,25 @@ export default class NavigationViewController extends ViewController {
     push(v/*: View*/)/*: Promise*/ {
         let leavingView = this.topView;
         let enteringView = v;
+        enteringView.visible = undefined;
 
         this.addSubview(v);
-        this.render();
 
         let leavingViewElement = leavingView.elementTree;//.parentNode;
         let enteringViewElement = enteringView.elementTree;//.parentNode;
 
         let themeManager = this.themeManager;
         if (themeManager && themeManager.currentTheme) {
-            return themeManager.currentTheme.animateViewHierarchyPush({enteringViewElement, leavingViewElement});
+            return themeManager.currentTheme.animateViewHierarchyPush({enteringViewElement, leavingViewElement})
+                .then(() => {
+                    leavingView.visible = false;
+                });
         }
 
         return Promise.reject("No theme manager, or no current theme. Can't push.");
     }
 
-    pop(/*: void*/)/*: Promise*/ {
+    pop()/*: Promise*/ {
 
         if (this.subviews.length < 2) {
             return Promise.resolve(); // can't pop anything!
@@ -99,6 +102,7 @@ export default class NavigationViewController extends ViewController {
 
         let leavingView = this.topView;
         let enteringView = this.viewUnderTopView;
+        enteringView.visible = undefined;
 
         let leavingViewElement = leavingView.elementTree;//.parentNode;
         let enteringViewElement = enteringView.elementTree;//.parentNode;
@@ -108,17 +112,15 @@ export default class NavigationViewController extends ViewController {
         if (themeManager && themeManager.currentTheme) {
             return themeManager.currentTheme.animateViewHierarchyPop({enteringViewElement, leavingViewElement})
             .then(() => {
-                console.log("hi");
+                leavingView.visible = false;
                 this.removeSubview(leavingView);
-                this.render();
-                console.log("bye");
             });
         }
 
         return Promise.reject("No theme manager, or no current theme. Can't pop.");
     }
 
-    popToRoot() /*: void*/ {
+    popToRoot()/*: void*/ {
 
     }
 
