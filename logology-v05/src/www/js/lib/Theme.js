@@ -51,6 +51,32 @@ export default class Theme extends Emitter {
     get CLASS_VIEW_ANIMD_ENTER_OUT()/*: string*/ { return this.namespace + "animd-view-enter-out"; }
     get CLASS_VIEW_ANIMH_ENTER_OUT()/*: string*/ { return this.namespace + "animh-view-enter-out"; }
 
+    get CLASS_VIEW_VISIBLE()/*: string*/ { return this.namespace + "visible"; }
+    get CLASS_VIEW_NOT_VISIBLE()/*: string*/ { return this.namespace + "not-visible"; }
+    get CLASS_VIEW_DISPLAYED()/*: string*/ { return this.namespace + "displayed"; }
+    get CLASS_VIEW_NOT_DISPLAYED()/*: string*/ { return this.namespace + "not-displayed"; }
+
+/// visibility and display for elements
+
+    markElementVisibility(e/*: Node*/, visibility = false) {
+        if (e) {
+            if (visibility === undefined) {
+                e.classList.remove(this.CLASS_VIEW_VISIBLE);
+                e.classList.remove(this.CLASS_VIEW_NOT_VISIBLE);
+            } else {
+                e.classList.remove(visibility ? this.CLASS_VIEW_NOT_VISIBLE : this.CLASS_VIEW_VISIBLE);
+                e.classList.add(visibility ? this.CLASS_VIEW_VISIBLE : this.CLASS_VIEW_NOT_VISIBLE);
+                //TODO: handle ARIA
+            }
+        }
+    }
+    markElementDisplay(e/*: Node*/, display = false) {
+        if (e) {
+            e.classList.remove(display ? this.CLASS_VIEW_NOT_DISPLAYED : this.CLASS_VIEW_DISPLAYED);
+            e.classList.add(display ? this.CLASS_VIEW_DISPLAYED : this.CLASS_VIEW_NOT_DISPLAYED);
+        }
+    }
+
 ///mark: animations
 
     addClearClassToElement(c, e) {
@@ -115,7 +141,7 @@ export default class Theme extends Emitter {
     }
     animateSplitViewSidebarEnter({splitViewElement/*: Node*/})/*: Promise*/ {
     }
-    animateSplitViewSidebarExit({splitViewElement/*: Node*/})/*: Promise*/ {
+    animateSplitViewSidebarLeave({splitViewElement/*: Node*/})/*: Promise*/ {
     }
 
 }
