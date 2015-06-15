@@ -94,6 +94,11 @@ var buffer = require("vinyl-buffer");
 var browserify = require("browserify");
 var babelify = require("babelify");
 
+// flow, notify, sourcemap reporter adapted from http://www.keendevelopment.ch/flow-babel-gulp-es6/
+var notify = require("gulp-notify");
+var flow = require("gulp-flowtype");
+var sourcemapReporter = require("jshint-sourcemap-reporter");
+
 var pkg = require("./package.json");
 
 var BUILD_DIR = path.join(__dirname, "build");
@@ -108,6 +113,7 @@ var TARGET_DEVICE = gutil.env.target ? "--target=" + gutil.env.target : "";
 var LR_PORT = parseInt(gutil.env.lrport ? gutil.env.lrport : "35729", 10);
 var SERVE_PORT = parseInt(gutil.env.port ? gutil.env.port : "8080", 10);
 var PG_PORT = parseInt(gutil.env.pgport ? gutil.env.pgport : "3000", 10);
+var FAIL_ON_ERROR = gutil.env.continue ? (gutil.env.continue !== "yes") : true;
 
 var cordova = require("cordova-tasks");
 var cordovaTasks = new cordova.CordovaTasks({pkg: pkg, basePath: __dirname, buildDir: "build", sourceDir: "src",
@@ -216,9 +222,9 @@ var projectTasks = {
                    .pipe(isRelease ? gutil.noop() : sourcemaps.init())
                    .pipe(sass({
                      includePaths: includePaths,
-                     outputStyle: (isRelease ? "compressed" : "nested"),
+                     outputStyle: (isRelease ? "compressed" : "nested")
                    }))
-                   .on("error", gutil.log.bind(gutil, "SASS Error"))
+                   .on("error", notify.onError("SASS: <%= error.message %>"))
                    .pipe(autoprefixer({browsers: ["last 2 versions"]}))
                    .pipe(isRelease ? gutil.noop() : sourcemaps.write()) // writes .map file
                    .pipe(gulp.dest(path.join(BUILD_DIR, "www", "css")))
@@ -235,10 +241,11 @@ var projectTasks = {
                 standalone: "app"
             })
             .transform(babelify.configure({
+                blacklist: ["flow"],
                 stage: 0
             }))
             .bundle()
-            .on("error", gutil.log.bind(gutil, "Browserify Error"))
+            .on("error", notify.onError("BABEL: <%= error.message %>"))
             .pipe(source("app.js"))
             .pipe(buffer())
             .pipe(cordovaTasks.performSubstitutions())
@@ -249,6 +256,20 @@ var projectTasks = {
             .pipe(isRelease ? gutil.noop() : sourcemaps.write()) // writes .map file
             .pipe(gulp.dest(path.join(BUILD_DIR, "www", "js", "app")))
             .pipe(livereload());
+    },
+    /**
+     * Checks our code's types using Facebook's Flow: Doesn't fully support ES6 yet, though
+     */
+    checkTypes: function checkTypes() {
+        return gulp.src("./src/**/*.js")
+        .pipe(flow({
+                all: false,
+                weak: true,
+                killFlow: false,
+                beep: true,
+                abort: FAIL_ON_ERROR
+            }))
+        .on("error", notify.onError("FLOW: <%= error.message %>"));
     },
     /**
      * Checks our coding style using JSCS. Config file should be in CONFIG_DIR
@@ -268,7 +289,7 @@ var projectTasks = {
         return gulp.src(["./src/www/js/app/**/*.js"])
             .pipe(eslint(path.join(CONFIG_DIR, "eslint.json")))
             .pipe(eslint.format())
-            .pipe(eslint.failOnError());
+            .pipe(FAIL_ON_ERROR ? eslint.failOnError() : gutil.noop());
     },
     /**
      * Start a local HTTP server on SERVE_PORT, serving build/www
@@ -355,6 +376,7 @@ var tasks = {
     // code checking
     "lint": projectTasks.lintCode,
     "code-style": projectTasks.checkCodeStyle,
+    "check-types": projectTasks.checkTypes,
 
     // serving
     "serve": {

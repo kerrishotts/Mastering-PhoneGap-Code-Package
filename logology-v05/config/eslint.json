@@ -25,6 +25,10 @@
         "setImmediate": false
     },
     "rules": {
+        "complexity": [2, 5],
+        "max-statements": [2, 100],
+        "max-depth": [2, 5],
+        "max-nested-callbacks": [2, 4],
         "strict": 0,
         "no-underscore-dangle": 0,
         "new-cap": 0,
