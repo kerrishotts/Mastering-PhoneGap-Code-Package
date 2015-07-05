@@ -16,19 +16,19 @@ import h from "yasmf-h";
 import once from "once";
 
 import Emitter from "yasmf-emitter";
-import GCS from "../lib/grandCentralStation";
-import SoftKeyboard from "../lib/SoftKeyboard";
+import GCS from "$LIB/grandCentralStation";
+import SoftKeyboard from "$LIB/SoftKeyboard";
 import L from "./localization/localization";
 
-import Theme from "../lib/Theme";
-import ThemeManager from "../lib/ThemeManager";
+import Theme from "$LIB/Theme";
+import ThemeManager from "$LIB/ThemeManager";
 
-import NavigationViewController from "../lib/NavigationViewController";
-import SplitViewController from "../lib/SplitViewController";
+import NavigationViewController from "$LIB/NavigationViewController";
+import SplitViewController from "$LIB/SplitViewController";
 
-import Settings from "./models/Settings";
-import Dictionaries from "./models/Dictionaries";
-import StarterDictionary from "./models/StarterDictionary";
+import Settings from "$MODELS/Settings";
+import Dictionaries from "$MODELS/Dictionaries";
+import StarterDictionary from "$MODELS/StarterDictionary";
 
 /*
 function simpleAlert() {
@@ -71,8 +71,8 @@ function simpleAlert() {
 }
 */
 
-import SearchViewController from "./controllers/SearchViewController";
-import MenuViewController from "./controllers/MenuViewController";
+import SearchViewController from "$CONTROLLERS/SearchViewController";
+import MenuViewController from "$CONTROLLERS/MenuViewController";
 
 class App extends Emitter {
     constructor() {
@@ -92,25 +92,42 @@ class App extends Emitter {
         console.log(`Startup failure ${err}`);
     }
 
+    configureAccessibility() {
+        // zoom our text for accessibility
+        if (typeof MobileAccessibility !== "undefined") {
+            MobileAccessibility.usePreferredTextZoom(true);
+        }
+    }
+
+    async configurei18n() {
+        // load localization information
+        this.locale = await L.loadLocale();
+        this.L = L; // DEBUG: testing only
+        L.loadTranslations(require("./localization/root/messages"));
+    }
+
+    configureTheme() {
+        // load theme
+        this.themeManager = new ThemeManager();
+        this.themeManager.currentTheme = new Theme();
+    }
+
+    configureSoftKeyboard() {
+        this.softKeyboard = new SoftKeyboard({selectors: [".ui-scroll-container",
+                                                         "[is='y-scroll-container']",
+                                                         "y-scroll-container"]});
+    }
+
     async start() {
 
         try {
             let rootElement = document.getElementById("rootContainer");
-            // zoom our text for accessibility
-            if (typeof MobileAccessibility !== "undefined") {
-                MobileAccessibility.usePreferredTextZoom(true);
-            }
 
-            // load localization information
-            this.locale = await L.loadLocale();
+            this.configureAccessibility();
+            this.configureTheme();
+            this.configureSoftKeyboard();
 
-            this.L = L; // DEBUG: testing only
-
-            L.loadTranslations(require("./localization/root/messages"));
-
-            // load theme
-            this.themeManager = new ThemeManager();
-            this.themeManager.currentTheme = new Theme();
+            await this.configurei18n();
 
             // load settings
             this.settings = new Settings();
@@ -134,9 +151,6 @@ class App extends Emitter {
             GCS.emit("APP:startupFailure", err);
             this.emit("startupFailure", err);
         }
-
-        //document.querySelector("[is='y-menu-glyph']").addEventListener("click", simpleAlert, false);
-        this.softKeyboard = new SoftKeyboard({selectors: [".ui-scroll-container", "[is='y-scroll-container']", "y-scroll-container"]});
     }
 }
 
