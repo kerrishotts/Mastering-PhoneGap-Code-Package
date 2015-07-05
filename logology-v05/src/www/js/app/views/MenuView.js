@@ -1,14 +1,14 @@
 /* @flow */
 "use strict";
 
-import scrollContainer from "../templates/widgets/scrollContainer";
-import View from "../../lib/View";
-import glyph from "../templates/widgets/glyph";
-import list from "../templates/widgets/list";
-import listItem from "../templates/widgets/listItem";
-import listItemContents from "../templates/widgets/listItemContents";
-import listItemActions from "../templates/widgets/listItemActions";
-import listIndicator from "../templates/Widgets/listIndicator";
+import scrollContainer from "$WIDGETS/scrollContainer";
+import View from "$LIB/View";
+import glyph from "$WIDGETS/glyph";
+import list from "$WIDGETS/list";
+import listItem from "$WIDGETS/listItem";
+import listItemContents from "$WIDGETS/listItemContents";
+import listItemActions from "$WIDGETS/listItemActions";
+import listIndicator from "$WIDGETS/listIndicator";
 
 import dictionariesList from "./dictionariesList";
 

@@ -1,14 +1,14 @@
 "use strict";
 
 import h from "yasmf-h";
-import el from "../templates/el";
-import L from "../localization/localization";
+import el from "$LIB/templates/el";
+import L from "$APP/localization/localization";
 
-import glyph from "../templates/widgets/glyph";
-import list from "../templates/widgets/list";
-import listItem from "../templates/widgets/listItem";
-import listItemContents from "../templates/widgets/listItemContents";
-import listIndicator from "../templates/Widgets/listIndicator";
+import glyph from "$WIDGETS/glyph";
+import list from "$WIDGETS/list";
+import listItem from "$WIDGETS/listItem";
+import listItemContents from "$WIDGETS/listItemContents";
+import listIndicator from "$WIDGETS/listIndicator";
 
 export default function dictionariesList(dictionaries) {
     return list({
@@ -27,4 +27,3 @@ export default function dictionariesList(dictionaries) {
         })
     });
 }
-

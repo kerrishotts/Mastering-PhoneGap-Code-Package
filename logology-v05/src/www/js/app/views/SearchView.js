@@ -4,9 +4,9 @@
 //import el from "../templates/el";
 //import L from "../localization/localization";
 
-import scrollContainer from "../templates/widgets/scrollContainer";
+import scrollContainer from "$WIDGETS/scrollContainer";
 import lemmaList from "./lemmaList";
-import View from "../../lib/View";
+import View from "$LIB/View";
 
 const kp = require("keypather")();
 

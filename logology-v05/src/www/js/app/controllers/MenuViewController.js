@@ -1,8 +1,8 @@
 /* @flow */
 "use strict";
 
-import ViewController from "../../lib/ViewController";
-import MenuView from "../views/MenuView";
+import ViewController from "$LIB/ViewController";
+import MenuView from "$VIEWS/MenuView";
 
 import h from "yasmf-h";
 

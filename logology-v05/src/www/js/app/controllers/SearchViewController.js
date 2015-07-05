@@ -1,15 +1,15 @@
 "use strict";
 
-import ViewController from "../../lib/ViewController";
-import SearchView from "../views/SearchView";
+import ViewController from "$LIB/ViewController";
+import SearchView from "$VIEWS/SearchView";
 
 import h from "yasmf-h";
 //import el from "../templates/el";
-import navigationBar from "../templates/widgets/bars/navigation";
-import widgetGroup from "../templates/widgets/group";
-import glyph from "../templates/widgets/glyph";
+import navigationBar from "$WIDGETS/bars/navigation";
+import widgetGroup from "$WIDGETS//group";
+import glyph from "$WIDGETS//glyph";
 
-import L from "../localization/localization";
+import L from "$APP/localization/localization";
 
 export default class SearchViewController extends ViewController {
     constructor({model}={}) {
