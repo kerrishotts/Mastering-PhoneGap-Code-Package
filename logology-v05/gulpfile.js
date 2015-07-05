@@ -64,15 +64,15 @@
  * 2015.01.18 KS   Created
  *
  *********************************************************************/
-/*globals require, __dirname, process */
+/*globals require, __dirname */
 "use strict";
 
 var path = require("path");
 
 var gulp = require("gulp");
 var gutil = require("gulp-util");
-var concat = require("gulp-concat");
-var rename = require("gulp-rename");
+//var concat = require("gulp-concat");
+//var rename = require("gulp-rename");
 var bump = require("gulp-bump");
 var replace = require("gulp-replace-task");
 var merge = require("merge-stream");
@@ -82,7 +82,7 @@ var sourcemaps = require("gulp-sourcemaps");
 var uglify = require("gulp-uglify");
 var eslint = require("gulp-eslint");
 var jscs = require("gulp-jscs");
-var plumber = require("gulp-plumber");
+//var plumber = require("gulp-plumber");
 var livereload = require("gulp-livereload");
 var http = require("http");
 var st = require("st");
@@ -97,14 +97,14 @@ var babelify = require("babelify");
 // flow, notify, sourcemap reporter adapted from http://www.keendevelopment.ch/flow-babel-gulp-es6/
 var notify = require("gulp-notify");
 var flow = require("gulp-flowtype");
-var sourcemapReporter = require("jshint-sourcemap-reporter");
+//var sourcemapReporter = require("jshint-sourcemap-reporter");
 
 var pkg = require("./package.json");
 
 var BUILD_DIR = path.join(__dirname, "build");
-var SOURCE_DIR = path.join(__dirname, "src");
+//var SOURCE_DIR = path.join(__dirname, "src");
 var CONFIG_DIR = path.join(__dirname, "config");
-var CORDOVA_CONFIG = path.join(SOURCE_DIR, "config.xml");
+//var CORDOVA_CONFIG = path.join(SOURCE_DIR, "config.xml");
 
 var PLATFORM = gutil.env.platform ? gutil.env.platform : "ios"; // or android
 var BUILD_PLATFORMS = (gutil.env.for ? gutil.env.for : "ios,android").split(",");
@@ -112,7 +112,7 @@ var BUILD_MODE = gutil.env.mode ? gutil.env.mode : "debug"; // or release
 var TARGET_DEVICE = gutil.env.target ? "--target=" + gutil.env.target : "";
 var LR_PORT = parseInt(gutil.env.lrport ? gutil.env.lrport : "35729", 10);
 var SERVE_PORT = parseInt(gutil.env.port ? gutil.env.port : "8080", 10);
-var PG_PORT = parseInt(gutil.env.pgport ? gutil.env.pgport : "3000", 10);
+//var PG_PORT = parseInt(gutil.env.pgport ? gutil.env.pgport : "3000", 10);
 var FAIL_ON_ERROR = gutil.env.continue ? (gutil.env.continue !== "yes") : true;
 
 var cordova = require("cordova-tasks");
@@ -120,10 +120,10 @@ var cordovaTasks = new cordova.CordovaTasks({pkg: pkg, basePath: __dirname, buil
                                              gulp: gulp, replace: replace});
 /**
  * Log a done message to gulp
- */
 function logDone() {
     gutil.log("... Done!");
 }
+ */
 /**
  * Increment the version in package.json
  * using importance to specify which portion of the version
@@ -190,16 +190,19 @@ var projectTasks = {
      * src to build.
      */
     copyAssets: function copyAssets() {
-        return merge(gulp.src(["./src/www/*.*"])
-                .pipe(gulp.dest(path.join(BUILD_DIR, "www"))),
+        return merge(
+                gulp.src(["./src/www/*.*"])
+                    .pipe(gulp.dest(path.join(BUILD_DIR, "www"))),
                 gulp.src(["./src/www/html/**/*"])
-                .pipe(gulp.dest(path.join(BUILD_DIR, "www", "html"))),
+                    .pipe(gulp.dest(path.join(BUILD_DIR, "www", "html"))),
                 gulp.src(["./src/www/img/**/*"])
-                .pipe(gulp.dest(path.join(BUILD_DIR, "www", "img"))),
-                gulp.src(["./src/www/js/lib/**/*"])
-                .pipe(gulp.dest(path.join(BUILD_DIR, "www", "js", "lib"))),
+                    .pipe(gulp.dest(path.join(BUILD_DIR, "www", "img"))),
+            //    gulp.src(["./src/www/js/lib/**/*"])
+            //        .pipe(gulp.dest(path.join(BUILD_DIR, "www", "js", "lib"))),
                 gulp.src(["./src/res/**/*"])
-                .pipe(gulp.dest(path.join(BUILD_DIR, "res"))),
+                    .pipe(gulp.dest(path.join(BUILD_DIR, "res"))),
+                gulp.src(["node_modules/open-iconic/sprite/sprite.svg"])
+                    .pipe(gulp.dest(path.join(BUILD_DIR, "www", "img", "open-iconic"))),
                 projectTasks.copyConfig()
             )
             .pipe(livereload());
@@ -236,13 +239,31 @@ var projectTasks = {
      */
     copyCode: function copyCode() {
         var isRelease = (BUILD_MODE === "release");
+        var pm = pkg.aliases;
         return browserify("./src/www/js/app/index.js", {
                 debug: !isRelease,
                 standalone: "app"
             })
             .transform(babelify.configure({
                 blacklist: ["flow"],
-                stage: 0
+                stage: 0,
+                resolveModuleSource: function (id, parent) {
+                    // this method inspired by https://github.com/babel/babelify/issues/48#issuecomment-104309530
+                    var matches = id.split(path.sep);
+                    var firstMatch = matches[0];
+                    var firstLetter;
+                    if (pm && pm[firstMatch]) {
+                        matches[0] = path.relative(path.dirname(parent), path.resolve(__dirname, pm[firstMatch]));
+                        id = matches.join(path.sep);
+                        firstLetter = id.substr(0, 1);
+                        if (firstLetter !== path.sep && firstLetter !== ".") {
+                            // require must indicate that it is relative, so ensure we have a ./
+                            // if the resulting path is a child of the cwd
+                            id = [".", id].join(path.sep);
+                        }
+                    }
+                    return id;
+                }
             }))
             .bundle()
             .on("error", notify.onError("BABEL: <%= error.message %>"))

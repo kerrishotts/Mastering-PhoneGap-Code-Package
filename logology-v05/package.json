@@ -292,6 +292,8 @@
     "merge": "^1.2.0",
     "node-reset-scss": "^1.0.1",
     "once": "^1.3.2",
+    "open-iconic": "git://github.com/iconic/open-iconic.git",
+    "svg-injector": "^1.1.3",
     "yasmf-emitter": "^0.1.5",
     "yasmf-h": "^0.1.4",
     "yasmf-localization": "0.0.1"
@@ -303,5 +305,13 @@
     "includePaths": [
       "./node_modules/node-reset-scss/scss"
     ]
+  },
+  "aliases": {
+      "$APP": "src/www/js/app",
+      "$LIB": "src/www/js/lib",
+      "$WIDGETS": "src/www/js/lib/templates/widgets",
+      "$MODELS": "src/www/js/app/models",
+      "$VIEWS": "src/www/js/app/views",
+      "$CONTROLLERS": "src/www/js/app/controllers"
   }
 }
