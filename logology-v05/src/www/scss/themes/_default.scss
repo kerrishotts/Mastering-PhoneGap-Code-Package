@@ -6,6 +6,8 @@
   $tint-border-color: #DEDAD1;
   $tint-active-color-darker: #CECAC1;
   $view-background-color: #EEEAE1;
+  $alert-background-color: #FFF;
+  $bar-light-color: #FFF;
 
   font-family: $font-stack;
 
@@ -17,7 +19,7 @@
   //nav
   y-nav, [is="y-nav"] {
     background: $tint-color;
-    color: white;
+    color: $bar-light-color;
   }
 
   //lists
@@ -47,7 +49,7 @@
     y-alert-dialog, [is="y-alert-dialog"] {
       h1 {
         background-color: $tint-color;
-        color: white;
+        color: $bar-light-color;
       }
 
       button {
@@ -64,13 +66,23 @@
     //                out                  out
     //
     // setup
-    .default-anims-view-leave-in, .default-anims-view-leave-out,
-    .default-anims-view-enter-in, .default-anims-view-enter-out {
+    %animation-timing {
         transition: transform .3s linear;
         visibility: visible;
+    }
+
+    .default-anims-view-leave-in, .default-anims-view-leave-out,
+    .default-anims-view-enter-in, .default-anims-view-enter-out {
+        @extend %animation-timing;
 
         y-nav *, [is="y-nav"] * {
             transition: opacity .3s linear;
+        }
+    }
+
+    .default-anims-split-enter, .default-anims-split-leave {
+        y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+            @extend %animation-timing;
         }
     }
 
@@ -100,6 +112,23 @@
 
     .default-anims-view-leave-in {
         transform: translate3d(0, 0, 10px);
+    }
+
+    // split       stage       left            right
+    //             enter       -240px --> 0    o --> 240px
+    //             leave       0 --> -240px    240px --> 0
+    .default-anims-split-enter {
+        y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+            &:first-child { transform: translate3d(-240px, 0, 15px); position: absolute; }
+            &:last-child { transform: translate3d(0, 0, 10px); }
+        }
+    }
+
+    .default-anims-split-leave {
+        y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+            &:first-child { transform: translate3d(0, 0, 15px); position: absolute; }
+            &:last-child { transform: translate3d(0, 0, 10px); }
+        }
     }
 
     // perform/hold animation
@@ -139,20 +168,41 @@
         visibility: hidden;
     }
 
+    .default-animd-split-enter, .default-animh-split-enter {
+        y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+            &:first-child { transform: translate3d(0, 0, 15px); }
+            &:last-child { transform: translate3d(0, 0, 10px); }
+        }
+    }
+
+    .default-animd-split-leave, .default-animh-split-leave {
+        y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+            &:first-child { transform: translate3d(-240px, 0, 15px); }
+            &:last-child { transform: translate3d(0, 0, 10px); }
+        }
+    }
+    
+    .default-animh-split-enter, .default-animh-split-leave {
+        y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+            &:first-child { position: absolute; }
+        }
+    }
+
+    // visibility
     .default-visible {
-      visibility: visible;
+        visibility: visible;
     }
 
     .default-not-visible {
-      visibility: hidden;
+        visibility: hidden;
     }
 
-  .default-displayed {
-    // no rules
-  }
+    .default-displayed {
+        // no rules
+    }
 
-  .default-not-displayed {
-    display: none;
-  }
+    .default-not-displayed {
+        display: none;
+    }
 
 }
