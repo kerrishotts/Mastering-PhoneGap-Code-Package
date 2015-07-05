@@ -36,7 +36,7 @@ export default class Theme extends Emitter {
 ///mark: CSS classes
 
     /*
-     * Here anims == animation startion, animd == animation doing, animh = animation hold
+     * Here anims == animation setup, animd == animation doing, animh = animation hold
      */
     get CLASS_VIEW_ANIMS_LEAVE_IN()/*: string*/ { return this.namespace + "anims-view-leave-in"; }
     get CLASS_VIEW_ANIMD_LEAVE_IN()/*: string*/ { return this.namespace + "animd-view-leave-in"; }
@@ -50,6 +50,13 @@ export default class Theme extends Emitter {
     get CLASS_VIEW_ANIMS_ENTER_OUT()/*: string*/ { return this.namespace + "anims-view-enter-out"; }
     get CLASS_VIEW_ANIMD_ENTER_OUT()/*: string*/ { return this.namespace + "animd-view-enter-out"; }
     get CLASS_VIEW_ANIMH_ENTER_OUT()/*: string*/ { return this.namespace + "animh-view-enter-out"; }
+
+    get CLASS_SPLIT_ANIMS_ENTER()/*: string*/ { return this.namespace + "anims-split-enter"; }
+    get CLASS_SPLIT_ANIMD_ENTER()/*: string*/ { return this.namespace + "animd-split-enter"; }
+    get CLASS_SPLIT_ANIMH_ENTER()/*: string*/ { return this.namespace + "animh-split-enter"; }
+    get CLASS_SPLIT_ANIMS_LEAVE()/*: string*/ { return this.namespace + "anims-split-leave"; }
+    get CLASS_SPLIT_ANIMD_LEAVE()/*: string*/ { return this.namespace + "animd-split-leave"; }
+    get CLASS_SPLIT_ANIMH_LEAVE()/*: string*/ { return this.namespace + "animh-split-leave"; }
 
     get CLASS_VIEW_VISIBLE()/*: string*/ { return this.namespace + "visible"; }
     get CLASS_VIEW_NOT_VISIBLE()/*: string*/ { return this.namespace + "not-visible"; }
@@ -144,9 +151,19 @@ export default class Theme extends Emitter {
     }
     animateAlertViewExit({leavingViewElement/*: Node*/})/*: Promise*/ {
     }
-    animateSplitViewSidebarEnter({splitViewElement/*: Node*/})/*: Promise*/ {
+    animateSplitViewSidebarEnter({splitViewElement/*: Node*/, options})/*: Promise*/ {
+        return Promise.all(
+            [ [ splitViewElement, this.CLASS_SPLIT_ANIMS_ENTER,
+                                  this.CLASS_SPLIT_ANIMD_ENTER,
+                                  this.CLASS_SPLIT_ANIMH_ENTER ] ]
+                .map( arr => this.animateElementWithAnimSequence(arr, options)));
     }
-    animateSplitViewSidebarLeave({splitViewElement/*: Node*/})/*: Promise*/ {
+    animateSplitViewSidebarLeave({splitViewElement/*: Node*/, options})/*: Promise*/ {
+        return Promise.all(
+            [ [ splitViewElement, this.CLASS_SPLIT_ANIMS_LEAVE,
+                                  this.CLASS_SPLIT_ANIMD_LEAVE,
+                                  this.CLASS_SPLIT_ANIMH_LEAVE ] ]
+                .map( arr => this.animateElementWithAnimSequence(arr, options)));
     }
 
 }
