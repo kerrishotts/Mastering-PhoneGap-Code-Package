@@ -6,37 +6,35 @@ import h from "yasmf-h";
 import Hammer from "hammerjs";
 import matchesSelector from "matches-selector";
 
-h.renderTo = function renderTo(n, el, idx) {
-    if (!idx) {
-        idx = 0;
+function removeRemainingChildrenFromElement(el, startingAt, nodeCount) {
+    for (let i = startingAt; i < nodeCount; i++) {
+        el.removeChild(el.childNodes[i]);
+    }
+}
+h.renderTo = function renderTo(n, el, idx = 0) {
+    if (!n || !el) {
+        return;
     }
     if (n instanceof Array) {
         let elNodeCount = el.children.length;
-        for (let i = 0, l = n.length; i < l; i++) {
-            if (n[i] !== undefined && n[i] !== null) {
+        n.forEach((ni, i) => renderTo(ni, el, i));
+        /*for (let i = 0, l = n.length; i < l; i++) {
+            if (n[i]) {
                 renderTo(n[i], el, i);
             }
-        }
-        for (let i = n.length; i< elNodeCount; i++) {
+        }*/
+        removeRemainingChildrenFromElement(el, n.length, elNodeCount);
+        /*for (let i = n.length; i < elNodeCount; i++) {
             el.removeChild(el.childNodes[i]);
-        }
+        }*/
     } else {
-        if (n === undefined || n === null || el === undefined || el === null) {
-            return;
-        }
-        var elid = [null, null];
         if (el.hasChildNodes() && idx < el.childNodes.length) {
-            elid[0] = el.childNodes[idx].getAttribute("id");
-            if (h.useDomMerging) {
-                transform(el, el.childNodes[idx], n);
-            } else {
-                el.replaceChild(n, el.childNodes[idx]);
-            }
+            el.replaceChild(n, el.childNodes[idx]);
         } else {
             el.appendChild(n);
         }
     }
-}
+};
 /******************************************************************************
  *
  * VIEW
@@ -192,11 +190,11 @@ export default class View extends Emitter {
      * Renders the return from `render` to the target element (which is the `renderElement` or the `parentNode`)
      * @param  {{stopAt: Node}} options ]   the node to stop at (renders propagate up the tree)
      */
-    renderTo(options = {})/*: void*/ {
+    renderUpTo(options = {})/*: void*/ {
         let {stopAt} = options,
             targetEl;
         if (this.parentView && this.parentView !== stopAt) {
-            this.parentView.renderTo(options);
+            this.parentView.renderUpTo(options);
         } else {
             if ((targetEl = (this.renderElement || (this.elementTree && this.elementTree.parentNode)))) {
                 h.renderTo(this.render(), targetEl);
@@ -227,7 +225,7 @@ export default class View extends Emitter {
      * If a `render` event is received, render our template up to our parent
      */
     onRender()/*: void*/ {
-        this.renderTo({stopAt: this.parentView});
+        this.renderUpTo({stopAt: this.parentView});
     }
 
     /**
@@ -495,6 +493,7 @@ export default class View extends Emitter {
             this.themeManager.currentTheme.markElementVisibility(this.elementTree, v);
         }
         this.emitSync("render");
+        this.emitSync("visibilityChanged", v);
     }
 
     get displayed()/*: boolean*/ {
@@ -506,6 +505,7 @@ export default class View extends Emitter {
             this.themeManager.currentTheme.markElementDisplay(this.elementTree, d);
         }
         this.emitSync("render");
+        this.emitSync("displayChanged", d);
     }
 
 ///mark: cleanup
