@@ -11,6 +11,7 @@
 /*globals MobileAccessibility, setImmediate*/
 
 import "babel/polyfill";
+
 import h from "yasmf-h";
 
 import once from "once";
@@ -30,6 +31,7 @@ import Settings from "$MODELS/Settings";
 import Dictionaries from "$MODELS/Dictionaries";
 import StarterDictionary from "$MODELS/StarterDictionary";
 
+let SVGInjector = require("svg-injector");
 /*
 function simpleAlert() {
     let outerDiv = document.createElement("div"),
@@ -78,7 +80,7 @@ class App extends Emitter {
     constructor() {
         super();
         let startAppOnce = once(this.start.bind(this));
-        document.addEventListener("deviceready", this.startAppOnce, false);
+        document.addEventListener("deviceready", startAppOnce, false);
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(startAppOnce, 1000);
         }, false);
@@ -90,6 +92,11 @@ class App extends Emitter {
 
     onStartupFailure(sender, notice, err) {
         console.log(`Startup failure ${err}`);
+    }
+
+    configureSVGIcons() {
+        let injectSVGs = document.querySelectorAll("img.inject-svg");
+        SVGInjector(injectSVGs);
     }
 
     configureAccessibility() {
@@ -126,6 +133,7 @@ class App extends Emitter {
             this.configureAccessibility();
             this.configureTheme();
             this.configureSoftKeyboard();
+            this.configureSVGIcons();
 
             await this.configurei18n();
 
@@ -144,6 +152,10 @@ class App extends Emitter {
 
             this.splitViewController = new SplitViewController( {subviews: [mvc, nvc], themeManager: this.themeManager, renderElement: rootElement});
             this.splitViewController.visible = true;
+
+            GCS.on("APP:menu", () => {
+                this.splitViewController.toggleSidebar();
+            });
             // tell everyone that the app has started
             GCS.emit("APP:started");
             this.emit("started");

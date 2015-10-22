@@ -1,0 +1,26 @@
+y-split-view-controller, [is="y-split-view-controller"], .y-split-view-controller,
+y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+  @extend y-container;
+}
+
+y-split-view-controller, [is="y-split-view-controller"], .y-split-view-controller {
+    display: flex;
+    flex-direction: row;
+
+    y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+        position: relative;
+        flex: 1;
+        border-right: 1px solid $tint-border-color;
+
+        &:first-child {
+            width: 240px;
+            flex: 0 0 auto;
+            z-index: 3;
+            transform: translateZ(15px);
+        }
+
+        &:last-child {
+            border-right: 0;
+        }
+    }
+}

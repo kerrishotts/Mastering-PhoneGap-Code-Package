@@ -11,5 +11,6 @@
   "requireLineFeedAtFileEnd": true,
   "disallowSpaceAfterObjectKeys": true,
   "validateLineBreaks": "LF",
-  "requireParenthesesAroundIIFE": true
+  "requireParenthesesAroundIIFE": true,
+  "esnext": true
 }

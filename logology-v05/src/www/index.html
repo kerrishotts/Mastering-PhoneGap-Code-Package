@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Security-Policy" 
+          content="default-src 'self' https://localhost:* gap://*; img-src 'self' data:; script-src 'self' 'unsafe-eval' gap://*"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
     <link rel="stylesheet" type="text/css" href="./css/app.css">
     <script src="cordova.js" type="text/javascript"></script>
     <script src="./js/app/app.js" type="text/javascript"></script>
+    <title>Logology</title>
   </head>
   <body>
-      <img style="display: none" id="svg-sprite" class="inject-svg" data-src="./img/open-iconic/sprite.svg" />
+      <img id="svg-sprite" class="inject-svg" data-src="./img/open-iconic/sprite.svg" />
       <div id="rootContainer" is="y-root"></div>
   </body>
 </html>

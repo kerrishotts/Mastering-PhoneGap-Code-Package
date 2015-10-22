@@ -5,3 +5,4 @@
 *.swp
 .settings
 logology-v05/.sublime-gulp.cache
+*/.release.keystore

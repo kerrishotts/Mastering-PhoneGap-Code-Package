@@ -89,20 +89,7 @@ function _renderResults() {
             docScript.setAttribute("type", "text/javascript");
 
             docHead.appendChild(docStyle);
-/*
-            // before we insert our script, we need to process any extant script tags in the HTML
-            var docScripts = [].slice.call(doc.getElementsByTagName("script"), 0),
-                sN, pN, nSN;
-            for (var i = 0, l = docScripts.length; i < l; i++) {
-                sN = docScripts[i];
-                pN = sN.parentNode;
-                pN.removeChild(sN);
-                nSN = doc.createElement("script");
-                nSN.setAttribute("src", sN.getAttribute("src"));
-                pN.appendChild(nSN);
-
-                console.log("Inserted script tag with " + sN.getAttribute("src"));
-            } */
+            win.console = new Console();
             docBody.appendChild(docScript);
 
             setTimeout(function() {
@@ -117,10 +104,6 @@ function _renderResults() {
 
         doc.write(htmlEditor.getValue().replace("<!--base-->", "<base href='" + docBase + "' />"));
         doc.close();
-
-        setTimeout(function() {
-            document.getElementById("results").contentWindow.console = new Console();
-        }, 0);
     }, 0);
 }
 

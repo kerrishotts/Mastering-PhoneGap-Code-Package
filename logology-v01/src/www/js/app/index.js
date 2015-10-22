@@ -12,19 +12,19 @@ function h ( elType, ...children ) {
   let el = document.createElement(elType); 
   for (let child of children) {
       if (typeof child !== "object") {
-            el.textContent = child;
-          } else if (child instanceof Array) {
-                child.forEach( el.appendChild.bind(el) );
-              } else {
-                    el.appendChild( child );
-                  }
-    }
+          el.textContent = child;
+      } else if (child instanceof Array) {
+          child.forEach( el.appendChild.bind(el) );
+      } else {
+          el.appendChild( child );
+      }
+  }
   return el;
 }
 
 function startApp() {
   document.querySelector("#demo").appendChild(
-    h( "div",
+    h("div",
       h("ul", h("li", "Some information about this app..."),
               h("li", "App name: {{{NAME}}}"),
               h("li", "App version: {{{VERSION}}}")
@@ -33,5 +33,11 @@ function startApp() {
   );
 }
 
-//document.addEventListener("DOMContentLoaded", startApp, false);
-document.addEventListener("deviceready", startApp, false);
+;(function() {
+    let appStartTimer;
+    document.addEventListener("deviceready", () => {
+        clearTimeout(appStartTimer);
+        startApp();
+    }, false);
+    appStartTimer = setTimeout(startApp, 1000);
+})();
