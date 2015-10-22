@@ -2,6 +2,7 @@
 .kas
 */build
 */node_modules
+*/tmp
 *.swp
 .settings
 logology-v05/.sublime-gulp.cache

@@ -9,7 +9,7 @@ require("brace/mode/html");
 require("brace/theme/monokai");
 var babel = require("babel");
 var xhr = require("xhr");
-var autoprefixer = require("autoprefixer-core");
+var autoprefixer = require("autoprefixer");
 
 var chapters = require("./chapters");
 
@@ -245,7 +245,9 @@ function configureEditors() {
         mode: "ace/mode/scss",
         el: "scss-editor",
         onchange: function() {
-            cssEditor.setValue(autoprefixer.process(Sass.compile(this.getValue())).css, -1);
+            Sass.compile(scssEditor.getValue(), function (r) {
+                cssEditor.setValue(autoprefixer.process(r.text).css, -1);
+            });
         }
     });
     htmlEditor = createEditor({

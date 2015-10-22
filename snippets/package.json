@@ -4,14 +4,14 @@
   "description": "Snippets related to Mastering PhoneGap",
   "main": "main.js",
   "scripts": {
-    "prereq": "nugget https://raw.githubusercontent.com/medialize/sass.js/master/dist/sass.js",
+    "prereq": "nugget https://raw.githubusercontent.com/medialize/sass.js/master/dist/sass.sync.js https://raw.githubusercontent.com/medialize/sass.js/master/dist/libsass.js.mem",
     "startr": "beefy index.js 5000",
     "start": "node main.js"
   },
   "author": "Kerri Shotts <kerrishotts@gmail.com> (http://www.photokandy.com)",
   "license": "MIT",
   "dependencies": {
-    "autoprefixer-core": "^6.0.1",
+    "autoprefixer": "^6.0.3",
     "babel": "^5.8.23",
     "beefy": "^2.1.5",
     "brace": "^0.5.0",
