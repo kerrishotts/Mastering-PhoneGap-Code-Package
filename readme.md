@@ -1,22 +1,28 @@
 # Mastering PhoneGap Code Bundle
 
-This repository stores the code for the book entitled Mastering PhoneGap Mobile Application Development published by
-Packt Publishing. You can purchase the book at
-[Packt's Site](http://www.packtpub.com/mastering_phonegap-mobile-application-development-hotshot/book). If you obtained
-the code package from Packt, you may wish to download the package from GitHub in order to receive the most recent changes.
-The package is available at <https://github.com/kerrishotts/Mastering-PhoneGap-Code-Package>
+This repository stores the code for the book entitled Mastering PhoneGap Mobile Application Development published by Packt
+Publishing. You can purchase the book at [Packt's
+Site](http://www.packtpub.com/mastering_phonegap-mobile-application-development-hotshot/book). If you obtained the code package from
+Packt, you may wish to download the package from GitHub in order to receive the most recent changes. The package is available at
+<https://github.com/kerrishotts/Mastering-PhoneGap-Code-Package>
 
 > **NOTE:** This book is under active development. As such, the contents of this repository are not yet finalized.
 
-The code herein is not a complete Cordova project. The build artifacts (namely the `platforms`, `plugins`, etc., directories)
-are ignored. Only the `src` directory,`config.xml`, and assets for each project are provided. In order to execute any of these
-projects, you'll need to create a new Cordova project and copy the relevant files from this repository into your project.
+The code herein is not a complete Cordova project. The build artifacts such as `build/`, `platforms/`, etc. are ignored. Only the
+`src` directory,`config.xml`, and assets for each project are provided. In order to execute any of these projects, you'll need to
+ensure you have the appropriate prerequisites installed (see [PREREQUISITES](./prerequisites.md)) and then execute the following to
+create the build artifacts:
 
-> You should also check out [notes.md](./notes.md) within this repository -- there are important issues and discussions of
-which you should be aware.
+```
+$ gulp init && gulp copy   // bash
+$ gulp init; and gulp copy // fish
+> gulp init                % 
+> gulp copy                % WINDOWS
+```
 
 # Table of Contents
 
+* [Snippets](#snippets)
 * [Chapter/Project Lookup](#chapterproject-lookup)
 * [Application Demos](#application-demos)
 * [Useful Directories](#useful-directories)
@@ -25,49 +31,111 @@ which you should be aware.
 * [Additional Project Information](#additional-project-information)
 * [License](#license)
 
+## [Snippets](id:snippets)
+
+Most of the chapters in the book contain several code snippets. Most of these snippets can be run within a desktop environment so
+that you can play around with the snippets and get a feel for what happens when you change certain things. There are, however, some
+chapters that do **NOT** support snippets because the code isn't functional within a browser-based context.
+
+The following chapters have snippets available in a browser context:
+
+* Chapter 1, Task Automation
+
+* Chapter 2, ES2015 and Browserify
+
+* Chapter 3, Sassy CSS
+
+* Chapter 4, More Responsive Design
+
+* Chapter 5, Accessibility
+
+* Chapter 7, IndexedDB
+
+* Chapter 8, SQLite
+
+* Chapter 9, File Transfer
+
+Chapters 6 and 9 through 11 do not have snippets available in a browser context.
+
+Assuming you already have Google Chrome installed, running the snippets requires the following steps:
+
+```
+$ cd snippets
+$ npm install
+$ npm start
+```
+
+At this point, an instance of Google Chrome should load. If it doesn't, you can start a fresh instance with the following
+command line arguments:
+
+```
+$ /path/to/chrome/chrome --no-first-run --no-default-browser-check --disable-translate --disable-default-apps
+--disable-web-security --user-data-dir=tmp http://localhost:5000/
+```
+
+> **NOTE**: It is vital that you use the created instance of Chrome only for playing with snippets. The settings configure Chrome to
+> be less secure so that the snippets can work from your local machine, but by doing so, any other pages you visit in the same
+> Chrome instance would not receive the normal web security mechanisms.
+
+Once Chrome is available, you should see a JSBin-like page load. Give it a few seconds to finish loading (it's pulling in several
+megabytes of supporting code!), and once everything is ready, there should be two drop-downs in the navigation bar, along with
+several editors visible.
+
+Selecting your desired snippet is easy:
+
+* Select the chapter from the first dropdown
+
+* Select the desired snippet from the second dropdown
+
+* Wait a couple of seconds while the resources load and transpile. Results are visible on the right-hand pane and in the JavaScript
+  Console.
+
+> **NOTE**: Some snippets only generate content in the JavaScript Console.
+
+Each snippet comes with its own preferred layout, but you can enable or disable any of the editors as you like by clicking the
+`Toggle` items in the upper right corner of the page. 
+
+One last note: the snippets have occasionally been modified slightly to work better within the snippet environment. Due to the way
+the environment works, `console.log` behaves somewhat differently, for example, and so the snippets have been updated to reflect
+that. Sometimes multiple snippets are in one file, and so arrangements are made for each smaller example to co-exist within the same
+context.
+
+See the [LICENSE](./LICENSE) file for information on the various libraries used to build the snippets tool.
+
 ## [Chapter/Project Lookup](id:chapterproject-lookup)
 
 |    Chapter | Title                              | Project             | App.io Demo
 |-----------:|:---------------------------------- |:--------------------|:------------
 |          1 | Task Automation                    | [LogologyV1](#v1)   | N/A
-|          2 | Modules                            | [LogologyV2](#v2)   | N/A
+|          2 | ES2015 and Browserify              | [LogologyV2](#v2)   | N/A
 |          3 | Sassy CSS                          | [LogologyV3](#v3)   | N/A
 |          4 | More Responsive Design             | [LogologyV4](#v4)   | N/A
 |          5 | Accessibility                      | [LogologyV5](#v5)   | N/A
-|          6 | IndexedDB                          | [LogologyV6](#v6)   | N/A
-|          7 | SQLite                             | [LogologyV7](#v7)   | N/A
-|          8 | File Transfer                      | [LogologyV8](#v8)   | N/A
-|          9 | In-App Purchases                   | [LogologyV9](#v9)   | N/A
-|         10 | Developing Custom Plugins          | [LogologyV10](#v10) | N/A
+|          6 | Testing and UI Automation          | [LogologyV6](#v6)   | N/A
+|          7 | IndexedDB                          | [LogologyV7](#v7)   | N/A
+|          8 | SQLite                             | [LogologyV8](#v8)   | N/A
+|          9 | File Transfer                      | [LogologyV9](#v9)   | N/A
+|         10 | Performance                        | [LogologyV10](#v10) | N/A
 |         11 | Graphical Assets                   | [LogologyV11](#v11) | N/A
-|         12 | Deployment                         | [LogologyV12](#v12) | [Demo](https://app.io/kAxEF4) (offsite)
+|         12 | Deployment                         | [LogologyV12](#v12) | [Demo](#) (offsite)
 
 ## [Application Demos](id:application-demos)
 
-I've taken the time to upload the final versions of Logology to [App.io](http://www.app.io).
-**Note:** It is not possible to simulate all aspects of each app; pay attention to what features are not available.
+I've taken the time to upload the final version of Logology to both the Apple App Store and the Google Play Market. Links are as
+follows:
 
-* [Logology V12](https://app.io/kAxEF4) (offsite)
-  * The simulator does not provide for in-app purchases or accessibility settings.
+* [Apple App Store](#)
+* [Google Play Market](#)
 
 ## [Useful Directories](id:useful-directories)
 
 Other than the actual code for each project, the following directories may be of interest to you:
 
-* `/design`
+* `design/`
   * Contains icons and splash screen for each project. Also contains design documents for each project in PDF and
     OmniGraffle format.
-* `/template`
+* `blank/`
   * Contains the template we used to create each project (`cordova create ... --copy-from ./template`).
-* `/framework`
-  * Contains the version of the YASMF-Next framework that was used to build the projects. You are welcome to update the
-    framework version at any time, but it is always possible that new framework versions might break the apps.
-
-## [Useful Scripts](id:useful-scripts)
-
-Contained within the top level of this project are several useful scripts. **NOTE:** Your use of these scripts is at
-your own risk. Neither the author of the book and code nor Packt Publishing can be held liable for the use, abuse,
-or misuse of these scripts.
 
 ## [Using PhoneGap Build](id:using-phonegap-build)
 
@@ -81,7 +149,6 @@ The projects as delivered are *Cordova* projects. In order to utilize them with 
 ```
 * If you want to add the icon and splash screen assets to the project, you'll need to copy the appropriate icons from the `design` directory into the project's `www` directory, and then update `config.xml` using [these directions](http://docs.build.phonegap.com/en_US/configuring_icons_and_splash.md.html#Icons%20and%20Splash%20Screens).
 * Upload the project to PhoneGap Build by using `phonegap remote build android` (or `ios`).
-
 
 ## [Additional Project Information](id:additional-project-information)
 
