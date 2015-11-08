@@ -1,0 +1,18 @@
+//!NA -- disable autoprefixer for this example
+
+@mixin prefix($property, $value...) {
+  -webkit-#{$property}: $value;
+  -moz-#{$property}: $value;
+  -ms-#{$property}: $value;
+  -o-#{$property}: $value;
+  #{$property}: $value;
+}
+
+@mixin box-sizing($value) {
+  @include prefix (box-sizing, $value);
+}
+
+.some-element {
+  @include box-sizing(border-box);
+}
+

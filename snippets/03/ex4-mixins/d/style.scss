@@ -1,0 +1,13 @@
+$grid-width: 960px;
+$grid-columns: 12;
+@function grid-size($columns) {
+  @return ($grid-width / $grid-columns) * $columns;
+}
+
+.some-element {
+  width: grid-size(5);
+}
+
+.some-other-element {
+  width: grid-size($columns: 5);
+}

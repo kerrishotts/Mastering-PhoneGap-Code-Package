@@ -1,0 +1,63 @@
+$text-color: #333;
+$font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$text-font: 16px $font;
+$text-title-size: 20px;
+$text-title-weight: bold;
+$tint-color: #369;
+$bar-background-color: rgba(255,255,255,.95);
+$view-background-color: #EEE;
+$separation-border: 1px solid black;
+$separation-size: 10px;
+$bar-height: 50px;
+
+.ui-view-container, .ui-navigation-bar, .ui-tool-bar, .ui-scroll-container {
+    box-sizing: border-box;
+    position: absolute;
+}
+.ui-view-container, .ui-scroll-container {
+    top: 0; left: 0;
+    bottom: 0; right: 0;
+}
+.ui-navigation-bar, .ui-tool-bar {
+    background-color: $bar-background-color;
+    color: $text-color;
+    height: $bar-height;
+    left: 0; right: 0;
+    padding: 0 $separation-size;
+    z-index: 1;
+}
+.ui-navigation-bar, .ui-tool-bar, .ui-tool-bar a {
+    line-height: $bar-height;
+}
+.ui-view-container {
+    border: $separation-border;
+    background-color: $view-background-color;
+    font: $text-font;
+    margin: $separation-size;
+    padding: $separation-size;
+}
+.ui-navigation-bar {
+    border-bottom: $separation-border;
+    font: {
+        size: $text-title-size;
+        weight: $text-title-weight;
+    }
+    text-align: center;
+    top: 0;
+}
+.ui-scroll-container {
+    overflow: auto;
+    padding: $bar-height $separation-size;
+}
+.ui-tool-bar {
+    border-top: $separation-border;
+    bottom: 0;
+    a {
+        color: $tint-color;
+        display: inline-block;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
