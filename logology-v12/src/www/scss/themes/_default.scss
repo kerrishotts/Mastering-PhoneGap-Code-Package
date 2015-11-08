@@ -81,7 +81,8 @@
         }
     }
 
-    .default-anims-split-enter, .default-anims-split-leave {
+    .default-anims-split-enter, .default-anims-split-leave,
+    .default-animd-split-enter, .default-animd-split-leave {
         y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
             @extend %animation-timing;
         }
@@ -120,14 +121,14 @@
     //             leave       0 --> -240px    240px --> 0
     .default-anims-split-enter {
         y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
-            &:first-child { transform: translate3d(-240px, 0, 15px); position: absolute; }
+            &:first-child { transform: translate3d(-240px, 0, 15px); }
             &:last-child { transform: translate3d(0, 0, 10px); }
         }
     }
 
     .default-anims-split-leave {
         y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
-            &:first-child { transform: translate3d(0, 0, 15px); position: absolute; }
+            &:first-child { transform: translate3d(0, 0, 15px); }
             &:last-child { transform: translate3d(0, 0, 10px); }
         }
     }
@@ -183,6 +184,8 @@
         }
     }
     
+    .default-anims-split-enter, .default-anims-split-leave,
+    .default-animd-split-enter, .default-animd-split-leave,
     .default-animh-split-enter, .default-animh-split-leave {
         y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
             &:first-child { position: absolute; }
