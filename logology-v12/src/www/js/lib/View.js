@@ -301,6 +301,18 @@ export default class View extends Emitter {
         return "tap press pressup panmove panstart panend swipe swipeleft swiperight";
     }
 
+    get HAMMER_RECOGNIZERS() {
+        return [
+            [Hammer.Rotate, { enable: false }],
+            [Hammer.Pinch, { enable: false }, ['rotate']],
+            [Hammer.Swipe,{ direction: Hammer.DIRECTION_HORIZONTAL }],
+            [Hammer.Pan, { direction: Hammer.DIRECTION_HORIZONTAL }, ['swipe']],
+            [Hammer.Tap, { threshold: 10 }],
+            [Hammer.Tap, { event: 'doubletap', taps: 2 }, ['tap']],
+            [Hammer.Press, { threshold: 10 }]
+        ]
+    }
+
     /**
      * Returns the list of DOM events this view will listen for. Because Hammer is handling touch events, we only
      * handle typing, focus, and form events.
@@ -438,7 +450,11 @@ export default class View extends Emitter {
             for (let evt of this.DOM_EVENTS.split(" ")) {
                 this[_elementTree].addEventListener(evt, (e)=>this.emit("DOMEvent", e), true);
             }
-            this[_hammer] = new Hammer(this[_elementTree], {domEvents: true});
+            //this[_hammer] = new Hammer(this[_elementTree], {domEvents: true});
+            this[_hammer] = new Hammer.Manager(this[_elementTree], {
+                recognizers: this.HAMMER_RECOGNIZERS,
+                domEvents: true
+            });
             this[_hammer].on(this.HAMMER_EVENTS, (e)=>this.emit("hammerEvent", e));
 
             if (this.renderElement) {
@@ -519,4 +535,8 @@ export default class View extends Emitter {
         this.elementTree = null;
         super.destroy();
     }
+}
+
+export function createView(...args) {
+    return new View(...args);
 }
