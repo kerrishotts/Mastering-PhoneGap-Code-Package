@@ -8,11 +8,11 @@ module.exports = [
   {name: "3: Sassy CSS",                  examples: require("./03")},
   {name: "4: More Responsive Design",     examples: require("./04")},
   {name: "5: Accessibility",              examples: require("./05")},
-  {name: "6: Testing and UI Automation *",  examples: NONE},
+  {name: "6: Testing and UI Automation",  examples: require("./06")},
   {name: "7: IndexedDB",                  examples: require("./07")},
   {name: "8: SQLite",                     examples: require("./08")},
   {name: "9: File Transfer",              examples: require("./09")},
-  {name: "10: Performance *",               examples: NONE},
-  {name: "11: Graphical Assets *",          examples: NONE},
-  {name: "12: Deployment *",                examples: NONE}
+  {name: "10: Performance *",             examples: NONE},
+  {name: "11: Graphical Assets *",        examples: NONE},
+  {name: "12: Deployment *",              examples: NONE}
 ];
