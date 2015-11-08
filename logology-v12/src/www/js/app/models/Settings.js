@@ -94,3 +94,7 @@ export default class Settings extends Emitter {
     }
 }
 
+export function createSettings(...args) {
+    return new Settings(...args);
+}
+

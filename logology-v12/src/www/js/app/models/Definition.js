@@ -7,3 +7,7 @@ export default class Definition {
         this.wordNetRef = wordNetRef;
     }
 }
+
+export function createDefinition(...args) {
+    return new Definition(...args);
+}

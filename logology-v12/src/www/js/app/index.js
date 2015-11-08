@@ -18,18 +18,19 @@ import once from "once";
 
 import Emitter from "yasmf-emitter";
 import GCS from "$LIB/grandCentralStation";
-import SoftKeyboard from "$LIB/SoftKeyboard";
+import {createSoftKeyboard} from "$LIB/SoftKeyboard";
 import L from "./localization/localization";
 
-import Theme from "$LIB/Theme";
-import ThemeManager from "$LIB/ThemeManager";
+import {createTheme} from "$LIB/Theme";
+import {createThemeManager} from "$LIB/ThemeManager";
 
-import NavigationViewController from "$LIB/NavigationViewController";
-import SplitViewController from "$LIB/SplitViewController";
+import {createNavigationViewController} from "$LIB/NavigationViewController";
+import {createSplitViewController} from "$LIB/SplitViewController";
 
-import Settings from "$MODELS/Settings";
-import Dictionaries from "$MODELS/Dictionaries";
+import {createSettings} from "$MODELS/Settings";
+import {createDictionaries} from "$MODELS/Dictionaries";
 import StarterDictionary from "$MODELS/StarterDictionary";
+import {createStarterDictionary} from "$MODELS/StarterDictionary";
 
 let SVGInjector = require("svg-injector");
 /*
@@ -73,12 +74,12 @@ function simpleAlert() {
 }
 */
 
-import SearchViewController from "$CONTROLLERS/SearchViewController";
-import MenuViewController from "$CONTROLLERS/MenuViewController";
+import {createSearchViewController} from "$CONTROLLERS/SearchViewController";
+import {createMenuViewController} from "$CONTROLLERS/MenuViewController";
 
 class App extends Emitter {
     constructor() {
-        super(); 
+        super();
         let startAppOnce = once(this.start.bind(this));
         document.addEventListener("deviceready", startAppOnce, false);
         document.addEventListener("DOMContentLoaded", () => {
@@ -115,14 +116,14 @@ class App extends Emitter {
 
     configureTheme() {
         // load theme
-        this.themeManager = new ThemeManager();
-        this.themeManager.currentTheme = new Theme();
+        this.themeManager = createThemeManager();
+        this.themeManager.currentTheme = createTheme();
     }
 
     configureSoftKeyboard() {
-        this.softKeyboard = new SoftKeyboard({selectors: [".ui-scroll-container",
-                                                         "[is='y-scroll-container']",
-                                                         "y-scroll-container"]});
+        this.softKeyboard = createSoftKeyboard({selectors: [".ui-scroll-container",
+                                                            "[is='y-scroll-container']",
+                                                            "y-scroll-container"]});
     }
 
     async start() {
@@ -138,19 +139,19 @@ class App extends Emitter {
             await this.configurei18n();
 
             // load settings
-            this.settings = new Settings();
+            this.settings = createSettings();
 
             // create dictionaries list
-            this.dictionaries = new Dictionaries();
+            this.dictionaries = createDictionaries();
             this.dictionaries.addDictionary(StarterDictionary);
 
-            let svc = new SearchViewController({model: new StarterDictionary()});
-            let mvc = new MenuViewController({model: this.dictionaries});
-            this.searchViewController2 = new SearchViewController({model: new StarterDictionary()});
+            let svc = createSearchViewController({model: createStarterDictionary()});
+            let mvc = createMenuViewController({model: this.dictionaries});
+            this.searchViewController2 = createSearchViewController({model: createStarterDictionary()});
 
-            let nvc = new NavigationViewController({subviews: [svc]});
+            let nvc = createNavigationViewController({subviews: [svc]});
 
-            this.splitViewController = new SplitViewController( {subviews: [mvc, nvc], themeManager: this.themeManager, renderElement: rootElement});
+            this.splitViewController = createSplitViewController( {subviews: [mvc, nvc], themeManager: this.themeManager, renderElement: rootElement});
             this.splitViewController.visible = true;
 
             GCS.on("APP:menu", () => {

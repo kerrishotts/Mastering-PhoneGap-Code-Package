@@ -2,7 +2,7 @@
 "use strict";
 
 import ViewController from "$LIB/ViewController";
-import MenuView from "$VIEWS/MenuView";
+import {createMenuView} from "$VIEWS/MenuView";
 
 import navigationBar from "$WIDGETS/bars/navigation";
 import widgetGroup from "$WIDGETS/group";
@@ -16,7 +16,7 @@ import h from "yasmf-h";
 
 export default class MenuViewController extends ViewController {
     constructor({model} = {}) {
-        super({title: "Menu", model, view: new MenuView()});
+        super({title: "Menu", model, view: createMenuView()});
     }
     get TARGET_SELECTORS() {
         return [
@@ -39,4 +39,8 @@ export default class MenuViewController extends ViewController {
             this.renderSubviews()
         ]);
     }
+}
+
+export function createMenuViewController(...args) {
+    return new MenuViewController(...args);
 }

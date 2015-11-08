@@ -41,3 +41,7 @@ export default class ThemeManager extends Emitter {
         super.destroy();
     }
 }
+
+export function createThemeManager(...args) {
+    return new ThemeManager(...args);
+}

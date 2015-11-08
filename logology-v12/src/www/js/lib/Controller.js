@@ -101,3 +101,7 @@ export default class Controller extends Emitter {
         }
     }
 }
+
+export function createController(...args) {
+    return new Controller(...args);
+}

@@ -25,3 +25,7 @@ StarterDictionary.meta = {
     name: "Starter Dictionary",
     language: "en"
 };
+
+export function createStarterDictionary(...args) {
+    return new StarterDictionary(...args);
+}

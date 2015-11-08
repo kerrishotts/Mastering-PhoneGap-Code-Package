@@ -301,3 +301,7 @@ export default class SoftKeyboard extends Emitter {
         }, 0);
     }
 }
+
+export function createSoftKeyboard(...args) {
+    return new SoftKeyboard(...args);
+}

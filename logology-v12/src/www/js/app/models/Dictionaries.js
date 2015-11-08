@@ -24,3 +24,7 @@ export default class Dictionaries extends Emitter {
         return Array.from(this[_dictionaries]).map(([k])=>k);
     }
 }
+
+export function createDictionaries(...args) {
+    return new Dictionaries(...args);
+}

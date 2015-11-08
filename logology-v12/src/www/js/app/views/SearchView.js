@@ -62,3 +62,7 @@ export default class SearchView extends View {
         }
     }
 }
+
+export function createSearchView(...args) {
+    return new SearchView(...args);
+}

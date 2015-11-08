@@ -66,3 +66,7 @@ Dictionary.meta = {
     name: "Abstract Dictionary",
     language: "en"
 };
+
+export function createDictionary(...args) {
+    return new Dictionary(...args);
+}

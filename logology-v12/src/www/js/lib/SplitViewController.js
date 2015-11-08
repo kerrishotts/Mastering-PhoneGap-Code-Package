@@ -126,3 +126,7 @@ export default class SplitViewController extends ViewController {
     }
 
 }
+
+export function createSplitViewController(...args) {
+    return new SplitViewController(...args);
+}

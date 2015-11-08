@@ -120,11 +120,11 @@ export default class Theme extends Emitter {
             this.clearElementClasses(e);
             if (animate) {
                 e.classList.add(setup);
-                setImmediate( () => {
+                setTimeout( () => {
                     e.classList.add(doing);
                     this.addClearClassToElement(doing, e);
                     setTimeout(finalAnimationStep, this.ANIMATION_TIMING);
-                });
+                }, 10);
             } else {
                 finalAnimationStep();
             }
@@ -166,4 +166,8 @@ export default class Theme extends Emitter {
                 .map( arr => this.animateElementWithAnimSequence(arr, options)));
     }
 
+}
+
+export function createTheme(...args) {
+    return new Theme(...args);
 }

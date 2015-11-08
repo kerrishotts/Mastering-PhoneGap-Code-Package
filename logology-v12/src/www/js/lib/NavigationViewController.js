@@ -125,3 +125,7 @@ export default class NavigationViewController extends ViewController {
     }
 
 }
+
+export function createNavigationViewController(...args) {
+    return new NavigationViewController(...args);
+}

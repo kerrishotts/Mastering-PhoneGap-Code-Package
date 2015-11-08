@@ -2,7 +2,7 @@
 
 import GCS from "$LIB/grandCentralStation";
 import ViewController from "$LIB/ViewController";
-import SearchView from "$VIEWS/SearchView";
+import {createSearchView} from "$VIEWS/SearchView";
 
 import h from "yasmf-h";
 //import el from "../templates/el";
@@ -14,7 +14,7 @@ import L from "$APP/localization/localization";
 
 export default class SearchViewController extends ViewController {
     constructor({model}={}) {
-        super({title: "Search", model, view: new SearchView()});
+        super({title: "Search", model, view: createSearchView()});
     }
     get TARGET_SELECTORS() {
         return [
@@ -47,4 +47,8 @@ export default class SearchViewController extends ViewController {
             this.renderSubviews()
         ]);
     }
+}
+
+export function createSearchViewController(...args) {
+    return new SearchViewController(...args);
 }

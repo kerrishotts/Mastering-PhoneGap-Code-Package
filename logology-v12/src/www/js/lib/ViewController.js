@@ -40,3 +40,7 @@ export default class ViewController extends View {
     }
 
 }
+
+export function createViewController(...args) {
+    return new ViewController(...args);
+}

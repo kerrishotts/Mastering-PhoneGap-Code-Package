@@ -30,3 +30,7 @@ export default class MenuView extends View {
         alert(listItem.textContent);
     }
 }
+
+export function createMenuView(...args) {
+    return new MenuView(...args);
+}
