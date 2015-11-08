@@ -8,12 +8,8 @@
             height: 25vw; min-height: 250px;
             position: relative;
         }
-        @media only screen and (min-width: 1025px) {
-            .fancy-heading {
-                background-image: url('./header-2000.jpg');
-            }
-        }
-        @media only screen and (min-width: 513px) and (-webkit-min-device-pixel-ratio: 1.5) {
+        @media only screen and (min-width: 1025px),
+               only screen and (min-width: 513px) and (-webkit-min-device-pixel-ratio: 1.5) {
             .fancy-heading {
                 background-image: url('./header-2000.jpg');
             }

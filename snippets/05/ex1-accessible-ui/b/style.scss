@@ -148,18 +148,18 @@ $glyphs: (search, magnifying-glass),
     y-#{$icon}-glyph, [is="y-#{$icon}-glyph"] {
         @extend y-icon;
         &:before {
-            mask-image: url( https://raw.githubusercontent.com/photokandyStudios/YASMF-Next/0.5/resources/ai-export/images/#{$glyph}.png);
+            mask-image: url('https://raw.githubusercontent.com/photokandyStudios/YASMF-Next/0.5/resources/ai-export/images/#{$glyph}.png');
             @media #{$dp2} {
-                mask-image: url( https://raw.githubusercontent.com/photokandyStudios/YASMF-Next/0.5/resources/ai-export/images/#{$glyph}@2x.png);
+                mask-image: url('https://raw.githubusercontent.com/photokandyStudios/YASMF-Next/0.5/resources/ai-export/images/#{$glyph}@2x.png');
             }
         }
     }
     y-#{$icon}-text-glyph, [is="y-#{$icon}-text-glyph"] {
         @extend y-icon-text;
         &:before {
-            mask-image: url( https://raw.githubusercontent.com/photokandyStudios/YASMF-Next/0.5/resources/ai-export/images/#{$glyph}.png);
+            mask-image: url('https://raw.githubusercontent.com/photokandyStudios/YASMF-Next/0.5/resources/ai-export/images/#{$glyph}.png');
             @media #{$dp2} {
-                mask-image: url( https://raw.githubusercontent.com/photokandyStudios/YASMF-Next/0.5/resources/ai-export/images/#{$glyph}@2x.png);
+                mask-image: url('https://raw.githubusercontent.com/photokandyStudios/YASMF-Next/0.5/resources/ai-export/images/#{$glyph}@2x.png');
             }
         }
     }
@@ -221,10 +221,10 @@ y-indicator, [is="y-indicator"] {
     padding: 0;
     position: absolute;
     top: -0.5rem;
-    mask-image: url(https://raw.githubusercontent.com/photokandyStudios/YASMF-Next/0.5/resources/ai-export/images/chevron-right-thick.png);
+    mask-image: url('https://raw.githubusercontent.com/photokandyStudios/YASMF-Next/0.5/resources/ai-export/images/chevron-right-thick.png');
     background-color: $tint-color;
     @media #{$dp2} {
-      mask-image: url(https://raw.githubusercontent.com/photokandyStudios/YASMF-Next/0.5/resources/ai-export/images/chevron-right-thick@2x.png);
+      mask-image: url('https://raw.githubusercontent.com/photokandyStudios/YASMF-Next/0.5/resources/ai-export/images/chevron-right-thick@2x.png');
     }
   }
 }
