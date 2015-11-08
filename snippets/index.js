@@ -245,8 +245,13 @@ function configureEditors() {
         mode: "ace/mode/scss",
         el: "scss-editor",
         onchange: function() {
-            Sass.compile(scssEditor.getValue(), function (r) {
-                cssEditor.setValue(autoprefixer.process(r.text).css, -1);
+            var scssText = scssEditor.getValue();
+            Sass.compile(scssText, function (r) {
+                if (scssText.substr(0,5) === "//!NA") {
+                    cssEditor.setValue(r.text, -1);
+                } else {
+                    cssEditor.setValue(autoprefixer.process(r.text).css, -1);
+                }
             });
         }
     });
