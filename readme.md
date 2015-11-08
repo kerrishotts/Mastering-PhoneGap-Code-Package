@@ -100,7 +100,7 @@ the environment works, `console.log` behaves somewhat differently, for example, 
 that. Sometimes multiple snippets are in one file, and so arrangements are made for each smaller example to co-exist within the same
 context.
 
-See the [LICENSE](./LICENSE) file for information on the various libraries used to build the snippets tool.
+See the [LICENSE](./snippets/LICENSE) file for information on the various libraries used to build the snippets tool.
 
 ## [Chapter/Project Lookup](id:chapterproject-lookup)
 
