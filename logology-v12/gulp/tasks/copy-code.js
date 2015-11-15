@@ -25,7 +25,7 @@ function copyCode() {
             standalone: "app"
         })
         .transform(babelify.configure({
-            blacklist: ["flow"],        // if we want to use type annotations, we can
+            //blacklist: ["flow"],        // if we want to use type annotations, we can
             stage: 0,                   // allow experimental features
             // resolve require directories so that we don't have to always specify full paths
             resolveModuleSource: function (id, parent) {
@@ -47,7 +47,14 @@ function copyCode() {
             }
         }))
         .bundle()
-        .on("error", notify.onError("BABEL: <%= error.message %>"))
+        //.on("error", notify.onError("BABEL: <%= error.message %>"))
+        .on("error", function(error) {
+            this.emit("end");
+        })
+        .on("error", notify.onError(function(error) {
+           // this.emit("end");
+            return "BABEL: " + error.message;
+        }))
         .pipe(source("app.js"))
         .pipe(buffer())
         .pipe(cordovaTasks.performSubstitutions())
