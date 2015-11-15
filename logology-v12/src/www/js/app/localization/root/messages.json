@@ -6,6 +6,9 @@
         "icon:back": "Back",
         "icon:search": "Search",
         "general:tap-to-reveal-the-sidebar": "Tap to reveal the sidebar",
-        "general:tap-to-hide-the-sidebar": "Tap to hide the sidebar"
+        "general:tap-to-hide-the-sidebar": "Tap to hide the sidebar",
+        "nav:get-more-dictionaries": "Get more dictionaries...",
+        "nav:readability": "Readability...",
+        "nav:about": "About..."
     }
 }

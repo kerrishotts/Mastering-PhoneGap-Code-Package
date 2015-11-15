@@ -3,10 +3,8 @@ import Dictionary from "./Dictionary";
 import Definition from "./Definition";
 
 export default class StarterDictionary extends Dictionary {
-    constructor() {
-        super();
-
-        // create a few definitions
+    load() {
+         // create a few definitions
         // definitions from Princeton's WordNet
         // Princeton University "About WordNet." WordNet. Princeton University. 2010. <http://wordnet.princeton.edu>
         let definitions = [
@@ -18,6 +16,7 @@ export default class StarterDictionary extends Dictionary {
              gloss: "nocturnal burrowing mammal of the grasslands of Africa that feeds on termites; sole extant representative of the order Tubulidentata"}
         ];
         definitions.forEach((definition) => this._addDefinition(new Definition(definition)));
+        this.loaded();
     }
 }
 
@@ -26,6 +25,6 @@ StarterDictionary.meta = {
     language: "en"
 };
 
-export function createStarterDictionary(...args) {
-    return new StarterDictionary(...args);
+export function createStarterDictionary(options = {}) {
+    return new StarterDictionary(options);
 }

@@ -11,19 +11,17 @@ import listItemContents from "$WIDGETS/listItemContents";
 import listIndicator from "$WIDGETS/listIndicator";
 
 export default function dictionariesList(dictionaries) {
-    return list({
-        contents: dictionaries.dictionaries.map( dictionaryName => {
-            return listItem({
-                contents: listItemContents({
-                    props: {
-                        value: dictionaryName
-                    },
-                    contents: [
-                        h.el("div.y-flex", dictionaryName),
-                        listIndicator()
-                    ]
-                })
-           });
-        })
+    return dictionaries.dictionaries.map( dictionaryName => {
+        return listItem({
+            contents: listItemContents({
+                props: {
+                    value: dictionaryName
+                },
+                contents: [
+                    h.el("div.y-flex", dictionaryName),
+                    listIndicator()
+                ]
+            })
+        });
     });
 }

@@ -10,6 +10,8 @@
 
 /*globals MobileAccessibility, setImmediate*/
 
+require("whatwg-fetch");
+
 import "babel/polyfill";
 
 import h from "yasmf-h";
@@ -29,8 +31,9 @@ import {createSplitViewController} from "$LIB/SplitViewController";
 
 import {createSettings} from "$MODELS/Settings";
 import {createDictionaries} from "$MODELS/Dictionaries";
+
 import StarterDictionary from "$MODELS/StarterDictionary";
-import {createStarterDictionary} from "$MODELS/StarterDictionary";
+import XHRDictionary from "$MODELS/XHRDictionary";
 
 let SVGInjector = require("svg-injector");
 /*
@@ -126,6 +129,18 @@ class App extends Emitter {
                                                             "y-scroll-container"]});
     }
 
+    handleNavigationRequests(sender, notice, ...data) {
+        // notice will be of the form APP:DO:command
+        let [, , command] = notice.split(":");
+        switch (command) {
+            case "menu":
+                this.splitViewController.toggleSidebar();
+                break;
+            default:
+                console.log(["Couldn't handle a navigation request:", sender, notice, data]);
+        }
+    }
+
     async start() {
 
         try {
@@ -143,20 +158,26 @@ class App extends Emitter {
 
             // create dictionaries list
             this.dictionaries = createDictionaries();
-            this.dictionaries.addDictionary(StarterDictionary);
+            this.dictionaries.addDictionary({name: "Starter", Dictionary: StarterDictionary});
+            this.dictionaries.addDictionary({name: "WordNet - JSON", Dictionary: XHRDictionary, options: {path: "wordnet.json"}});
 
-            let svc = createSearchViewController({model: createStarterDictionary()});
+            let starterDictionary = await this.dictionaries.getDictionaryInstance({name: "Starter"});
+            let wnjDictionary = await this.dictionaries.getDictionaryInstance({name: "WordNet - JSON"});
+
+            let svc = createSearchViewController({model: wnjDictionary});
             let mvc = createMenuViewController({model: this.dictionaries});
-            this.searchViewController2 = createSearchViewController({model: createStarterDictionary()});
+            //this.searchViewController2 = createSearchViewController({model: starterDictionary});
 
             let nvc = createNavigationViewController({subviews: [svc]});
 
             this.splitViewController = createSplitViewController( {subviews: [mvc, nvc], themeManager: this.themeManager, renderElement: rootElement});
             this.splitViewController.visible = true;
 
-            GCS.on("APP:menu", () => {
-                this.splitViewController.toggleSidebar();
-            });
+            // logging
+            GCS.on("/.*/", (...args) => console.log(args));
+
+            GCS.on("/APP:DO:.+/", this.handleNavigationRequests, this)
+
             // tell everyone that the app has started
             GCS.emit("APP:started");
             this.emit("started");

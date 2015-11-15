@@ -5,16 +5,38 @@ import Definition from "./Definition";
 // jscs:enable
 
 // private property symbols
-let _definitions = Symbol(),
-    _index = Symbol(),
-    _sortedIndex = Symbol();
+let _definitions = Symbol("_definitions"),
+    _index = Symbol("_index"),
+    _loaded = Symbol("_loaded"),
+    _options = Symbol("_options");
+
+export let _sortedIndex = Symbol("_sortedIndex");
 
 export default class Dictionary extends Emitter {
-    constructor() {
+    constructor(options = {}) {
         super();
         this[_definitions] = new Map(); // wordNetRef : definition
         this[_index] = new Map(); // lemma : set of WordNetRef
         this[_sortedIndex] = [];
+        this[_loaded] = false;
+        this[_options] = options;
+    }
+
+    get isLoaded() {
+        return this[_loaded];
+    }
+
+    get options() {
+        return this[_options];
+    }
+
+    loaded() {
+        this[_loaded] = true;
+        this.emit("loaded");
+    }
+
+    load() {
+        throw new Error("must override load()!");
     }
 
     _addDefinition( definition ) {
@@ -31,6 +53,9 @@ export default class Dictionary extends Emitter {
     }
 
     get sortedIndex() {
+        if (!this.isLoaded) {
+            return [];
+        }
         if (this[_sortedIndex].length === this[_index].size) {
             // the currently sorted index is the same size as our map
             // return it
@@ -44,8 +69,44 @@ export default class Dictionary extends Emitter {
         return this[_sortedIndex];
     }
 
+    filteredIndex(filter) {
+        if (!this.isLoaded) {
+            return [];
+        }
+        return this[_sortedIndex].filter(v => v.indexOf(filter) > -1);
+    }
+
+    asyncFilteredIndex(filter, per=10) {
+        if (!this.isLoaded) {
+            return Promise.resolve(() => []);
+        }
+        let arr = [], idx = 0, len = this[_sortedIndex].length, id;
+        return new Promise((resolve, reject) => {
+            id = setInterval(() => {
+                if (idx<len) {
+                    let nextLen = idx + per;
+                    if (nextLen > len) {
+                        nextLen = len;
+                    }
+                    for (let i=idx;i<nextLen;i++) {
+                        if (this[_sortedIndex][i].indexOf(filter) > -1) {
+                            arr.push(this[_sortedIndex][i]);
+                        }
+                        idx++;
+                    }
+                } else {
+                    clearInterval(id);
+                    resolve(arr);
+                }
+            }, 0);
+        });
+    }
+
 
     async getEntries( {lemma="", wordNetRef} ) {
+        if (!this.isLoaded) {
+            return [];
+        }
         if (wordNetRef !== undefined) {
             // if we have a wordNetRef, we can get the word directly, so do that first.
             let entry = this[_definitions].get(wordNetRef);
@@ -67,6 +128,7 @@ Dictionary.meta = {
     language: "en"
 };
 
-export function createDictionary(...args) {
-    return new Dictionary(...args);
+export function createDictionary(options = {}) {
+    return new Dictionary(options);
 }
+

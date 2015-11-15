@@ -1,6 +1,6 @@
 "use strict";
 export default class Definition {
-    constructor({wordNetRef, lemmas=[], partOfSpeech, gloss }) {
+    constructor({wordNetRef, lemmas=[], partOfSpeech, gloss } = {}) {
         this.lemmas = lemmas;
         this.partOfSpeech = partOfSpeech;
         this.gloss = gloss;
@@ -8,6 +8,6 @@ export default class Definition {
     }
 }
 
-export function createDefinition(...args) {
-    return new Definition(...args);
+export function createDefinition(options = {}) {
+    return new Definition(options);
 }

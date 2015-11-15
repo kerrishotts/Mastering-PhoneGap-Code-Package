@@ -23,10 +23,15 @@ export default class SearchViewController extends ViewController {
         ];
     }
     onSearchChanged(sender, notice, target/*, e*/) {
-        console.log(target.value);
+        let filter = target.value.trim();
+        if (filter === "") {
+            this.view.clearFilter();
+        } else {
+            this.view.filter = target.value;
+        }
     }
     onMenuTapped() {
-        GCS.emit("APP:menu");
+        GCS.emit("APP:DO:menu");
     }
     template() {
         return h.el("main.SearchViewController y-container?is=y-search-view-controller", [

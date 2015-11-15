@@ -24,7 +24,7 @@ export default class MenuViewController extends ViewController {
         ];
     }
     onMenuTapped() {
-        GCS.emit("APP:menu");
+        GCS.emit("APP:DO:menu");
     }
     template() {
         return h.el("main.MenuViewController y-container?is=menu-view-controller", [

@@ -14,6 +14,13 @@ describe("Dictionary Tests", () => {
         });
     });
     
+    describe ("#Loaded", () => {
+        it("should be able to set itself as loaded", () => {
+            dictionary.loaded();
+            return dictionary.isLoaded.should.be.true;
+        })
+    })
+    
     describe ("#Empty", () => {
         it("should return an empty sorted index", () => {
             return dictionary.sortedIndex.should.have.lengthOf(0);

@@ -138,8 +138,8 @@ function findElementMatchingSelectorLocally(selector/*: string*/, startingTarget
 function triggerTargetSelectors(e/*: Event*/)/*: void*/ {
     const targetSelectors = this[_targetSelectors];
     for (let [eventAndSelector, emitSet] of targetSelectors) {
-        let [eventFilters, selector] = eventAndSelector.split(":");
-        selector = selector.trim();
+        let [eventFilters, ...selector] = eventAndSelector.split(":");
+        selector = selector.join(":").trim();
         eventFilters = eventFilters.trim().split(" ");
         if (eventFilters && eventFilters.indexOf(e.type) > -1) {
             let curTarget = findElementMatchingSelectorLocally(selector, e.target, this.elementTree);
