@@ -5,7 +5,7 @@ import ViewController from "$LIB/ViewController";
 import {createSearchView} from "$VIEWS/SearchView";
 
 import h from "yasmf-h";
-//import el from "../templates/el";
+import el from "$LIB/templates/el";
 import navigationBar from "$WIDGETS/bars/navigation";
 import widgetGroup from "$WIDGETS/group";
 import glyph from "$WIDGETS/glyph";
@@ -45,7 +45,7 @@ export default class SearchViewController extends ViewController {
                 widgetGroup({contents:[
                     h.el("label?role=search", [
                         glyph({tag:"div", icon:"search", contents: L.T("icon:search")}),
-                        h.el("input?type=text")
+                        el({tag:"input?type=text&autocapitalize=off&autocorrect=off", value: this.view.filter})
                     ])
                 ], align:"right"})
             ]}),
