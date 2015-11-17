@@ -7,7 +7,8 @@ let _fontFamily = Symbol(), // font family
     _fontSize = Symbol(),   // 0 = use system default, otherwise specific point sizes
     _theme = Symbol(),      // light, dark, lightHighContrast, etc.
     _externalResources = Symbol(), // link templates to external resources, like Wikipedia
-    _showImages = Symbol(); // determines if images are shown (if possible)
+    _showImages = Symbol(), // determines if images are shown (if possible)
+    _pageSize = Symbol();   // page length (search results, etc.)
 
 export default class Settings extends Emitter {
     constructor() {
@@ -16,6 +17,7 @@ export default class Settings extends Emitter {
         this[_fontSize] = 0;           // 0 will use app default (from system)
         this[_theme] = "light";
         this[_showImages] = true;
+        this[_pageSize] = 100;
         this[_externalResources] = {
             "Wikipedia": "http://www.wikipedia.org/search-redirect.php?language=en&search=%WORD%",
             "WordNet": "http://wordnetweb.princeton.edu/perl/webwn?s=%WORD%"
@@ -37,18 +39,20 @@ export default class Settings extends Emitter {
         if (localStorage.fontSize !== undefined) { this[_fontSize] = localStorage.fontSize; }
         if (localStorage.theme !== undefined) { this[_theme] = localStorage.theme; }
         if (localStorage.showImages !== undefined) { this[_showImages] = localStorage.showImages; }
-        if (localStorage.externalResources !== undefined) { this[_externalResources] = localStorage.externalResources; }
+        if (localStorage.externalResources !== undefined) { this[_externalResources] = JSON.parse(localStorage.externalResources); }
+        if (localStorage.pageSize !== undefined) { this[_pageSize] = localStorage.pageSize; }
         this.emit("settingsRetrieved");
         GCS.emit("APP:SETTINGS:loaded");
         this.emit("settingsChanged"); // this will save the settings again, but that's OK
     }
 
     persistSettings() {
-        localStorage.fontFamily = this.fontFamily;
-        localStorage.fontSize = this.fontSize;
-        localStorage.theme = this.theme;
-        localStorage.showImages = this.showImages;
-        localStorage.externalResources = this._externalResources;
+        if (this.fontFamily !== undefined) { localStorage.fontFamily = this.fontFamily; }
+        if (this.fontSize !== undefined) { localStorage.fontSize = this.fontSize; }
+        if (this.theme !== undefined) { localStorage.theme = this.theme; }
+        if (this.showImages !== undefined) { localStorage.showImages = this.showImages; }
+        localStorage.externalResources = JSON.stringify(this.externalResources);
+        if (this.pageSize !== undefined) { localStorage.pageSize = this.pageSize; }
         this.emit("settingsPersisted");
         GCS.emit("APP:SETTINGS:persisted");
     }
@@ -83,6 +87,12 @@ export default class Settings extends Emitter {
         this[_showImages] = v;
     }
 
+    get pageSize() { return this[_pageSize]; }
+    set pageSize(s) {
+        this._emitChangeNotice("pageSize", s, this[_pageSize]);
+        this[_pageSize] = s;
+    }
+
     get externalResources() { return this[_externalResources]; }
 
     addExternalResource({name, template}) {
@@ -93,6 +103,8 @@ export default class Settings extends Emitter {
         this[_externalResources][name] = undefined;
     }
 }
+
+export let settings = new Settings();
 
 export function createSettings(...args) {
     return new Settings(...args);
