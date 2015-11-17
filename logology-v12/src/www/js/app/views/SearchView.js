@@ -1,14 +1,15 @@
 /* @flow */
 "use strict";
 
+const kp = require("keypather")();
+
+import prefix from "prefix-property";
 import scrollContainer from "$WIDGETS/scrollContainer";
-import lemmaList from "./lemmaList";
 import View from "$LIB/View";
 import GCS from "$LIB/grandCentralStation";
 
-import prefix from "prefix-property";
-
-const kp = require("keypather")();
+import lemmaList from "./lemmaList";
+import {settings} from "$MODELS/Settings";
 
 const prefixedJSTransition = prefix("transition"),
       prefixedCSSTransform = prefix.css("transform"),
@@ -20,7 +21,8 @@ const _panningItem = Symbol(),
       _panningStartX = Symbol(),
       _panningActionWidth = Symbol(),
       _filter = Symbol(),
-      _filteredItems = Symbol();
+      _filteredItems = Symbol(),
+      _page = Symbol();
 //-----------------------------------------------------------------------------
 //endregion
 
@@ -158,6 +160,13 @@ export default class SearchView extends View {
         // indicate that we want all dictionary items
         this[_filter] = undefined;
         this[_filteredItems] = [];
+
+        // page number is zero
+        this[_page] = 0;
+    }
+
+    get page() {
+        return this[_page];
     }
 
     get filter() {
@@ -174,7 +183,7 @@ export default class SearchView extends View {
 
     template() {
         let model = kp.get(this, "controller.model");
-        let dictionaryItems = (this[_filter] ? this[_filteredItems] : model.sortedIndex).slice(0,100);
+        let dictionaryItems = (this[_filter] ? this[_filteredItems] : model.sortedIndex).slice((this.page * settings.pageSize),settings.pageSize);
         return scrollContainer({contents: lemmaList(dictionaryItems)});
     }
 
@@ -213,6 +222,9 @@ export default class SearchView extends View {
     }
 
     onFilterChanged(_, notice, data) {
+        this[_page] = 0;
+        this.elementTree.scrollTop = 0; // scroll the page back to the top
+
         let model = kp.get(this, "controller.model");
         let filter = this[_filter];
         if (filter) {
