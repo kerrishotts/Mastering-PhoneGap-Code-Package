@@ -6,10 +6,14 @@
   $tint-border-color: #DEDAD1;
   $tint-active-color-darker: #CECAC1;
   $view-background-color: #EEEAE1;
+  $ui-text-color: #000000;
+  $text-color: #3E3A31;
   $alert-background-color: #FFF;
   $bar-light-color: #FFF;
+  $list-heading-text-color: #6E6A61;
 
   font-family: $font-stack;
+  color: $ui-text-color;
 
   //button
   button {
@@ -43,6 +47,14 @@
     &:before {
       background-color: $tint-color;
     }
+  }
+
+  y-list-heading, [is="y-list-heading"] {
+      color: $list-heading-text-color;
+  }
+  .list-indicator-icon {
+    margin-right: -1rem;
+    color: $tint-color;
   }
 
   // alerts

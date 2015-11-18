@@ -8,13 +8,36 @@ y-list, [is="y-list"] {
   padding-bottom: 100vh;
 }
 
-y-list-item, [is="y-list-item"] {
+y-list-item, [is="y-list-item"],
+y-list-item-spacer, [is="y-list-item-spacer"],
+y-list-heading, [is="y-list-heading"] {
   display: flex;
   border-bottom: 1px solid $tint-border-color;
   border-right: 1px solid $tint-border-color;
   flex: 1 1 320px;
   position: relative;
   overflow: hidden;
+}
+
+y-list-item-spacer, [is="y-list-item-spacer"],
+y-list-heading, [is="y-list-heading"] {
+    border-right: 0;
+    height: 2rem;
+}
+
+y-list-heading, [is="y-list-heading"] {
+    color: $list-heading-text-color;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 90%;
+    height: auto;
+    padding: 0.5rem;
+}
+
+.list-indicator-icon {
+    margin-right: -1rem;
+    color: $tint-color;
 }
 
 y-list-actions, [is="y-list-actions"] {

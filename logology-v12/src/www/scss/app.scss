@@ -7,6 +7,7 @@ $tint-active-color: #EEEAE1;
 $tint-border-color: #DEDAD1;
 $tint-active-color-darker: #CECAC1;
 $view-background-color: #EEEAE1;
+$list-heading-text-color: #303030;
 
 @import "./lib/base";
 @import "./lib/button";
@@ -47,10 +48,6 @@ $view-background-color: #EEEAE1;
     }
 }
 
-.list-indicator-icon {
-    margin-right: -1rem;
-    color: $tint-color;
-}
 .menu-icon {
     margin-top: -0.25rem;
 }
