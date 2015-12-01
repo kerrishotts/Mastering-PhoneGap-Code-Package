@@ -42,6 +42,6 @@ export default class ThemeManager extends Emitter {
     }
 }
 
-export function createThemeManager(...args) {
-    return new ThemeManager(...args);
+export function createThemeManager(options = {}) {
+    return new ThemeManager(options);
 }

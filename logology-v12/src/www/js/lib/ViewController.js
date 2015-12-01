@@ -41,6 +41,6 @@ export default class ViewController extends View {
 
 }
 
-export function createViewController(...args) {
-    return new ViewController(...args);
+export function createViewController(options = {}) {
+    return new ViewController(options);
 }

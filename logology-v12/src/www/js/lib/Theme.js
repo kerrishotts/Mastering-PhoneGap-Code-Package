@@ -168,6 +168,6 @@ export default class Theme extends Emitter {
 
 }
 
-export function createTheme(...args) {
-    return new Theme(...args);
+export function createTheme(options = {}) {
+    return new Theme(options);
 }
