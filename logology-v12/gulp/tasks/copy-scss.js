@@ -1,7 +1,6 @@
 "use strict";
 
-var pkg = require("../../package.json"),
-    gulp = require("gulp"),
+var gulp = require("gulp"),
     sass = require("gulp-sass"),
     autoprefixer = require("gulp-autoprefixer"),
     notify = require("gulp-notify"),
@@ -15,14 +14,14 @@ var pkg = require("../../package.json"),
 function copySCSS() {
     var isRelease = (settings.BUILD_MODE === "release");
     var includePaths = [];
-    var includeModules = pkg.sass && pkg.sass.includeModules;
+    var includeModules = config.sass && config.sass.includeModules;
     if (includeModules instanceof Array) {
         includePaths = includePaths.concat(includeModules.map( function (moduleName) {
         var module = require(moduleName);
         return module.includePath;
         }));
     }
-    var moreIncludePaths = pkg.sass && pkg.sass.includePaths;
+    var moreIncludePaths = config.sass && config.sass.includePaths;
     if (moreIncludePaths instanceof Array) {
         includePaths = includePaths.concat(moreIncludePaths);
     }
@@ -32,7 +31,12 @@ function copySCSS() {
                    includePaths: includePaths,
                    outputStyle: (isRelease ? "compressed" : "nested")
                }))
-               .on("error", notify.onError("SASS: <%= error.message %>"))
+               .on("error", function(error) {
+                   this.emit("end");
+               })
+               .on("error", notify.onError(function(error) {
+                   return "SASS: " + error.message;
+               }))
                .pipe(autoprefixer({browsers: ["last 2 versions"]}))
                .pipe(isRelease ? gutil.noop() : sourcemaps.write())
                .pipe(gulp.dest(paths.makeFullPath(config.assets.styles.dest, paths.DEST)))
