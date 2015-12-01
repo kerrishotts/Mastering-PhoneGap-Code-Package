@@ -30,7 +30,7 @@ export default class NavigationViewController extends ViewController {
     }
     template()/*: Node*/ {
         return h.el("main.NavigationViewController?is=y-navigation-view-controller",
-            this.renderSubviews().map( elTree => h.el("div.y-navigation-wrapper?is=y-navigation-wrapper", elTree)));
+            this.renderSubviews()); //.map( elTree => h.el("div.y-navigation-wrapper?is=y-navigation-wrapper", elTree)));
     }
 
 ///mark: top and root view properties
@@ -120,12 +120,20 @@ export default class NavigationViewController extends ViewController {
         return Promise.reject("No theme manager, or no current theme. Can't pop.");
     }
 
-    popToRoot()/*: void*/ {
-
+    popToRoot(): Promise<void> {
+        if (this.subviews.length < 2) {
+            return Promise.resolve();
+        }
+        
+        var p: Promise<{}> = Promise.resolve();
+        for (var i=this.subviews.length; i>=2; i--) {
+            p = p.then(() => this.pop({animate: false}));
+        }
+        return p.then(() => {return;});
     }
 
 }
 
-export function createNavigationViewController(...args) {
-    return new NavigationViewController(...args);
+export function createNavigationViewController(options = {}) {
+    return new NavigationViewController(options);
 }
