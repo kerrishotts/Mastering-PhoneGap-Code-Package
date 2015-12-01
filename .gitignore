@@ -6,5 +6,9 @@
 */tmp
 *.swp
 .settings
-logology-v05/.sublime-gulp.cache
+.sublime-gulp.cache
 */.release.keystore
+*.ipa
+*.apk
+todo.txt
+audit/
