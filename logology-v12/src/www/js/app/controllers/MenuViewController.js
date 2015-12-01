@@ -20,7 +20,7 @@ export default class MenuViewController extends ViewController {
     }
     get TARGET_SELECTORS() {
         return [
-            {selector: "tap:.back-icon", emit: "menuTapped"}
+            {selector: "tap:.menu-icon", emit: "menuTapped"}
         ];
     }
     onMenuTapped() {
@@ -30,7 +30,7 @@ export default class MenuViewController extends ViewController {
         return h.el("main.MenuViewController y-container?is=menu-view-controller", [
             navigationBar({contents:[
                 widgetGroup({contents:[
-                    glyph({icon:"back", contents: L.T("icon:back"), title: L.T("general:tap-to-hide-the-sidebar")})
+                    glyph({icon:"menu", contents: L.T("icon:menu"), title: L.T("general:tap-to-hide-the-sidebar")})
                 ]}),
                 widgetGroup({contents:[
                     h.el("h1?is=y-title", L.T("app:menu-title"))
@@ -41,6 +41,6 @@ export default class MenuViewController extends ViewController {
     }
 }
 
-export function createMenuViewController(...args) {
-    return new MenuViewController(...args);
+export function createMenuViewController(options={}) {
+    return new MenuViewController(options);
 }
