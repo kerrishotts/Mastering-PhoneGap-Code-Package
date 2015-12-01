@@ -16,7 +16,15 @@ y-container, [is="y-container"], .y-container {
 }*/
 
 y-scroll-container, [is="y-scroll-container"], .y-scroll-container {
-  overflow: auto;
+  overflow: scroll;
   -webkit-overflow-scrolling: touch;
   flex: 1;
+}
+
+y-text-container, [is="y-text-container"], .y-text-container {
+    color: $text-color;
+    p {
+        margin: 1rem;
+        line-height: normal;
+    }
 }
