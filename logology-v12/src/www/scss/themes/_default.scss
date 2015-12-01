@@ -8,6 +8,7 @@
   $view-background-color: #EEEAE1;
   $ui-text-color: #000000;
   $text-color: #3E3A31;
+  $lighter-text-color: #6E6A61;
   $alert-background-color: #FFF;
   $bar-light-color: #FFF;
   $list-heading-text-color: #6E6A61;
@@ -55,6 +56,10 @@
   .list-indicator-icon {
     margin-right: -1rem;
     color: $tint-color;
+  }
+
+  y-text-container, [is="y-text-container"], .y-text-container {
+    color: $text-color;
   }
 
   // alerts
@@ -195,7 +200,7 @@
             &:last-child { transform: translate3d(0, 0, 10px); }
         }
     }
-    
+
     .default-anims-split-enter, .default-anims-split-leave,
     .default-animd-split-enter, .default-animd-split-leave,
     .default-animh-split-enter, .default-animh-split-leave {
@@ -219,6 +224,94 @@
 
     .default-not-displayed {
         display: none;
+    }
+
+    // about
+    .AboutViewController {
+        div.y-flex {
+            margin: auto auto;
+        }
+        .name {
+            font-weight: bold;
+            flex: 2 !important;
+        }
+        .comment {
+            text-align: center;
+        }
+        .licenseType {
+            text-align: right;
+        }
+    }
+
+    .SettingsViewController {
+        div.y-flex {
+            margin: auto auto;
+        }
+        .name {
+        }
+        .value {
+            font-weight: bold;
+            text-align: right;
+            select {
+                -webkit-appearance: none;
+                border: 0;
+                font-weight: bold;
+                width: 100%;
+                font-size: 1rem;
+                background-color: transparent;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                padding-left: 50%;
+            }
+        }
+    }
+
+    // search results
+    .SearchViewController {
+        p.search-info {
+            font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+            font-style: italic;
+            font-size: 150%;
+            line-height: normal;
+            opacity: 0.66;
+            text-align: center;
+            padding: 2rem 0;
+        }
+    }
+
+    // dictionary definitions
+    .DefinitionViewController {
+        ol {
+            list-style-type: none;
+            counter-reset: definition-list;
+            margin-left: 1rem;
+            li {
+                &:before {
+                    content: counter(definition-list) '.';
+                    counter-increment: definition-list;
+                    font-weight: bold;
+                    margin-left: -3rem;
+                    display: inline-block;
+                    width: 3rem;
+                    text-align: right;
+                }
+                color: $text-color;
+                margin: 1rem 2rem;
+                span.pos {
+                    font-style: italic;
+                    color: $lighter-text-color;
+                    margin-left: 0.5rem;
+                    display: inline-block;
+                }
+                span.def {
+                    display: inline-block;
+                    margin-left: 1.5rem;
+                }
+            }
+        }
     }
 
 }
