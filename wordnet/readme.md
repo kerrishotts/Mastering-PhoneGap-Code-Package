@@ -16,40 +16,64 @@ I executed the following SQL query against the database using `sqlite3`:
 .mode list
 .separator ;
 .output wordnet.json
-select '[' || group_concat(JSON, ',' || char(10)) || ']' from
-(
-  select '{"wordNetRef": "' || wordNetRef || '", "lemmas": [' || lemmas || '], "partOfSpeech": "' || 
-          partOfSpeech || '", "semantics": "' || semantics || '",' || char(10) ||
-          ' "gloss": "' || gloss || '"}' as JSON from
+select '[' || group_concat(items, ", " || char(10)) || ']'
+from (
+  select '{' || group_concat('"' || lemma ||'": [' || wordOrder || ']', ", " || char(10) ) || '}' items
+  from (
+    select lemma, group_concat('"' || synsetid || '"', ", ") wordOrder from (
+      select w.lemma, p.posname, s.sensenum, s.synsetid
+        from words w, senses s, synsets syn, postypes p
+      where 1=1
+        and s.wordid = w.wordid
+        and syn.synsetid = s.synsetid
+        and syn.pos = p.pos
+      order by 1,2,3,4
+    ) group by 1
+  )
+  UNION
+  select '[' || group_concat(JSON, ',' || char(10)) || ']' items from
   (
-    select syn.synsetid as wordNetRef,
-          group_concat('"' || lemma || '"',', ') as lemmas,
-          p.posname as partOfSpeech,
-          lexdomainname as semantics,
-          definition as gloss
-      from words w, senses s, synsets syn, lexdomains l, postypes p
-    where 1=1
-      and s.wordid = w.wordid
-      and syn.synsetid = s.synsetid
-      and l.lexdomainid = syn.lexdomainid
-      and syn.pos = p.pos
-    group by 1,3,4,5
-    order by 1
+    select '{"wordNetRef": "' || wordNetRef || '", "lemmas": [' || lemmas || '], "partOfSpeech": "' ||
+            partOfSpeech || '", "semantics": "' || semantics || '",' || char(10) ||
+            ' "gloss": "' || gloss || '"}' as JSON from
+    (
+      select syn.synsetid as wordNetRef,
+            group_concat('"' || lemma || '"',', ') as lemmas,
+            p.posname as partOfSpeech,
+            lexdomainname as semantics,
+            definition as gloss
+        from words w, senses s, synsets syn, lexdomains l, postypes p
+      where 1=1
+        and s.wordid = w.wordid
+        and syn.synsetid = s.synsetid
+        and l.lexdomainid = syn.lexdomainid
+        and syn.pos = p.pos
+      group by 1,3,4,5
+      order by 1
+    )
   )
 );
 .exit
 ```
 
-This results in about a 22MiB JavaScript object.
+This results in about a 28MiB JavaScript object that contains an index and definitions.
 
-## Get a smaller SQLite representation
+## Get a SQLite representation
 
-We can use a portion of the query that generates the JSON representation to obtain a SQLite database. Although the result is not smaller (it's larger by about 12MiB), it's also more flexible.
+We can use a portion of the query that generates the JSON representation to obtain a SQLite database. Although the result is not smaller (it's larger by nearly 20MiB), it's much more flexible and speedy.
 
 ```sql
 sqlite3 /path/to/sqlite-31.db
 attach './wordnet.db' as WD;
-create table WD.lemmas as select wordid, lemma from words;
+create table WD.lemmas as
+    select wordid, lemma
+      from words;
+create table WD.senses as
+    select w.wordid, s.sensenum, p.posname
+      from words w, senses s, synsets syn, postypes p
+     where s.wordid = w.wordid
+       and syn.synsetid = s.synsetid
+       and syn.pos = p.pos;
 create table WD.definitions as
     select w.wordid as wordid,
            syn.synsetid as wordNetRef,
@@ -76,6 +100,8 @@ create view words as
     order by 1;
 create unique index pk_lemmas on lemmas ( wordid );
 create index idx_lemmas on lemmas ( lemma );
+create unique index pk_senses on senses ( wordid, sensenum, posname );
+create index idx_senses on senses ( wordid );
 create index pk_definitions on definitions ( wordNetRef );
 create index idx_definitions on definitions ( wordid );
 .exit
