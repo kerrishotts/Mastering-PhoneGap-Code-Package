@@ -33,6 +33,9 @@ export default class SearchViewController extends ViewController {
     onMenuTapped() {
         GCS.emit("APP:DO:menu");
     }
+    onDidRemoveFromParent() {
+        this.destroy();
+    }
     template() {
         return h.el("main.SearchViewController y-container?is=y-search-view-controller", [
             navigationBar({contents:[
@@ -45,7 +48,7 @@ export default class SearchViewController extends ViewController {
                 widgetGroup({contents:[
                     h.el("label?role=search", [
                         glyph({tag:"div", icon:"search", contents: L.T("icon:search")}),
-                        el({tag:"input?type=text&autocapitalize=off&autocorrect=off", value: this.view.filter})
+                        el({tag:"input?type=text&autocapitalize=off&autocorrect=off", value: this.view && this.view.filter})
                     ])
                 ], align:"right"})
             ]}),
@@ -54,6 +57,6 @@ export default class SearchViewController extends ViewController {
     }
 }
 
-export function createSearchViewController(...args) {
-    return new SearchViewController(...args);
+export function createSearchViewController(options = {}) {
+    return new SearchViewController(options);
 }
