@@ -11,6 +11,9 @@ y-widget-group, [is="y-widget-group"] {
     display: inline-block;
     vertical-align: middle;
   }
+  label {
+      line-height: 1; // otherwise it increases the height by a few px
+  }
   label input {
     -webkit-appearance: none;
     -moz-appearance: none;
