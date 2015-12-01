@@ -4,11 +4,16 @@
 const kp = require("keypather")();
 
 import prefix from "prefix-property";
+import h from "yasmf-h";
+
 import scrollContainer from "$WIDGETS/scrollContainer";
+import textContainer from "$WIDGETS/textContainer";
 import View from "$LIB/View";
 import GCS from "$LIB/grandCentralStation";
+import L from "$APP/localization/localization";
 
 import lemmaList from "./lemmaList";
+
 import {settings} from "$MODELS/Settings";
 
 const prefixedJSTransition = prefix("transition"),
@@ -149,8 +154,8 @@ function panItemEnd(listItem: Node, evt: Event): void {
 //region SearchView
 //-----------------------------------------------------------------------------
 export default class SearchView extends View {
-    constructor (...args) {
-        super(...args);
+    constructor (options={}) {
+        super(options);
 
         // initialize our private properties for item panning support
         this[_panningItem] = null;
@@ -183,8 +188,14 @@ export default class SearchView extends View {
 
     template() {
         let model = kp.get(this, "controller.model");
-        let dictionaryItems = (this[_filter] ? this[_filteredItems] : model.sortedIndex).slice((this.page * settings.pageSize),settings.pageSize);
-        return scrollContainer({contents: lemmaList(dictionaryItems)});
+        let dictionaryItems = model ? ((this[_filter] ? this[_filteredItems] : []).slice((this.page * settings.pageSize),settings.pageSize)) : [];
+        return  scrollContainer({contents: [lemmaList(dictionaryItems)].concat(textContainer({contents:h.el("p.search-info",
+            this[_filter] ? (
+                this[_filteredItems].length === 0 ? L.T("search:no-results") : (
+                    this[_filteredItems].length > settings.pageSize ? L.T("search:too-many-results") : ""
+                )
+            ) : L.T("search:enter")
+        )}))});
     }
 
     get TARGET_SELECTORS() {
@@ -222,6 +233,7 @@ export default class SearchView extends View {
     }
 
     onFilterChanged(_, notice, data) {
+        this.dirty = true;
         this[_page] = 0;
         this.elementTree.scrollTop = 0; // scroll the page back to the top
 
@@ -229,13 +241,13 @@ export default class SearchView extends View {
         let filter = this[_filter];
         if (filter) {
             // look up some entries!
-            this[_filteredItems] = model.filteredIndex(filter);
-            this.render();
-            /*model.asyncFilteredIndex(filter)
+            /*this[_filteredItems] = model.filteredIndex(filter);
+            this.render();*/
+            model.asyncFilteredIndex(filter)
                 .then(entries => {
                     this[_filteredItems] = entries;
                     this.render();
-                });*/
+                });
         } else {
             // back to the sorted list
             this.render();
@@ -250,8 +262,8 @@ export default class SearchView extends View {
 
 //region Factory
 //-----------------------------------------------------------------------------
-export function createSearchView(...args) {
-    return new SearchView(...args);
+export function createSearchView(options={}) {
+    return new SearchView(options);
 }
 //-----------------------------------------------------------------------------
 //endregion
