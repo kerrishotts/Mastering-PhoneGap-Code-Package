@@ -6,35 +6,6 @@ import h from "yasmf-h";
 import Hammer from "hammerjs";
 import matchesSelector from "matches-selector";
 
-function removeRemainingChildrenFromElement(el, startingAt, nodeCount) {
-    for (let i = startingAt; i < nodeCount; i++) {
-        el.removeChild(el.childNodes[i]);
-    }
-}
-h.renderTo = function renderTo(n, el, idx = 0) {
-    if (!n || !el) {
-        return;
-    }
-    if (n instanceof Array) {
-        let elNodeCount = el.children.length;
-        n.forEach((ni, i) => renderTo(ni, el, i));
-        /*for (let i = 0, l = n.length; i < l; i++) {
-            if (n[i]) {
-                renderTo(n[i], el, i);
-            }
-        }*/
-        removeRemainingChildrenFromElement(el, n.length, elNodeCount);
-        /*for (let i = n.length; i < elNodeCount; i++) {
-            el.removeChild(el.childNodes[i]);
-        }*/
-    } else {
-        if (el.hasChildNodes() && idx < el.childNodes.length) {
-            el.replaceChild(n, el.childNodes[idx]);
-        } else {
-            el.appendChild(n);
-        }
-    }
-};
 /******************************************************************************
  *
  * VIEW
@@ -63,17 +34,19 @@ h.renderTo = function renderTo(n, el, idx = 0) {
 */
 
 // private property symbols
-const _subviews = Symbol(),
-      _elementTree = Symbol(),
-      _parentView = Symbol(),
-      _hammer = Symbol(),
-      _renderElement = Symbol(),
-      _targetSelectors = Symbol(),
-      _themeManager = Symbol(),
-      _visible = Symbol(),
-      _display = Symbol(),
-      _attached = Symbol(),
-      _scrollTop = Symbol();
+const _subviews = Symbol("_subviews"),
+      _elementTree = Symbol("_elementTree"),
+      _parentView = Symbol("_parentView"),
+      _hammer = Symbol("_hammer"),
+      _renderElement = Symbol("_renderElement"),
+      _targetSelectors = Symbol("_targetSelectors"),
+      _themeManager = Symbol("_themeManager"),
+      _visible = Symbol("_visible"),
+      _display = Symbol("_display"),
+      _attached = Symbol("_attached"),
+      _scrollTop = Symbol("_scrollTop"),
+      _title = Symbol("_title"),
+      _tag = Symbol("_tag");
 
 /**
  * Remove the view's tree from the render element.
@@ -156,7 +129,7 @@ function triggerTargetSelectors(e/*: Event*/)/*: void*/ {
  * View Class
  */
 export default class View extends Emitter {
-    constructor({deferRendering = false, subviews = [], renderElement = null, themeManager = null} = {}) {
+    constructor({deferRendering = false, subviews = [], renderElement = null, themeManager = null, title = "", tag} = {}) {
         super();
         this[_subviews] = [];
         subviews.forEach(v => this.addSubview(v));
@@ -172,8 +145,23 @@ export default class View extends Emitter {
         this[_attached] = false;
         this[_visible] = undefined; // use parent if we have one
         this[_display] = true;
+        this[_title] = title;
+        this[_tag] = tag;
 
         if (!deferRendering) { setImmediate(this.render.bind(this)); }
+    }
+
+    get title() {
+        return this[_title];
+    }
+
+    get tag() {
+        return this[_tag];
+    }
+
+    set tag(v) {
+        this[_tag] = v;
+        this.emit("tagChanged", v);
     }
 
 ///mark: rendering
@@ -207,11 +195,12 @@ export default class View extends Emitter {
      * @return {Node|Array}
      */
     render()/*: Node|Array*/ {
+        let template = this.template();
         if (this.elementTree) {
-            h.renderTo(Array.from(this.template().children), this.elementTree);
+            h.renderTo(template && template.children ? Array.from(template && template.children) : [], this.elementTree);
             //h.renderTo(this.template(), this.elementTree);
         } else {
-            this.elementTree = this.template();
+            this.elementTree = template;
         }
         if (this.themeManager && this.themeManager.currentTheme) {
             // make sure we handle visibility and display
@@ -225,7 +214,8 @@ export default class View extends Emitter {
      * If a `render` event is received, render our template up to our parent
      */
     onRender()/*: void*/ {
-        this.renderUpTo({stopAt: this.parentView});
+        this.render();
+        //this.renderUpTo({stopAt: this.parentView});
     }
 
     /**
@@ -428,7 +418,7 @@ export default class View extends Emitter {
     set elementTree(e/*: Node*/)/*: void*/ {
         this.emitSync("willChangeElementTree", e);
         this[_elementTree] = e;
-        this.emit("didChangeElementTree");
+        this.emitSync("didChangeElementTree");
     }
 
     /**
@@ -537,6 +527,6 @@ export default class View extends Emitter {
     }
 }
 
-export function createView(...args) {
-    return new View(...args);
+export function createView(options={}) {
+    return new View(options);
 }
