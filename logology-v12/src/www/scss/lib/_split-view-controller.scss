@@ -11,6 +11,7 @@ y-split-view-controller, [is="y-split-view-controller"], .y-split-view-controlle
         position: relative;
         flex: 1;
         border-right: 1px solid $tint-border-color;
+        overflow: hidden;
 
         &:first-child {
             width: 240px;
