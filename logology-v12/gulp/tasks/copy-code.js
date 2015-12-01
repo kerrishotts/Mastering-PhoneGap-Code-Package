@@ -1,7 +1,6 @@
 "use strict";
 
 var cordovaTasks = require("../utils/cordova-tasks"),
-    pkg = require("../../package.json"),
     gulp = require("gulp"),
     babelify = require("babelify"),
     browserify = require("browserify"),
@@ -15,11 +14,12 @@ var cordovaTasks = require("../utils/cordova-tasks"),
     config = require("../config"),
     settings = require("../settings"),
     paths = require("../utils/paths"),
+    licensify = require("licensify"),
     browserSync = require("browser-sync").get("www");
 
 function copyCode() {
     var isRelease = (settings.BUILD_MODE === "release");
-    var pm = pkg.aliases;
+    var pm = config.aliases;
     return browserify(paths.makeFullPath(config.assets.code.src, paths.SRC), {
             debug: !isRelease,
             standalone: "app"
@@ -46,6 +46,7 @@ function copyCode() {
                 return id;
             }
         }))
+        //.plugin(licensify)
         .bundle()
         //.on("error", notify.onError("BABEL: <%= error.message %>"))
         .on("error", function(error) {
