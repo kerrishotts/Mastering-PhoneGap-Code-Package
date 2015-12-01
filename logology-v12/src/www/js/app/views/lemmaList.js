@@ -9,7 +9,7 @@ import list from "$WIDGETS/list";
 import listItem from "$WIDGETS/listItem";
 import listItemContents from "$WIDGETS/listItemContents";
 import listItemActions from "$WIDGETS/listItemActions";
-import listIndicator from "$WIDGETS/listIndicator";
+import lemmaActions from "./lemmaActions";
 
 export default function lemmaList(lemmas) {
     return list({
@@ -20,17 +20,10 @@ export default function lemmaList(lemmas) {
                         value: lemma
                     },
                     contents: [
-                        h.el("div.y-flex", lemma),
-                        listIndicator()
+                        h.el("div.y-flex", lemma)
                     ]
                 }),
-                actions: listItemActions({
-                    contents: [
-                        glyph({icon:"fav", title:"Save this item as a favorite", contents: "Favorite"}),
-                        glyph({icon:"share", title:"Share this item", contents: "Share"}),
-                        glyph({icon:"note", title:"Create or edit a note", contents: "Note"})
-                    ]
-                })
+                actions: listItemActions({ contents: lemmaActions() })
            });
         })
     });
