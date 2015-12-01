@@ -37,15 +37,7 @@ export default class Controller extends Emitter {
             }
             this[_model] = m;
             if (m) {
-                if (typeof m.controller === "undefined") {
-                    Object.defineProperty( m, "controller", {
-                        configurable: true,
-                        writable: false,
-                        value: this
-                    });
-                } else {
-                    m.controller = this;
-                }
+                m.controller = this;
                 m.on(MODEL_CHANGED_REGEXP, (...args) => this.emit("model:changed", ...args), this);
             }
         }
@@ -64,28 +56,22 @@ export default class Controller extends Emitter {
             }
             this[_view] = v;
             if (v) {
-                if (typeof v.controller === "undefined") {
-                    Object.defineProperty( v, "controller", {
-                        configurable: true,
-                        writable: false,
-                        value: this
-                    });
-                } else {
-                    v.controller = this;
-                }
+                v.controller = this;
+                v.on(VIEW_USER_REGEXP, (...args) => this.emit("view:updated", ...args), this);
             }
-            v.on(VIEW_USER_REGEXP, (...args) => this.emit("view:updated", ...args), this);
         }
     }
 
     destroy() {
-        this[_model] = null;
-        this[_view] = null;
+        this.model = null;
+        this.view = null;
         super.destroy();
     }
 
     onModel_changed(sender, notice, model, modelNotice, ...args) {
-        this.emit("view:render", model, modelNotice, ...args);
+        if (this[_model]) {
+            this.emit("view:render", model, modelNotice, ...args);
+        }
     }
     onModel_update(sender, notice, view, viewNotice, ...args) {
         if (this[_model]) {
@@ -102,6 +88,6 @@ export default class Controller extends Emitter {
     }
 }
 
-export function createController(...args) {
-    return new Controller(...args);
+export function createController(options = {}) {
+    return new Controller(options = {});
 }
