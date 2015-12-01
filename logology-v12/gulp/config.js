@@ -30,6 +30,18 @@ var config = {
     test: {
         code: "test/*.js",
         ui: "test-ui/*.js"
+    },
+    aliases: {
+        "$APP": "src/www/js/app",
+        "$LIB": "src/www/js/lib",
+        "$WIDGETS": "src/www/js/lib/templates/widgets",
+        "$MODELS": "src/www/js/app/models",
+        "$VIEWS": "src/www/js/app/views",
+        "$CONTROLLERS": "src/www/js/app/controllers"
+    },
+    sass: {
+        includeModules: [ "node-reset-scss" ],
+        includePaths: [ "./node_modules/node-reset-scss/scss" ]
     }
 }
 
