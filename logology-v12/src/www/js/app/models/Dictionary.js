@@ -6,11 +6,11 @@ import Definition from "./Definition";
 
 // private property symbols
 let _definitions = Symbol("_definitions"),
-    _index = Symbol("_index"),
     _loaded = Symbol("_loaded"),
     _options = Symbol("_options");
 
 export let _sortedIndex = Symbol("_sortedIndex");
+export let _index = Symbol("_index");
 
 export default class Dictionary extends Emitter {
     constructor(options = {}) {
@@ -73,10 +73,10 @@ export default class Dictionary extends Emitter {
         if (!this.isLoaded) {
             return [];
         }
-        return this[_sortedIndex].filter(v => v.indexOf(filter) > -1);
+        return this[_sortedIndex].filter(v => v.indexOf(filter) === 0);
     }
 
-    asyncFilteredIndex(filter, per=10) {
+    asyncFilteredIndex(filter, per=10000) {
         if (!this.isLoaded) {
             return Promise.resolve(() => []);
         }
@@ -89,7 +89,7 @@ export default class Dictionary extends Emitter {
                         nextLen = len;
                     }
                     for (let i=idx;i<nextLen;i++) {
-                        if (this[_sortedIndex][i].indexOf(filter) > -1) {
+                        if (this[_sortedIndex][i].indexOf(filter) === 0) {
                             arr.push(this[_sortedIndex][i]);
                         }
                         idx++;
