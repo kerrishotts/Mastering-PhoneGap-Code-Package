@@ -38,7 +38,8 @@ export default class MenuView extends View {
     }
 
     template() {
-        const model = kp.get(this, "controller.model"); // get the dictionary list model
+        let model = kp.get(this, "controller.model"); // get the dictionary list model
+        if (!model) {model = {dictionaries: []}};
         // return a list of all the available dictionaries along with options for downloading
         // more and changing settings.
         return scrollContainer({contents: list({
@@ -67,7 +68,7 @@ export default class MenuView extends View {
 
     onNavItemTapped(sender: Object, notice: string, listItem: Node) {
         GCS.emit(listItem.value);   // notify the app that it needs to navigate
-        GCS.emit("APP:DO:menu");   // close the sidebar
+        //GCS.emit("APP:DO:menu");   // close the sidebar
     }
 }
 
