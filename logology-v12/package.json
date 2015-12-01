@@ -111,6 +111,14 @@
         {
           "src": "res/icon/android/xhdpi.png",
           "d": "xhdpi"
+        },
+        {
+          "src": "res/icon/android/xxhdpi.png",
+          "d": "xxhdpi"
+        },
+        {
+          "src": "res/icon/android/xxhdpi.png",
+          "d": "xxxhdpi"
         }
       ]
     },
@@ -169,36 +177,7 @@
       ],
       "android": [
         {
-          "src": "res/splash/android/splash-land-hdpi.png",
-          "d": "land-hdpi"
-        },
-        {
-          "src": "res/splash/android/splash-land-ldpi.png",
-          "d": "land-ldpi"
-        },
-        {
-          "src": "res/splash/android/splash-land-mdpi.png",
-          "d": "land-mdpi"
-        },
-        {
-          "src": "res/splash/android/splash-land-xhdpi.png",
-          "d": "land-xhdpi"
-        },
-        {
-          "src": "res/splash/android/splash-port-hdpi.png",
-          "d": "port-hdpi"
-        },
-        {
-          "src": "res/splash/android/splash-port-ldpi.png",
-          "d": "port-ldpi"
-        },
-        {
-          "src": "res/splash/android/splash-port-mdpi.png",
-          "d": "port-mdpi"
-        },
-        {
-          "src": "res/splash/android/splash-port-xhdpi.png",
-          "d": "port-xhdpi"
+          "src": "res/splash/android/screen.9.png"
         }
       ]
     },
@@ -221,15 +200,23 @@
       "SupressesIncrementalRendering": "true",
       "android-minSdkVersion": "14",
       "android-installLocation": "auto",
-      "android-windowSoftInputMode": "adjustResize"
+      "android-windowSoftInputMode": "adjustResize",
+      "StatusBarOverlaysWebView": "false",
+      "StatusBarBackgroundColor": "#EEAA11",
+      "StatusBarStyle": "darkcontent"
     },
     "plugins": [
-      "cordova-plugin-device",
-      "cordova-plugin-network-information",
-      "cordova-plugin-globalization",
-      "cordova-plugin-whitelist",
+      "cordova-plugin-device@1.1.0",
+      "cordova-plugin-network-information@1.1.0",
+      "cordova-plugin-globalization@1.0.2",
+      "cordova-plugin-whitelist@1.1.0",
       "https://github.com/phonegap/phonegap-mobile-accessibility",
-      "ionic-plugin-keyboard"
+      "ionic-plugin-keyboard@1.0.8",
+      "cordova-sqlite-ext@0.8.0",
+      "cordova-plugin-splashscreen@2.1.0",
+      "cordova-plugin-statusbar@1.0.1",
+      "cordova-plugin-inappbrowser@1.0.1",
+      "cordova-plugin-safariviewcontroller@1.1.1"
     ]
   },
   "keywords": [
@@ -254,17 +241,19 @@
     "cldr-data": "^28.0.2",
     "colors": "^1.1.2",
     "cordova-android": "^4.1.1",
-    "cordova-ios": "^3.9.1",
-    "cordova-lib": "^5.2.0",
+    "cordova-ios": "^3.9.2",
+    "cordova-lib": "^5.4.0",
     "cordova-tasks": "^0.2.0",
     "desassify": "^0.1.8",
     "eslint": "^1.3.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
     "gulp-bump": "^0.3.1",
+    "gulp-changed-in-place": "^2.0.3",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^1.0.0",
     "gulp-jscs": "^2.0.0",
+    "gulp-license-finder": "^0.3.2",
     "gulp-mocha": "^2.1.3",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.0.1",
@@ -274,6 +263,7 @@
     "gulp-sourcemaps": "^1.3.0",
     "gulp-uglify": "^1.4.0",
     "gulp-util": "^3.0.6",
+    "licensify": "^2.0.1",
     "merge-stream": "^1.0.0",
     "q": "^1.4.1",
     "require-all": "^1.1.0",
@@ -299,7 +289,7 @@
     "svg-injector": "^1.1.3",
     "whatwg-fetch": "^0.10.1",
     "yasmf-emitter": "^0.1.5",
-    "yasmf-h": "^0.1.4",
+    "yasmf-h": "file:///Users/kerrishotts/Documents/Mobile/YASMF/_y-h",
     "yasmf-localization": "^0.0.2"
   },
   "sass": {
