@@ -22,8 +22,7 @@ export default function lemmaList(lemmas) {
                     contents: [
                         h.el("div.y-flex", lemma)
                     ]
-                }),
-                actions: listItemActions({ contents: lemmaActions() })
+                })
            });
         })
     });
