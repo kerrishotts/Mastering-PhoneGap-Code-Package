@@ -1,344 +1,439 @@
 [
-   {
-      "name" : "animationend",
-      "link" : "git",
-      "licenseType" : "MIT",
-      "comment" : "0.0.1"
-   },
+    { "name": "Device",               "comment": "1.1.0", "licenseType": "Apache version 2.0",
+      "link": "https://www.npmjs.com/package/cordova-plugin-device", "type": "plugin" },
+    { "name": "Globalization",        "comment": "1.0.2", "licenseType": "Apache version 2.0",
+      "link": "https://www.npmjs.com/package/cordova-plugin-globalization", "type": "plugin" },
+    { "name": "InAppBrowser",         "comment": "1.0.1", "licenseType": "Apache version 2.0",
+      "link": "https://www.npmjs.com/package/cordova-plugin-inappbrowser", "type": "plugin" },
+    { "name": "Network Information",  "comment": "1.1.0", "licenseType": "Apache version 2.0",
+      "link": "https://www.npmjs.com/package/cordova-plugin-network-information", "type": "plugin" },
+    { "name": "SafariViewController", "comment": "1.1.1", "licenseType": "Apache version 2.0",
+      "link": "https://www.npmjs.com/package/cordova-plugin-safariviewcontroller", "type": "plugin" },
+    { "name": "Splashscreen",         "comment": "2.1.0", "licenseType": "Apache version 2.0",
+      "link": "https://www.npmjs.com/package/cordova-plugin-splashscreen", "type": "plugin" },
+    { "name": "StatusBar",            "comment": "1.0.1", "licenseType": "Apache version 2.0",
+      "link": "https://www.npmjs.com/package/cordova-plugin-statusbar", "type": "plugin" },
+    { "name": "CordvoaWebServer",     "comment": "1.0.3", "licenseType": "Apache version 2.0",
+      "link": "https://www.npmjs.com/package/cordova-plugin-webserver", "type": "plugin" },
+    { "name": "Whitelist",            "comment": "1.1.0", "licenseType": "Apache version 2.0",
+      "link": "https://www.npmjs.com/package/cordova-plugin-whitelist", "type": "plugin" },
+    { "name": "SQLite (extras)",      "comment": "0.8.0", "licenseType": "Apache version 2.0",
+      "link": "https://www.npmjs.com/package/cordova-sqlite-ext", "type": "plugin" },
+    { "name": "Keyboard",             "comment": "1.0.8", "licenseType": "Apache version 2.0",
+      "link": "https://www.npmjs.com/package/ionic-plugin-keyboard", "type": "plugin" },
+    { "name": "Mobile Accessibility", "comment": "1.0.2-dev", "licenseType": "Apache version 2.0",
+      "link": "https://www.npmjs.com/package/phonegap-plugin-mobile-accessibility", "type": "plugin" },
    {
       "link" : "https://github.com/babel/babel.git",
       "name" : "babel",
       "comment" : "5.8.34",
-      "licenseType" : "MIT"
-   },
-   {
-      "name" : "document-register-element",
-      "link" : "https://github.com/WebReflection/document-register-element.git",
       "licenseType" : "MIT",
-      "comment" : "0.4.5"
+      "type": "package"
    },
    {
       "link" : "https://github.com/jquery/globalize.git",
       "name" : "globalize",
       "licenseType" : "MIT",
-      "comment" : "1.1.0-rc.6"
+      "comment" : "1.1.0-rc.6",
+      "type": "package"
    },
    {
       "licenseType" : "MIT",
       "comment" : "2.0.4",
       "link" : "https://github.com/hammerjs/hammer.js.git",
-      "name" : "hammerjs"
+      "name" : "hammerjs",
+      "type": "package"
    },
    {
       "licenseType" : "MIT",
       "comment" : "1.10.1",
       "name" : "keypather",
-      "link" : "https://github.com/tjmehta/value-for-keypath.git"
+      "link" : "https://github.com/tjmehta/value-for-keypath.git",
+      "type": "package"
    },
    {
       "link" : "https://github.com/ForbesLindesay/matches-selector.git",
       "name" : "matches-selector",
       "comment" : "1.0.0",
-      "licenseType" : "MIT"
+      "licenseType" : "MIT",
+      "type": "package"
    },
    {
       "name" : "merge",
       "link" : "https://github.com/yeikos/js.merge.git",
       "licenseType" : "MIT",
-      "comment" : "1.2.0"
+      "comment" : "1.2.0",
+      "type": "package"
    },
    {
       "licenseType" : "Public Domain",
       "comment" : "1.0.1",
       "name" : "node-reset-scss",
-      "link" : "git@github.com:JakeElder/node-reset-scss.git"
+      "link" : "git@github.com:JakeElder/node-reset-scss.git",
+      "type": "package"
    },
    {
       "link" : "https://github.com/isaacs/once.git",
       "name" : "once",
       "licenseType" : "ISC",
-      "comment" : "1.3.3"
+      "comment" : "1.3.3",
+      "type": "package"
    },
    {
       "comment" : "1.1.1",
       "licenseType" : "MIT",
       "link" : "https://github.com/iconic/open-iconic.git",
-      "name" : "open-iconic"
+      "name" : "open-iconic",
+      "type": "package"
    },
    {
       "licenseType" : "MIT",
       "comment" : "1.0.23",
       "name" : "prefix-property",
-      "link" : "https://github.com/jshanson7/prefix-property.git"
+      "link" : "https://github.com/jshanson7/prefix-property.git",
+      "type": "package"
    },
    {
       "name" : "svg-injector",
       "link" : "https://github.com/iconic/SVGInjector",
       "comment" : "1.1.3",
-      "licenseType" : "MIT"
+      "licenseType" : "MIT",
+      "type": "package"
+   },
+   {
+       "name": "treo",
+       "link": "https://github.com/treojs/treo",
+       "comment": "0.5.1",
+       "licenseType": "MIT",
+      "type": "package"
+   },
+   {
+       "name": "treo-websql",
+       "link": "https://github.com/treojs/treo-websql",
+       "comment": "3.0.0",
+       "licenseType": "MIT",
+      "type": "package"
    },
    {
       "link" : "https://github.com/github/fetch.git",
       "name" : "whatwg-fetch",
       "comment" : "0.10.1",
-      "licenseType" : "MIT"
+      "licenseType" : "MIT",
+      "type": "package"
    },
    {
       "link" : "https://github.com/photokandyStudios/yasmf-emitter.git",
       "name" : "yasmf-emitter",
       "licenseType" : "MIT",
-      "comment" : "0.1.5"
+      "comment" : "0.1.5",
+      "type": "package"
    },
    {
       "licenseType" : "MIT",
       "comment" : "1.0.5",
       "link" : "https://github.com/photokandyStudios/_y-h.git",
-      "name" : "yasmf-h"
+      "name" : "yasmf-h",
+      "type": "package"
    },
    {
       "licenseType" : "MIT",
       "comment" : "0.0.2",
       "name" : "yasmf-localization",
-      "link" : "https://github.com/photokandyStudios/yasmf-localization.git"
+      "link" : "https://github.com/photokandyStudios/yasmf-localization.git",
+      "type": "package"
    },
    {
       "comment" : "4.1.6",
       "licenseType" : "MIT",
       "name" : "babel-eslint",
-      "link" : "https://github.com/babel/babel-eslint.git"
+      "link" : "https://github.com/babel/babel-eslint.git",
+      "type": "dev-package"
    },
    {
       "name" : "babelify",
       "link" : "https://github.com/babel/babelify.git",
       "comment" : "6.4.0",
-      "licenseType" : "MIT"
+      "licenseType" : "MIT",
+      "type": "dev-package"
    },
    {
       "licenseType" : "Apache-2.0",
       "comment" : "2.10.0",
       "link" : "https://github.com/browsersync/browser-sync.git",
-      "name" : "browser-sync"
+      "name" : "browser-sync",
+      "type": "dev-package"
    },
    {
       "licenseType" : "MIT",
       "comment" : "11.2.0",
       "link" : "https://github.com/substack/node-browserify.git",
-      "name" : "browserify"
+      "name" : "browserify",
+      "type": "dev-package"
    },
    {
       "name" : "chai",
       "link" : "https://github.com/chaijs/chai.git",
       "licenseType" : "MIT",
-      "comment" : "3.4.1"
+      "comment" : "3.4.1",
+      "type": "dev-package"
    },
    {
       "comment" : "5.1.0",
       "licenseType" : "WTFPL",
       "link" : "https://github.com/domenic/chai-as-promised.git",
-      "name" : "chai-as-promised"
+      "name" : "chai-as-promised",
+      "type": "dev-package"
    },
    {
       "link" : "https://github.com/rxaviers/cldr-data-npm.git",
       "name" : "cldr-data",
       "licenseType" : "MIT",
-      "comment" : "28.0.3"
+      "comment" : "28.0.3",
+      "type": "dev-package"
    },
    {
       "name" : "colors",
       "link" : "http://github.com/Marak/colors.js.git",
       "licenseType" : "MIT",
-      "comment" : "1.1.2"
+      "comment" : "1.1.2",
+      "type": "dev-package"
    },
    {
       "comment" : "4.1.1",
       "licenseType" : "Apache version 2.0",
       "link" : "https://git-wip-us.apache.org/repos/asf/cordova-android.git",
-      "name" : "cordova-android"
+      "name" : "cordova-android",
+      "type": "dev-package"
    },
    {
       "name" : "cordova-ios",
       "link" : "https://git-wip-us.apache.org/repos/asf/cordova-ios.git",
       "licenseType" : "Apache Version 2.0",
-      "comment" : "3.9.2"
+      "comment" : "3.9.2",
+      "type": "dev-package"
    },
    {
       "licenseType" : "Apache Version 2.0",
       "link" : "https://git-wip-us.apache.org/repos/asf/cordova-lib.git",
       "name" : "cordova-lib",
-      "comment" : "5.4.1"
+      "comment" : "5.4.1",
+      "type": "dev-package"
    },
    {
       "comment" : "0.2.0",
       "licenseType" : "MIT",
       "link" : "http://www.photokandy.com",
-      "name" : "cordova-tasks"
+      "name" : "cordova-tasks",
+      "type": "dev-package"
    },
    {
       "link" : "https://github.com/themang/sassify.git",
       "name" : "desassify",
       "comment" : "0.1.8",
-      "licenseType" : "BSD-2-Clause"
+      "licenseType" : "BSD-2-Clause",
+      "type": "dev-package"
+   },
+   {
+       "name": "dom-storage",
+       "comment": "2.0.2",
+       "licenseType": "Apache version 2.0",
+       "link": "https://github.com/node-browser-compat/dom-storage",
+      "type": "dev-package"
    },
    {
       "licenseType" : "MIT",
       "comment" : "1.10.2",
       "name" : "eslint",
-      "link" : "https://github.com/eslint/eslint"
+      "link" : "https://github.com/eslint/eslint",
+      "type": "dev-package"
+   },
+   {
+       "name": "fake-indexeddb",
+       "comment": "1.0.3",
+       "licenseType": "Apache version 2.0",
+       "link": "https://github.com/dumbmatter/fakeIndexedDB",
+      "type": "dev-package"
    },
    {
       "comment" : "3.9.0",
       "licenseType" : "MIT",
       "name" : "gulp",
-      "link" : "https://github.com/gulpjs/gulp.git"
+      "link" : "https://github.com/gulpjs/gulp.git",
+      "type": "dev-package"
    },
    {
       "comment" : "2.3.1",
       "licenseType" : "MIT",
       "link" : "https://github.com/sindresorhus/gulp-autoprefixer",
-      "name" : "gulp-autoprefixer"
+      "name" : "gulp-autoprefixer",
+      "type": "dev-package"
    },
    {
       "licenseType" : "MIT",
       "comment" : "0.3.1",
       "name" : "gulp-bump",
-      "link" : "https://github.com/stevelacy/gulp-bump.git"
+      "link" : "https://github.com/stevelacy/gulp-bump.git",
+      "type": "dev-package"
    },
    {
       "licenseType" : "MIT",
       "comment" : "2.0.3",
       "link" : "https://github.com/alexgorbatchev/gulp-changed-in-place.git",
-      "name" : "gulp-changed-in-place"
+      "name" : "gulp-changed-in-place",
+      "type": "dev-package"
    },
    {
       "link" : "https://github.com/wearefractal/gulp-concat.git",
       "name" : "gulp-concat",
       "comment" : "2.6.0",
-      "licenseType" : "MIT"
+      "licenseType" : "MIT",
+      "type": "dev-package"
    },
    {
       "comment" : "1.1.1",
       "licenseType" : "MIT",
       "link" : "https://github.com/adametry/gulp-eslint.git",
-      "name" : "gulp-eslint"
+      "name" : "gulp-eslint",
+      "type": "dev-package"
    },
    {
       "licenseType" : "MIT",
       "comment" : "2.0.0",
       "name" : "gulp-jscs",
-      "link" : "https://github.com/jscs-dev/gulp-jscs"
+      "link" : "https://github.com/jscs-dev/gulp-jscs",
+      "type": "dev-package"
    },
    {
       "name" : "gulp-license-finder",
       "link" : "https://github.com/iandotkelly/gulp-license-finder",
       "licenseType" : "MIT",
-      "comment" : "0.3.2"
+      "comment" : "0.3.2",
+      "type": "dev-package"
    },
    {
       "name" : "gulp-mocha",
       "link" : "https://github.com/sindresorhus/gulp-mocha",
       "comment" : "2.2.0",
-      "licenseType" : "MIT"
+      "licenseType" : "MIT",
+      "type": "dev-package"
    },
    {
       "name" : "gulp-notify",
       "link" : "https://github.com/mikaelbr/gulp-notify.git",
       "comment" : "2.2.0",
-      "licenseType" : "MIT"
+      "licenseType" : "MIT",
+      "type": "dev-package"
    },
    {
       "name" : "gulp-plumber",
       "link" : "https://github.com/floatdrop/gulp-plumber.git",
       "comment" : "1.0.1",
-      "licenseType" : "MIT"
+      "licenseType" : "MIT",
+      "type": "dev-package"
    },
    {
       "link" : "https://github.com/hparra/gulp-rename.git",
       "name" : "gulp-rename",
       "comment" : "1.2.2",
-      "licenseType" : "MIT"
+      "licenseType" : "MIT",
+      "type": "dev-package"
    },
    {
       "comment" : "0.10.1",
       "licenseType" : "MIT",
       "link" : "https://github.com/outatime/gulp-replace-task.git",
-      "name" : "gulp-replace-task"
+      "name" : "gulp-replace-task",
+      "type": "dev-package"
    },
    {
       "licenseType" : "MIT",
       "comment" : "2.1.0",
       "name" : "gulp-sass",
-      "link" : "https://github.com/dlmanning/gulp-sass.git"
+      "link" : "https://github.com/dlmanning/gulp-sass.git",
+      "type": "dev-package"
    },
    {
       "link" : "https://github.com/floridoo/gulp-sourcemaps.git",
       "name" : "gulp-sourcemaps",
       "comment" : "1.6.0",
-      "licenseType" : "ISC"
+      "licenseType" : "ISC",
+      "type": "dev-package"
    },
    {
       "name" : "gulp-uglify",
       "link" : "https://github.com/terinjokes/gulp-uglify.git",
       "comment" : "1.5.1",
-      "licenseType" : "MIT"
+      "licenseType" : "MIT",
+      "type": "dev-package"
    },
    {
       "comment" : "3.0.7",
       "licenseType" : "MIT",
       "link" : "https://github.com/gulpjs/gulp-util.git",
-      "name" : "gulp-util"
+      "name" : "gulp-util",
+      "type": "dev-package"
    },
    {
       "licenseType" : "MIT",
       "comment" : "2.0.1",
       "name" : "licensify",
-      "link" : "https://github.com/twada/licensify.git"
+      "link" : "https://github.com/twada/licensify.git",
+      "type": "dev-package"
    },
    {
       "comment" : "1.0.0",
       "licenseType" : "MIT",
       "name" : "merge-stream",
-      "link" : "https://github.com/grncdr/merge-stream.git"
+      "link" : "https://github.com/grncdr/merge-stream.git",
+      "type": "dev-package"
    },
    {
       "link" : "https://github.com/kriskowal/q.git",
       "name" : "q",
       "comment" : "1.4.1",
-      "licenseType" : "MIT"
+      "licenseType" : "MIT",
+      "type": "dev-package"
    },
    {
       "licenseType" : "MIT",
       "comment" : "1.1.0",
       "link" : "https://github.com/felixge/node-require-all",
-      "name" : "require-all"
+      "name" : "require-all",
+      "type": "dev-package"
    },
    {
       "comment" : "2.4.4",
       "licenseType" : "ISC",
       "link" : "https://github.com/isaacs/rimraf.git",
-      "name" : "rimraf"
+      "name" : "rimraf",
+      "type": "dev-package"
    },
    {
       "licenseType" : "BSD-3-Clause",
       "comment" : "1.0.3",
       "name" : "sprintf-js",
-      "link" : "https://github.com/alexei/sprintf.js.git"
+      "link" : "https://github.com/alexei/sprintf.js.git",
+      "type": "dev-package"
    },
    {
       "link" : "https://github.com/hughsk/vinyl-buffer",
       "name" : "vinyl-buffer",
       "licenseType" : "MIT",
-      "comment" : "1.0.0"
+      "comment" : "1.0.0",
+      "type": "dev-package"
    },
    {
       "link" : "https://github.com/hughsk/vinyl-source-stream",
       "name" : "vinyl-source-stream",
       "comment" : "1.1.0",
-      "licenseType" : "MIT"
+      "licenseType" : "MIT",
+      "type": "dev-package"
    },
    {
       "licenseType" : "Apache-2.0",
       "comment" : "0.3.12",
       "link" : "https://github.com/admc/wd.git",
-      "name" : "wd"
+      "name" : "wd",
+      "type": "dev-package"
    }
 ]
