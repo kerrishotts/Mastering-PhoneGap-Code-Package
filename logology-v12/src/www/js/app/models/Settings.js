@@ -9,10 +9,11 @@ let _fontFamily = Symbol("fontFamily"), // font family
     _externalResources = Symbol("externalResources"), // link templates to external resources, like Wikipedia
     _showImages = Symbol("images"), // determines if images are shown (if possible)
     _lastDictionary = Symbol("lastDictionary"), // records the last dictionary
-    _pageSize = Symbol("pageSize");   // page length (search results, etc.)
+    _pageSize = Symbol("pageSize"),   // page length (search results, etc.)
+    _localStorage = Symbol("_localStorage"); // for testing
 
 export default class Settings extends Emitter {
-    constructor() {
+    constructor({localStorage} = {}) {
         super();
         this[_fontFamily] = undefined; // undefined will use app default
         this[_fontSize] = 0;           // 0 will use app default (from system)
@@ -34,6 +35,10 @@ export default class Settings extends Emitter {
     _emitChangeNotice(notice, newV, oldV) {
         this.emit(notice + "Changed", newV, oldV);
         this.emit("settingsChanged");
+    }
+
+    get localStorage() {
+        return this[_localStorage] ? this[_localStorage] : (typeof localStorage !== "undefined" ? localStorage : {});
     }
 
     get entries() {
@@ -72,26 +77,28 @@ export default class Settings extends Emitter {
     }
 
     retrieveSettings() {
-        if (localStorage.fontFamily !== undefined) { this[_fontFamily] = localStorage.fontFamily; }
-        if (localStorage.fontSize !== undefined) { this[_fontSize] = localStorage.fontSize; }
-        if (localStorage.theme !== undefined) { this[_theme] = localStorage.theme; }
-        if (localStorage.showImages !== undefined) { this[_showImages] = localStorage.showImages; }
-        if (localStorage.externalResources !== undefined) { this[_externalResources] = JSON.parse(localStorage.externalResources); }
-        if (localStorage.pageSize !== undefined) { this[_pageSize] = localStorage.pageSize; }
-        if (localStorage.lastDictionary !== undefined) { this[_lastDictionary] = localStorage.lastDictionary; }
+        const storage = this.localStorage;
+        if (storage.fontFamily !== undefined) { this[_fontFamily] = storage.fontFamily; }
+        if (storage.fontSize !== undefined) { this[_fontSize] = storage.fontSize; }
+        if (storage.theme !== undefined) { this[_theme] = storage.theme; }
+        if (storage.showImages !== undefined) { this[_showImages] = storage.showImages; }
+        if (storage.externalResources !== undefined) { this[_externalResources] = JSON.parse(storage.externalResources); }
+        if (storage.pageSize !== undefined) { this[_pageSize] = storage.pageSize; }
+        if (storage.lastDictionary !== undefined) { this[_lastDictionary] = storage.lastDictionary; }
         this.emit("settingsRetrieved");
         GCS.emit("APP:SETTINGS:loaded");
         this.emit("settingsChanged"); // this will save the settings again, but that's OK
     }
 
     persistSettings() {
-        if (this.fontFamily !== undefined) { localStorage.fontFamily = this.fontFamily; }
-        if (this.fontSize !== undefined) { localStorage.fontSize = this.fontSize; }
-        if (this.theme !== undefined) { localStorage.theme = this.theme; }
-        if (this.showImages !== undefined) { localStorage.showImages = this.showImages; }
-        localStorage.externalResources = JSON.stringify(this.externalResources);
-        if (this.pageSize !== undefined) { localStorage.pageSize = this.pageSize; }
-        if (this.lastDictionary !== undefined) { localStorage.lastDictionary = this.lastDictionary; }
+        const storage = this.localStorage;
+        if (this.fontFamily !== undefined) { storage.fontFamily = this.fontFamily; }
+        if (this.fontSize !== undefined) { storage.fontSize = this.fontSize; }
+        if (this.theme !== undefined) { storage.theme = this.theme; }
+        if (this.showImages !== undefined) { storage.showImages = this.showImages; }
+        storage.externalResources = JSON.stringify(this.externalResources);
+        if (this.pageSize !== undefined) { storage.pageSize = this.pageSize; }
+        if (this.lastDictionary !== undefined) { storage.lastDictionary = this.lastDictionary; }
         this.emit("settingsPersisted");
         GCS.emit("APP:SETTINGS:persisted");
     }
