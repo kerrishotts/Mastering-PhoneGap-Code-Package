@@ -8,11 +8,13 @@ import h from "yasmf-h";
 
 import scrollContainer from "$WIDGETS/scrollContainer";
 import textContainer from "$WIDGETS/textContainer";
+import listItemActions from "$WIDGETS/listItemActions";
 import View from "$LIB/View";
 import GCS from "$LIB/grandCentralStation";
 import L from "$APP/localization/localization";
 
 import lemmaList from "./lemmaList";
+import lemmaActions from "./lemmaActions";
 
 import {settings} from "$MODELS/Settings";
 
@@ -22,12 +24,13 @@ const prefixedJSTransition = prefix("transition"),
 
 //region private properties
 //-----------------------------------------------------------------------------
-const _panningItem = Symbol(),
-      _panningStartX = Symbol(),
-      _panningActionWidth = Symbol(),
-      _filter = Symbol(),
-      _filteredItems = Symbol(),
-      _page = Symbol();
+const _panningItem = Symbol("_panningItem"),
+      _panningStartX = Symbol("panningStartX"),
+      _panningActionWidth = Symbol("_panningActionWidth"),
+      _filter = Symbol("_filter"),
+      _filteredItems = Symbol("_filteredItems"),
+      _page = Symbol("_page"),
+      _actionsElement = Symbol("_actionsElement");
 //-----------------------------------------------------------------------------
 //endregion
 
@@ -97,6 +100,7 @@ function closePannedItem(): void {
  * @param {Event} evt
  */
 function panItemStart(listItem: Node, evt: Event): void {
+    listItem.appendChild(this[_actionsElement]);
     const [panItem, actionItem] = getInternalItems(listItem);
     if (panItem !== this[_panningItem] && this[_panningItem]) {
         closePannedItem.call(this);
@@ -168,6 +172,9 @@ export default class SearchView extends View {
 
         // page number is zero
         this[_page] = 0;
+
+        // get one shared set of list actions
+        this[_actionsElement] = listItemActions({contents: lemmaActions()});
     }
 
     get page() {
@@ -233,7 +240,6 @@ export default class SearchView extends View {
     }
 
     onFilterChanged(_, notice, data) {
-        this.dirty = true;
         this[_page] = 0;
         this.elementTree.scrollTop = 0; // scroll the page back to the top
 
@@ -241,15 +247,12 @@ export default class SearchView extends View {
         let filter = this[_filter];
         if (filter) {
             // look up some entries!
-            /*this[_filteredItems] = model.filteredIndex(filter);
-            this.render();*/
             model.asyncFilteredIndex(filter)
                 .then(entries => {
                     this[_filteredItems] = entries;
                     this.render();
                 });
         } else {
-            // back to the sorted list
             this.render();
         }
     }
