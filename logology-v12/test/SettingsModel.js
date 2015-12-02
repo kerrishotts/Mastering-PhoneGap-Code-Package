@@ -1,16 +1,14 @@
 "use strict";
+var Storage = require("dom-storage");
+var localStorage = new Storage(null, { strict: true });
 
 let should = require("./helpers/setup").should;
 import Settings from "../src/www/js/app/models/Settings";
 
 describe("Settings Tests (no initial settings)", () => {
-    before( () => {
-        // localStorage needs to a blank object
-        global.localStorage = {};
-    });
 
     it("should be able to create a new Settings object", () => {
-        let settings = new Settings();
+        let settings = new Settings({localStorage});
         return settings.should.exist;
     });
     it("should be able to access default settings", () => {
