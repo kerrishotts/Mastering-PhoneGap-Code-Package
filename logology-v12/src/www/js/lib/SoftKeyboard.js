@@ -207,7 +207,7 @@ export default class SoftKeyboard extends Emitter {
         setTimeout(() => {
             let screenHeight = window.innerHeight; //(document.body.clientWidth === window.screen.height ? window.screen.width : window.screen.height);
             let scrollContainers = getScrollContainers(this.selectorString);
-            let keyboardHeight = e.keyboardHeight / devicePixelRatio;
+            let keyboardHeight = 0; //e.keyboardHeight;
 
             if (this.showElementUnderKeyboard) {
                 showElementUnderKeyboard(keyboardHeight);
