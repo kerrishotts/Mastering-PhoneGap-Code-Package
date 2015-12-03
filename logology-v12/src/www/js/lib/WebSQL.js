@@ -37,13 +37,29 @@ export default class WebSQLDB {
         this.supportsReadOnlyTransactions = false;
         this.log = false;
 
-        if (window.sqlitePlugin && !window.jshAdmin) {
-            this.plugin = true;
-            this.db = window.sqlitePlugin.openDatabase({name, location, createFromLocation,
-                                                        androidDatabaseImplementation,
-                                                        androidLockWorkaround});
-        } else {
-            this.db = window.openDatabase(name, version, description, quota);
+        let context = (typeof window !== "undefined") ? window :
+                        (typeof global !== "undefined") ? global :
+                          null;
+
+        if (!context) {
+            throw new Error("No Web SQL Interface available.");
+        }
+
+        try {
+            if (context.sqlitePlugin && !context.jshAdmin) {
+                this.plugin = true;
+                this.db = context.sqlitePlugin.openDatabase({name, location, createFromLocation,
+                                                            androidDatabaseImplementation,
+                                                            androidLockWorkaround});
+            } else {
+                this.db = context.openDatabase(name, version, description, quota);
+                if (!this.db) {
+                    // try something else -- for testing
+                    this.db = new context.openDatabase(name, version, description, quota);
+                }
+            }
+        } catch (err) {
+            throw new Error("No Web SQL Interface available, or failed to open database.");
         }
 
         if (!this.db) {
@@ -52,6 +68,10 @@ export default class WebSQLDB {
 
         if (this.db.readTransaction) {
             this.supportsReadOnlyTransactions = true;
+        }
+
+        this.db.error = function(err) {
+            console.log(err.message);
         }
     }
 
@@ -88,14 +108,17 @@ export default class WebSQLDB {
             let returnResults = {};
             transaction.executeSql(sql, binds,
                 (transaction, results) => {
-                    returnResults.rowsAffected = results.rowsAffected;
+                    if (this.log) { console.log("[WebSQL] creating return result"); }
+                    returnResults.rowsAffected = results && results.rowsAffected && results.rowsAffected;
                     returnResults.rows = [];
                     if (results.rows && results.rows.length>0) {
+                        if (this.log) { console.log("[WebSQL] iterating over rows"); }
                         for (let i = 0, l = results.rows.length; i < l; i++) {
                             returnResults.rows.push(results.rows.item(i));
                         }
                     }
                 });
+            if (this.log) { console.log("[WebSQL] returning result", returnResults); }
             return returnResults;
         }
     }
