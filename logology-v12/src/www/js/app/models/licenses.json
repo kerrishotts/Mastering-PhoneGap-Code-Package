@@ -13,7 +13,7 @@
       "link": "https://www.npmjs.com/package/cordova-plugin-splashscreen", "type": "plugin" },
     { "name": "StatusBar",            "comment": "1.0.1", "licenseType": "Apache version 2.0",
       "link": "https://www.npmjs.com/package/cordova-plugin-statusbar", "type": "plugin" },
-    { "name": "CordvoaWebServer",     "comment": "1.0.3", "licenseType": "Apache version 2.0",
+    { "name": "CordovaWebServer",     "comment": "1.0.3", "licenseType": "Apache version 2.0",
       "link": "https://www.npmjs.com/package/cordova-plugin-webserver", "type": "plugin" },
     { "name": "Whitelist",            "comment": "1.1.0", "licenseType": "Apache version 2.0",
       "link": "https://www.npmjs.com/package/cordova-plugin-whitelist", "type": "plugin" },
@@ -163,6 +163,11 @@
       "name" : "browser-sync",
       "type": "dev-package"
    },
+   {  "licenseType" : "MIT",
+      "comment" : "2.1.2",
+      "link" : "https://github.com/alekseykulikov/browserify-test",
+      "name" : "browserify-test",
+      "type" : "dev-package"},
    {
       "licenseType" : "MIT",
       "comment" : "11.2.0",
@@ -253,6 +258,13 @@
        "licenseType": "Apache version 2.0",
        "link": "https://github.com/dumbmatter/fakeIndexedDB",
       "type": "dev-package"
+   },
+   {
+       "comment" : "6.0.1",
+       "licenseType" : "ISC",
+       "name": "glob",
+       "link": "https://github.com/isaacs/node-glob.git",
+       "type": "dev-package"
    },
    {
       "comment" : "3.9.0",
@@ -400,6 +412,13 @@
       "link" : "https://github.com/felixge/node-require-all",
       "name" : "require-all",
       "type": "dev-package"
+   },
+   {
+       "comment": "0.2.1",
+       "licenseType": "GNU v3",
+       "link": "http://bitbucket.org/surgemcgee/opendatabase/src/",
+       "name": "opendatabase",
+       "type": "dev-package"
    },
    {
       "comment" : "2.4.4",
