@@ -60,17 +60,21 @@ export default class AboutView extends View {
                     for additional information, including licensing information.`)
             ]}),
             list({
-                contents: licenses.map( license => {
-                    return listItem({
-                        contents: listItemContents({
-                            props: {
-                                value: license.link
-                            },
-                            contents: ["name", "comment", "licenseType"].map( field => {
-                                return h.el(`div.y-flex ${field}`, license[field]);
-                            })
+                contents: ["plugin", "package", "dev-package"].map ( t=> {
+                    return [listHeading({contents:L.T(`about:${t}`)})].concat(
+                        licenses.map( license => {
+                            return license.type === t ? listItem({
+                                contents: listItemContents({
+                                    props: {
+                                        value: license.link
+                                    },
+                                    contents: ["name", "comment", "licenseType"].map( field => {
+                                        return h.el(`div.y-flex ${field}`, license[field]);
+                                    })
+                                })
+                            }) : undefined;
                         })
-                    })
+                    );
                 })
             })
         ]});
