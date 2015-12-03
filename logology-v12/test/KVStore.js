@@ -1,25 +1,37 @@
 "use strict";
+let localStorage, indexedDB, openDatabase;
+if (typeof window !== "undefined") {
+    localStorage = window.localStorage;
+    indexedDB = window.indexedDB;
+    openDatabase = window.openDatabase;
+}
+else {
+    global.window = global;
+    global.navigator = {
+        userAgent: "node"
+    };
+
+    let Storage = require("dom-storage");
+    let localStorage = new Storage(null, { strict: true });
+    indexedDB = require("fake-indexeddb");
+    global.indexedDB = indexedDB;
+    openDatabase = require("opendatabase");
+    global.openDatabase = openDatabase;
+}
 let should = require("./helpers/setup").should;
-global.window = global;
-
-global.navigator = {
-    userAgent: "node"
-};
-
-let Storage = require("dom-storage");
-let localStorage = new Storage(null, { strict: true });
-let indexedDB = require("fake-indexeddb");
-global.indexedDB = indexedDB;
 
 import {createKVStore} from "../src/www/js/app/lib/KVStore";
 import {createLocalStorageKVStore} from "../src/www/js/app/lib/LocalStorageKVStore";
 import {createIndexedDBKVStore} from "../src/www/js/app/lib/IndexedDBKVStore";
+import {createWebSQLKVStore} from "../src/www/js/app/lib/WebSQLKVStore";
 
 describe ("KVStore", () => {
     [["localStorage", createLocalStorageKVStore, "localStorage", localStorage],
-     ["IndexedDB",    createIndexedDBKVStore, "indexedDB", indexedDB]
+     ["IndexedDB",    createIndexedDBKVStore, "indexedDB", indexedDB],
+     ["WebSQL",       createWebSQLKVStore,       "openDatabase", openDatabase]
     ].forEach( ([adapterName, adapterFn, mockProperty, mock]) => {
         describe ("Using " + adapterName, () => {
+            if (mock) {
             describe ("#Create", () => {
                 it ("should be able to create a new store", () => {
                     let store = createKVStore({adapter:adapterFn({[mockProperty]:mock})});
@@ -59,6 +71,7 @@ describe ("KVStore", () => {
                     return store.exists("key").should.become(false);
                 });
             });
+          }
         });
     });
 });
