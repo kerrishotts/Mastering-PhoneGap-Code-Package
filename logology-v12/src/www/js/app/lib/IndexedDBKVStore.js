@@ -2,7 +2,10 @@
 
 import Emitter from "yasmf-emitter";
 import treo from "treo";
-import treoWebsql from "treo-websql";
+let treoWebSql;
+if (typeof window !== "undefined") {
+    treoWebSql= require("treo/plugins/treo-websql");
+}
 
 //region private properties
 const _namespace = Symbol("_namespace"),
@@ -19,9 +22,9 @@ export default class IndexedDBKVStore extends Emitter {
         super();
         this[_namespace] = namespace;
         this[_indexedDB] = indexedDB;
-        if (indexedDB) {
-            global.indexedDB = indexedDB;
-        }
+        //if (indexedDB) {
+        //    global.indexedDB = indexedDB;
+        //}
         this[_db] = treo(namespace, kvSchema);
         if (!indexedDB) {
             this.db.use(treoWebsql());
