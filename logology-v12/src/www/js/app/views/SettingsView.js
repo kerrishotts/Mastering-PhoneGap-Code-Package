@@ -44,24 +44,24 @@ export default class SettingsView extends View {
         return scrollContainer({contents:
             list({
                 contents: model.map( setting => {
-                    return listItem({
-                        tag: "label",
-                        contents: listItemContents({
-                            props: {
-                                value: setting.key
-                            },
-                            contents: [
-                                h.el("div.y-flex name", L.T(setting.name)),
-                                h.el("div.y-flex value",
-                                     h.select(
-                                         setting.options.map( option => h.option(option.value, L.T(option.name)))
-                                     )
-                                )
-                            ]})
+                            return listItem({
+                                tag: "label",
+                                contents: listItemContents({
+                                    props: {
+                                        value: setting.key
+                                    },
+                                    contents: [
+                                        h.el("div.y-flex name", L.T(setting.name)),
+                                        h.el("div.y-flex value",
+                                            h.select(
+                                                setting.options.map( option => h.option(option.value, L.T(option.name)))
+                                            )
+                                        )
+                                    ]})
+                                });
                         })
-                    })
-                })
-            });
+            })
+        });
     }
 
 }
