@@ -344,6 +344,13 @@ The projects as delivered are *Cordova* projects. In order to utilize them with 
 
     * Installation instructions <https://github.com/google/ios-webkit-debug-proxy#installation>
 
+* sqlite3
+
+    * Comes with the Android SDK
+    * Or can be installed separately
+        * OS X: brew install sqlite3
+    * Make sure it is in your PATH
+
 #### Development Packages Required
 
 > NOTE: These can be installed via `npm install`
@@ -475,6 +482,22 @@ The projects as delivered are *Cordova* projects. In order to utilize them with 
 * merge-stream 1.0.0 (or better), MIT
 
       npm install --save-dev merge-stream
+
+* opendatabase 0.2.1 (or better), GNU V3
+
+      npm install --save-dev opendatabase
+
+    > NOTE: If tests fail for WebSQL, do the following:
+
+        1. Fix the install_sqlite3_json.sh by changing it to
+
+            #! /bin/sh
+            cd sqlite-autoconf-3080200 && ./configure --prefix=$(pwd)/../lib --disable-dynamic-extensions --enable-static --disable-shared && make && make install && echo 'Successfully created opendatabase Sqlite3 binaries.'
+
+        2. `cd sqlite-autoconf-3080200`
+        3. `make clean`
+        4. `cd ..`
+        5. `./install_sqlite3_json.sh`
 
 * q 1.4.1 (or better), MIT
 
