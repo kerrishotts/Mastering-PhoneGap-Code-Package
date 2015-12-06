@@ -18,7 +18,8 @@ import h from "yasmf-h";
 import L from "$APP/localization/localization";
 import GCS from "$LIB/grandCentralStation";
 
-import {settings} from "$MODELS/settings";
+import {getSettings} from "$MODELS/settings";
+let settings = getSettings();
 
 const kp = require("keypather")();
 
@@ -26,17 +27,12 @@ const kp = require("keypather")();
 export default class SettingsView extends View {
     get TARGET_SELECTORS() {
         return [
-            {selector: "tap:a", emit: "linkTapped"},
-            {selector: "tap:ul li > button", emit: "licenseTapped"}
+            {selector: "input:select", emit: "settingChanged"}
         ];
     }
 
-    onLinkTapped(sender, notice, linkElement) {
-        GCS.emit("APP:DO:URL", linkElement.getAttribute("link"));
-    }
-
-    onLicenseTapped(sender, notice, license) {
-        GCS.emit("APP:DO:URL", license.value);
+    onSettingChanged(sender, notice, select) {
+        settings[select.getAttribute("data-key")] = select.value;
     }
 
     template() {
@@ -54,7 +50,14 @@ export default class SettingsView extends View {
                                         h.el("div.y-flex name", L.T(setting.name)),
                                         h.el("div.y-flex value",
                                             h.select(
-                                                setting.options.map( option => h.option(option.value, L.T(option.name)))
+                                                {attrs: {
+                                                    "data-key": setting.key
+                                                }},
+                                                setting.options.map( option => h.option(option.value, L.T(option.name),
+                                                                                        {attrs: {
+                                                                                            selected: settings[setting.key] == option.value ? "selected" : undefined
+                                                                                        }}
+                                                                                       )),
                                             )
                                         )
                                     ]})
