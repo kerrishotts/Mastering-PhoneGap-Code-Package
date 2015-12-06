@@ -12,14 +12,14 @@ export default class SQLDictionary extends Dictionary {
         super(options);
         this[_db] = null;
     }
-    
+
     async load() {
         this[_db] = new WebSQLDB({
             name: "dicts/" + this.options.path,
             description: this.options.name
         });
         let db = this[_db];
-        
+
         return db.transaction((transaction) => {
             this[_sortedIndex] = (db.select({
                 transaction,
@@ -27,11 +27,11 @@ export default class SQLDictionary extends Dictionary {
                 from: "lemmas",
                 orderBy: ["lemma"]
             })).rows;
-            
+
         }, {readOnly: true}).then(() => {
-            this.loaded();            
+            this.loaded();
         });
-        
+
     }
     get sortedIndex() {
         if (!this.isLoaded) {
@@ -47,7 +47,7 @@ export default class SQLDictionary extends Dictionary {
         let arr = [], idx = 0, len = this[_json].length, id;
         let searchKey = wordNetRef !== undefined ? "wordNetRef" : "lemmas";
         let searchStr = wordNetRef !== undefined ? wordNetRef : lemma.toLowerCase().trim();
-        
+
         return new Promise((resolve, reject) => {
             id = setInterval(() => {
                 if (idx<len) {
@@ -63,7 +63,7 @@ export default class SQLDictionary extends Dictionary {
                         idx++;
                     }
                 } else {
-                    clearInterval(id);                    
+                    clearInterval(id);
                     resolve(arr.map(d => new Definition(d))
                                .sort((a, b) => (a.wordNetRef === b.wordNetRef ? 0 : (a.wordNetRef < b.wordNetRef ? -1 : 1))));
                 }
