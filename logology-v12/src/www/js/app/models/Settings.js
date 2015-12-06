@@ -15,11 +15,11 @@ let _fontFamily = Symbol("fontFamily"), // font family
 export default class Settings extends Emitter {
     constructor({localStorage} = {}) {
         super();
-        this[_fontFamily] = undefined; // undefined will use app default
+        this[_fontFamily] = "default"; // will just use the default font family
         this[_fontSize] = 0;           // 0 will use app default (from system)
-        this[_theme] = "light";
-        this[_showImages] = true;
-        this[_pageSize] = 100;
+        this[_theme] = "Default";      // default theme
+        this[_showImages] = true;      // not currently used
+        this[_pageSize] = 100;         // search result limit
         this[_lastDictionary] = undefined; // if undefined, the app will pick the first one
         this[_externalResources] = {
             "Wikipedia": "http://www.wikipedia.org/search-redirect.php?language=en&search=%WORD%",
@@ -44,7 +44,7 @@ export default class Settings extends Emitter {
     get entries() {
         return [
             {name: "setting:font-family", key: "fontFamily", value: this.fontFamily, type: "select", options: [
-                {name: "setting:font-family:Default", value: undefined},
+                {name: "setting:font-family:Default", value: "default"},
                 {name: "setting:font-family:Helvetica-Neue", value: "HelveticaNeue, 'Helvetica Neue', Helvetica, Arial, sans-serif"},
                 {name: "setting:font-family:Lucida-Grande", value: "'Lucida Sans Unicode', 'Lucida Grande', sans-serif"},
                 {name: "setting:font-family:Georgia", value: "Georgia, serif"},
@@ -61,9 +61,9 @@ export default class Settings extends Emitter {
                 {name: "setting:font-size:Gigantic", value: 250}
             ]},
             {name: "setting:theme", key: "theme", value: this.theme, type: "select", options: [
-                {name: "setting:theme:Default", value: "default"},
-                {name: "setting:theme:Light", value: "light"},
-                {name: "setting:theme:Dark", value: "dark"}
+                {name: "setting:theme:Default", value: "Default"},
+                {name: "setting:theme:Light", value: "Light"},
+                {name: "setting:theme:Dark", value: "Dark"}
             ]},
             {name: "setting:page-size", key: "pageSize", value: this.pageSize, type: "select", options: [
                 {name: "setting:page-size:20", value: 25},
@@ -73,7 +73,7 @@ export default class Settings extends Emitter {
                 {name: "setting:page-size:150", value: 150},
                 {name: "setting:page-size:200", value: 200}
             ]}
-        ]
+        ];
     }
 
     retrieveSettings() {
@@ -156,10 +156,18 @@ export default class Settings extends Emitter {
     }
 }
 
-export let settings = new Settings();
-settings.retrieveSettings();
-
 export function createSettings(...args) {
     return new Settings(...args);
 }
+
+let settings;
+export function getSettings() {
+    if (!settings) {
+        settings = createSettings();
+        settings.retrieveSettings();
+    }
+    return settings;
+}
+
+
 
