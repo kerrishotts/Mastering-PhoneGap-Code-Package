@@ -22,7 +22,8 @@ const ICONMAP = {
     "clock": "clock",
     "history": "clock",
     "home": "home",
-    "note": "pencil"
+    "note": "pencil",
+    "trash": "trash"
 };
 
 module.exports.svgIcon = function svgIcon(glyph, text) {
