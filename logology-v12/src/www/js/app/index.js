@@ -14,41 +14,37 @@
 // instances, so we use a polyfill
 require("whatwg-fetch");
 
-// Need ES6 polyfill as well
-import "babel/polyfill";
-
-import once from "once";
-
-import Emitter from "yasmf-emitter";
-import h from "yasmf-h";
-
-import GCS from "$LIB/grandCentralStation";
-import {createSoftKeyboard} from "$LIB/SoftKeyboard";
-import L from "./localization/localization";
-
-import {createTheme} from "$LIB/Theme";
-import {createThemeManager} from "$LIB/ThemeManager";
-
-import {createNavigationViewController} from "$LIB/NavigationViewController";
-import {createSplitViewController} from "$LIB/SplitViewController";
-import {createViewController} from "$LIB/ViewController";
-
-import {settings} from "$MODELS/Settings";
-import {createDictionaries} from "$MODELS/Dictionaries";
-
-import StarterDictionary from "$MODELS/StarterDictionary";
-import XHRDictionary from "$MODELS/XHRDictionary";
-import SQLDictionary from "$MODELS/SQLDictionary";
-
+// inject SVG assets
 let SVGInjector = require("svg-injector");
 
-import {createSearchViewController} from "$CONTROLLERS/SearchViewController";
-import {createMenuViewController} from "$CONTROLLERS/MenuViewController";
-import {createAboutViewController} from "$CONTROLLERS/AboutViewController";
-import {createSettingsViewController} from "$CONTROLLERS/SettingsViewController";
-import {createDefinitionViewController} from "$CONTROLLERS/DefinitionViewController";
-import {createDefinitions} from "$MODELS/Definitions";
-
+// Need ES6 polyfill as well
+import "babel/polyfill";
+import once from "once";
+import Emitter from "yasmf-emitter";
+import h from "yasmf-h";
+import GCS from "../lib/grandCentralStation";
+import L from "./localization/localization";
+import {createSoftKeyboard} from "../lib/SoftKeyboard";
+import {createTheme} from "../lib/Theme";
+import {createThemeManager} from "../lib/ThemeManager";
+import {createNavigationViewController} from "../lib/NavigationViewController";
+import {createSplitViewController} from "../lib/SplitViewController";
+import {createViewController} from "../lib/ViewController";
+import {createDictionaries} from "./models/Dictionaries";
+import {createSearchViewController} from "./controllers/SearchViewController";
+import {createMenuViewController} from "./controllers/MenuViewController";
+import {createAboutViewController} from "./controllers/AboutViewController";
+import {createSettingsViewController} from "./controllers/SettingsViewController";
+import {createDefinitionViewController} from "./controllers/DefinitionViewController";
+import {createNotesViewController} from "./controllers/NotesViewController";
+import {createDefinitions} from "./models/Definitions";
+import {getFavorites} from "./models/Favorites";
+import {getNotes} from "./models/Notes";
+import {getSettings} from "./models/settings";
+import StarterDictionary from "./models/StarterDictionary";
+import XHRDictionary from "./models/XHRDictionary";
+import SQLDictionary from "./models/SQLDictionary";
+let settings = getSettings();
 
 class App extends Emitter {
     constructor() {
@@ -83,7 +79,10 @@ class App extends Emitter {
     configureTheme() {
         // load theme
         this.themeManager = createThemeManager();
-        this.themeManager.currentTheme = createTheme();
+        this.themeManager.registerTheme(createTheme());
+        this.themeManager.registerTheme(createTheme({name: "Light", cssClass: "theme-light", namespace: "light-"}));
+        this.themeManager.registerTheme(createTheme({name: "Dark", cssClass: "theme-dark", namespace: "dark-"}));
+        this.themeManager.currentTheme = this.themeManager.getThemeByName("Default");
     }
 
     configureSoftKeyboard() {
@@ -123,6 +122,11 @@ class App extends Emitter {
                    });
     }
 
+    viewNotes(lemma) {
+        let nvc = createNotesViewController();
+        return this.splitViewController.rightView.push(nvc, {animate: false});
+    }
+
     showAbout() {
         let avc = createAboutViewController();
         GCS.emit("APP:DO:menu");
@@ -133,6 +137,13 @@ class App extends Emitter {
         let svc = createSettingsViewController();
         GCS.emit("APP:DO:menu");
         return this.splitViewController.rightView.push(svc, {animate:false});
+    }
+
+    toggleFavorite(word) {
+        let favorites = getFavorites();
+        favorites.toggleFavorite(word)
+                 .then(() => favorites.isWordAFavorite(word))
+                 .then(r => GCS.emit("APP:DID:favDefinition", word, r));
     }
 
     openURL(url) {
@@ -185,12 +196,41 @@ class App extends Emitter {
             case "viewDefinition":
                 this.viewDefinition(data[0]);
                 break;
+            case "favDefinition":
+                this.toggleFavorite(data[0]);
+                break;
+            case "noteDefinition":
+                this.viewNotes(data[0]);
+                break;
+            case "shareDefinition":
+                // share definition
+                break;
             case "URL":
                 this.openURL(data[0]);
                 break;
             default:
                 console.log(["Couldn't handle a navigation request:", sender, notice, data]);
         }
+    }
+
+    applySettings() {
+        document.body.style.fontFamily = settings.fontFamily === "default" ? "" : settings.fontFamily;
+
+        Array.from(document.styleSheets).forEach((ss) => {
+            if (ss.href && ss.href.indexOf("app.css")>-1) {
+                Array.from(ss.rules).forEach((r) => {
+                    if (r.selectorText === "html") {
+                        r.style.fontSize = settings.fontSize == 0 ? "100%" : `${settings.fontSize}%`;
+                    }
+                });
+            }
+        });
+        try {
+            this.themeManager.currentTheme = this.themeManager.getThemeByName(settings.theme);
+        } catch (err) {
+            console.log("couldn't change theme to ", settings.theme);
+        }
+
     }
 
     enableEmitterLog(e) {
@@ -221,6 +261,7 @@ class App extends Emitter {
 
             // load settings
             this.settings = settings;
+            this.applySettings();
 
 
             // create dictionaries list
@@ -241,6 +282,8 @@ class App extends Emitter {
             GCS.on("/.*/", (...args) => console.log(args));
 
             GCS.on("/APP:DO:.+/", this.handleNavigationRequests, this)
+
+            GCS.on("APP:SETTINGS:changed", this.applySettings, this);
 
             // tell everyone that the app has started
             GCS.emit("APP:started");
