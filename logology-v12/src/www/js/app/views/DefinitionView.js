@@ -16,7 +16,8 @@ import listIndicator from "$WIDGETS/listIndicator";
 import h from "yasmf-h";
 import L from "$APP/localization/localization";
 import GCS from "$LIB/grandCentralStation";
-import {settings} from "$MODELS/Settings";
+import {getSettings} from "$MODELS/settings";
+let settings = getSettings();
 
 const kp = require("keypather")();
 
@@ -38,26 +39,27 @@ export default class DefinitionView extends View {
         let model = kp.get(this, "controller.model");
         if (!model) {model = {entries:[]}};  // we need to support an empty set of entries
         return scrollContainer({
-                   contents: [textContainer({
-                       contents: h.ol(
-                           model.entries.map(d => h.li([
-                               h.el("span.pos", d.partOfSpeech), 
-                               h.el("span.def", d.gloss)
-                           ]))
-                        )}),
-                        list({
-                            contents: Object.entries(settings.externalResources).map(([k,v]) => {
-                                return listItem({
-                                    contents: listItemContents({
-                                        props: {
-                                            value: v
-                                        },
-                                        contents: h.el("div.y-flex", L.T("actions:external", {resource:k}))
-                                    })
-                                })
+            contents: //h.el("div.fill-height",
+            [
+                textContainer({contents: h.ol(
+                        model.entries.map(d => h.li([
+                            h.el("span.pos", d.partOfSpeech),
+                            h.el("span.def", d.gloss)
+                        ]))
+                )}),
+                list({
+                    contents: Object.entries(settings.externalResources).map(([k,v]) => {
+                        return listItem({
+                            contents: listItemContents({
+                                props: {
+                                    value: v
+                                },
+                                contents: h.el("div.y-flex", L.T("actions:external", {resource:k}))
                             })
-                        })
-                   ]
+                        });
+                    })
+                })
+            ] //)
         });
     }
 
