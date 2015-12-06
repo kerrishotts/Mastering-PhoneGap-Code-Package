@@ -23,7 +23,7 @@ y-scroll-container, [is="y-scroll-container"], .y-scroll-container {
 
 y-text-container, [is="y-text-container"], .y-text-container {
     color: $text-color;
-    p {
+    h1,h2,h3,h4,h5,h6,p,ul,ol {
         margin: 1rem;
         line-height: normal;
     }

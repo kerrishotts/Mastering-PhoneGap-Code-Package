@@ -2,6 +2,7 @@
   $font-stack: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
   $dp2: "only screen and (-webkit-min-device-pixel-ratio: 1.01), only screen and (min-resolution: 1.01dppx), only screen and (min-resolution: 191dpi)";
   $tint-color: #EA1;
+  $tint-color-contrast: #A1E;
   $tint-active-color: #EEEAE1;
   $tint-border-color: #DEDAD1;
   $tint-active-color-darker: #CECAC1;
@@ -16,11 +17,28 @@
   font-family: $font-stack;
   color: $ui-text-color;
 
+    @import "../lib/button";
+    @import "../lib/container";
+    @import "../lib/bar";
+    @import "../lib/bar-navigation";
+    @import "../lib/glyphs";
+    @import "../lib/list";
+    @import "../lib/alert";
+    @import "../lib/svg";
+
+    @import "../lib/navigation-view-controller";
+    @import "../lib/split-view-controller";
+
+    .menu-icon, .back-icon {
+        margin-left: -0.75rem;
+    }
+
   //button
   button {
     font-family: $font-stack;
   }
 
+/*
   //nav
   y-nav, [is="y-nav"] {
     background: $tint-color;
@@ -75,7 +93,7 @@
       }
     }
   }
-
+*/
     // animations
     //
     // view        -100<----0 leaving    0<----100 entering
@@ -241,6 +259,10 @@
         .licenseType {
             text-align: right;
         }
+        h1 {
+            font-size: 150%;
+            font-weight: bold;
+        }
     }
 
     .SettingsViewController {
@@ -280,10 +302,43 @@
             text-align: center;
             padding: 2rem 0;
         }
+        .fav-icon, .note-icon {
+            transition: fill 0.3s ease-in-out;
+            fill: $bar-light-color;
+        }
+        .fav-icon[data-fav=yes] {
+            fill: $tint-color-contrast;
+        }
+    }
+
+    .NotesViewController {
+        textarea {
+            flex: 1 1 auto;
+            user-select: text !important;
+            border: 0;
+            padding: 1rem;
+            font-size: 1rem;
+            background-color: transparent;
+        }
     }
 
     // dictionary definitions
     .DefinitionViewController {
+        .fav-icon, .note-icon {
+            transition: fill 0.3s ease-in-out;
+            fill: $bar-light-color;
+        }
+        .fav-icon[data-fav=yes] {
+            fill: $tint-color-contrast;
+        }
+        [is="y-scroll-container"] {
+            display: flex;
+            flex-direction: column;
+            [is="y-text-container"] {
+                flex: 1 0 auto;
+                user-select: text;
+            }
+        }
         ol {
             list-style-type: none;
             counter-reset: definition-list;
