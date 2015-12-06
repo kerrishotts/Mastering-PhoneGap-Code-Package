@@ -30,9 +30,9 @@ export default class MenuView extends View {
     }
 
     get MENU_ITEMS() {
-        return [
+        return [/*
             {label: "nav:get-more-dictionaries", emit: "APP:DO:moreDictionaries"},
-            {label: "nav:readability", emit:"APP:DO:readability"},
+            {label: "nav:readability", emit:"APP:DO:readability"},*/
             {label: "nav:settings", emit:"APP:DO:settings"},
             {label: "nav:about", emit:"APP:DO:about"}];
     }
