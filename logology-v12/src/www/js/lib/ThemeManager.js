@@ -22,6 +22,11 @@ export default class ThemeManager extends Emitter {
         return Array.from(this[_available]);
     }
 
+    getThemeByName(n) {
+        let themes = Array.from(this[_available]).filter(theme => theme.name === n);
+        return themes[0];
+    }
+
     get currentTheme()/*: Theme*/ {
         return this[_current];
     }
