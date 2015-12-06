@@ -12,11 +12,12 @@ import listItemActions from "$WIDGETS/listItemActions";
 import View from "$LIB/View";
 import GCS from "$LIB/grandCentralStation";
 import L from "$APP/localization/localization";
-
 import lemmaList from "./lemmaList";
 import lemmaActions from "./lemmaActions";
-
-import {settings} from "$MODELS/Settings";
+import {getSettings} from "../models/settings";
+import {getFavorites} from "../models/Favorites";
+import {getNotes} from "../models/Notes";
+let settings = getSettings();
 
 const prefixedJSTransition = prefix("transition"),
       prefixedCSSTransform = prefix.css("transform"),
@@ -110,6 +111,17 @@ function panItemStart(listItem: Node, evt: Event): void {
     if (this[_panningStartX] === undefined) {
         this[_panningStartX] = evt.center.x;
     }
+    let lemma = panItem.value;
+    getFavorites().isWordAFavorite(lemma).then((fav) => {
+        let actions = lemmaActions({isFavorite: fav});
+        let favIcon = this[_actionsElement].querySelector(".fav-icon");
+        favIcon.title = actions[0].title;
+        favIcon.setAttribute("data-fav", actions[0].getAttribute("data-fav"));
+    }).then(() => getNotes().doesWordHaveANote(lemma)).then((note) => {
+        let actions = lemmaActions({hasNote: note});
+        let noteIcon = this[_actionsElement].querySelector(".note-icon");
+        noteIcon.setAttribute("data-note", actions[0].getAttribute("data-note"));
+    });
 }
 
 /**
