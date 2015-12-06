@@ -195,6 +195,7 @@ export default class View extends Emitter {
      * @return {Node|Array}
      */
     render()/*: Node|Array*/ {
+        //let scrollBackTo = this.elementTree ? this.elementTree.scrollTop : 0;
         let template = this.template();
         if (this.elementTree) {
             h.renderTo(template && template.children ? Array.from(template && template.children) : [], this.elementTree);
@@ -207,6 +208,11 @@ export default class View extends Emitter {
             this.themeManager.currentTheme.markElementVisibility(this.elementTree, this.visible || false);
             this.themeManager.currentTheme.markElementDisplay(this.elementTree, this[_display]);
         }
+        /*setTimeout(() => {
+            try {
+                this.elementTree.scrollTop = scrollBackTo;
+            } catch (err) {}
+        }, 0);*/
         return this.elementTree;
     }
 
