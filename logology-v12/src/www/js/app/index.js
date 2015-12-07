@@ -38,6 +38,7 @@ import {createSettingsViewController} from "./controllers/SettingsViewController
 import {createDefinitionViewController} from "./controllers/DefinitionViewController";
 import {createNotesViewController} from "./controllers/NotesViewController";
 import {createDefinitions} from "./models/Definitions";
+import {createNote} from "./models/Note";
 import {getFavorites} from "./models/Favorites";
 import {getNotes} from "./models/Notes";
 import {getSettings} from "./models/settings";
@@ -56,8 +57,7 @@ class App extends Emitter {
         }, false);
         GCS.on("APP:startupFailure", this.onStartupFailure, this);
 
-        // DEBUG: debugging only
-        this.GCS = GCS;
+        this.version = "{{{VERSION}}}";
     }
 
     onStartupFailure(sender, notice, err) {
@@ -88,7 +88,8 @@ class App extends Emitter {
     configureSoftKeyboard() {
         this.softKeyboard = createSoftKeyboard({selectors: [".ui-scroll-container",
                                                             "[is='y-scroll-container']",
-                                                            "y-scroll-container"]});
+                                                            "y-scroll-container",
+                                                            "textarea"]});
     }
 
     viewLastDictionary() {
@@ -123,7 +124,8 @@ class App extends Emitter {
     }
 
     viewNotes(lemma) {
-        let nvc = createNotesViewController();
+        let model = createNote({lemma});
+        let nvc = createNotesViewController({model});
         return this.splitViewController.rightView.push(nvc, {animate: false});
     }
 
@@ -226,7 +228,20 @@ class App extends Emitter {
             }
         });
         try {
-            this.themeManager.currentTheme = this.themeManager.getThemeByName(settings.theme);
+            let theme = this.themeManager.getThemeByName(settings.theme);
+            if (!theme) {
+                theme = this.themeManager.getThemeByName("Default");
+            }
+            this.themeManager.currentTheme = theme;
+            if (typeof StatusBar !== "undefined") {
+                let barColor = {
+                    "Default": {color: "#EEAA11", bg: "styleLightContent"},
+                    "Light": {color: "#FFFFFF", bg: "styleDefault"},
+                    "Dark": {color: "#40566F", bg: "styleLightContent"}
+                }
+                StatusBar.backgroundColorByHexString( barColor[settings.theme].color );
+                StatusBar[barColor[settings.theme].bg]();
+            }
         } catch (err) {
             console.log("couldn't change theme to ", settings.theme);
         }
@@ -240,16 +255,12 @@ class App extends Emitter {
     async configurei18n() {
         // load localization information
         this.locale = await L.loadLocale();
-        this.L = L; // DEBUG: testing only
         L.loadTranslations(require("./localization/root/messages"));
     }
 
     async start() {
 
         try {
-            this.h = h;
-//            h.useDomMerging = true;
-
             let rootElement = document.getElementById("rootContainer");
 
             this.configureAccessibility();
@@ -263,12 +274,19 @@ class App extends Emitter {
             this.settings = settings;
             this.applySettings();
 
-
             // create dictionaries list
             this.dictionaries = createDictionaries();
-            this.dictionaries.addDictionary({name: "Starter", Dictionary: StarterDictionary});
-            this.dictionaries.addDictionary({name: "WordNet - JSON", Dictionary: XHRDictionary, options: {path: "wordnet.json"}});
-            this.dictionaries.addDictionary({name: "WordNet - SQL", Dictionary: SQLDictionary, options: {path: "wordnet.db"}});
+
+            // starter only useful for quick testing
+            // this.dictionaries.addDictionary({name: "Starter", Dictionary: StarterDictionary});
+
+            if (typeof sqlitePlugin !== "undefined") {
+                // introduced ch8
+                this.dictionaries.addDictionary({name: "WordNet - SQL", Dictionary: SQLDictionary, options: {path: "wordnet.db"}});
+            } else {
+                // introduced ch4
+                this.dictionaries.addDictionary({name: "WordNet - JSON", Dictionary: XHRDictionary, options: {path: "wordnet.json"}});
+            }
 
             let mvc = createMenuViewController({model: this.dictionaries});
             let rrv = createViewController();
@@ -278,8 +296,8 @@ class App extends Emitter {
             this.splitViewController = createSplitViewController( {subviews: [mvnc, nvc], themeManager: this.themeManager, renderElement: rootElement});
             this.splitViewController.visible = true;
 
-            // logging
-            GCS.on("/.*/", (...args) => console.log(args));
+            // logging, debug only
+            // GCS.on("/.*/", (...args) => console.log(args));
 
             GCS.on("/APP:DO:.+/", this.handleNavigationRequests, this)
 
@@ -291,6 +309,13 @@ class App extends Emitter {
 
             // and ask the app to go to the last dictionary
             GCS.emit("APP:DO:viewLastDictionary");
+
+            // hide splash screen if visible
+            if (typeof navigator !== "undefined") {
+                if (navigator.splashscreen) {
+                    navigator.splashscreen.hide();
+                }
+            }
         } catch (err) {
             GCS.emit("APP:startupFailure", err);
             this.emit("startupFailure", err);
@@ -300,4 +325,11 @@ class App extends Emitter {
 
 let app = new App();
 export default app;
+
+if (global) {
+    global.appVersion = "{{{VERSION}}}";
+}
+if (window) {
+    window.appVersion = "{{{VERSION}}}";
+}
 
