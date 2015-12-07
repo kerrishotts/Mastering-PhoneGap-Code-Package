@@ -1,1 +1,49 @@
-../config/eslint.json
+{
+    "parser": "babel-eslint",
+    "globals": {
+        "require": false,
+        "console": false,
+        "module": false,
+        "window": false,
+        "navigator": false,
+        "setTimeout": false,
+        "document": false,
+        "getComputedStyle": false,
+        "define": false,
+        "requirejs": false,
+        "Node": false,
+        "XMLHttpRequest": false,
+        "localStorage": false,
+        "alert": false,
+        "isNaN": false,
+        "_y": false,
+        "Q": false,
+        "Hammer": false,
+        "require": false,
+        "module": true,
+        "clearTimeout": false,
+        "setImmediate": false
+    },
+    "rules": {
+        "complexity": [2, 10],
+        "max-statements": [2, 100],
+        "max-depth": [2, 5],
+        "max-nested-callbacks": [2, 4],
+        "strict": 0,
+        "no-underscore-dangle": 0,
+        "new-cap": 0,
+        "no-console": 0,
+        "no-shadow": 0,
+        "camelcase": 0,
+        "global-strict": 0,
+        "no-loop-func": 0,
+        "key-spacing": 0,
+        "comma-spacing": 0,
+        "no-unused-vars": [
+            0, {
+                "vars": "all",
+                "args": "after-used"
+            }
+        ]
+    }
+}

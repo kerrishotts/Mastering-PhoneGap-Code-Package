@@ -1,0 +1,25 @@
+#svg-sprite {
+    display: none;
+}
+
+.svg-icon, [is='y-svg'] {
+  min-width: 44px; // 2rem can be a bit small
+  display: inline-flex;
+  position: relative;
+  fill: currentColor;
+  transform: translateZ(0);
+  text-align: center !important;
+}
+
+.svg-icon svg, [is='y-svg'] svg {
+    width: 1.33rem;
+    height: 1.33rem;
+    padding: 0;
+    margin: auto auto;
+    flex: 0 0 auto;
+
+    use {
+        padding: 0;
+        margin: 0;
+    }
+}

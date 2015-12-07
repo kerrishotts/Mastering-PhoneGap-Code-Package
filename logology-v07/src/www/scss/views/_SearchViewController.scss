@@ -1,0 +1,19 @@
+.SearchViewController {
+    p.search-info {
+        font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+        font-style: italic;
+        font-size: 150%;
+        line-height: normal;
+        opacity: 0.66;
+        text-align: center;
+        padding: 2rem 0;
+    }
+    .fav-icon, .note-icon {
+        transition: fill 0.3s ease-in-out;
+        fill: $bar-light-color;
+    }
+    .fav-icon[data-fav=yes],
+    .note-icon[data-note=yes] {
+        fill: $tint-color-contrast;
+    }
+}

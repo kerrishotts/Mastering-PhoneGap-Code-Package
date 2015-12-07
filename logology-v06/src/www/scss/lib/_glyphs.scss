@@ -1,0 +1,51 @@
+y-icon-text, [is="y-icon-text"] {
+  display: inline-block;
+  position: relative;
+  &:before {
+    vertical-align: middle;
+    margin: auto;
+    min-width: 2rem;
+    min-height: 2rem;
+    display: inline-block;
+    padding: 0.5rem;
+    content: '';
+    background-color: currentColor;
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    mask-size: 2rem 2rem;
+  }
+}
+
+y-icon, [is="y-icon"] {
+  @extend y-icon-text;
+  font-size: 0;
+  padding:0 !important;
+}
+
+$glyphs: (search, magnifying-glass),
+        (menu, menu),
+        (fav, bookmark),
+        (make-note, pencil),
+        (share, share)
+;
+
+@each $icon, $glyph in $glyphs {
+  y-#{$icon}-glyph, [is="y-#{$icon}-glyph"] {
+    @extend y-icon;
+    &:before {
+      mask-image: url(../img/#{$glyph}.png);
+      @media #{$dp2} {
+        mask-image: url(../img/#{$glyph}@2x.png);
+      }
+    }
+  }
+  y-#{$icon}-text-glyph, [is="y-#{$icon}-text-glyph"] {
+    @extend y-icon-text;
+    &:before {
+      mask-image: url(../img/#{$glyph}.png);
+      @media #{$dp2} {
+        mask-image: url(../img/#{$glyph}@2x.png);
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+y-alert-container, [is="y-alert-container"] {
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background-color: rgba(0,0,0,0.33);
+  z-index:999999;
+  display: flex;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  line-height: normal;
+  &.visible {
+    opacity: 1;
+  }
+  y-alert-dialog, [is="y-alert-dialog"] {
+    margin: auto;
+    min-width: 240px;
+    max-width: 50vw;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 2rem rgba(0,0,0,0.5);
+    h1 {
+      margin: 0; padding: 0.5rem;
+      font-size: 1.25rem;
+      font-weight: bold;
+      text-align: left;
+      background-color: $tint-color;
+      color: white;
+    }
+    p {
+      padding: 0.5rem;
+    }
+    button {
+      padding: 0.5rem;
+      text-align: center;
+      border-top: 1px solid $tint-border-color;
+    }
+  }
+}

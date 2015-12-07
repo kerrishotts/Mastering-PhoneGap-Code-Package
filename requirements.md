@@ -44,50 +44,7 @@ You'll need the following in order to get started with the book:
 
 ### Chapter-specific
 
-In addition to the above, each chapter will introduce new requirements. These will be mentioned in each chapter, so you don't need them installed in advance (you can install them all using `npm install` in the project directory. Note that each chapter generally builds upon the requirements of the previous chapters. As such, we only list the first chapter where certain software is required.
-
-| Chapter |    Software         | Min Version | Website                                                     |
-|:-------:|:--------------------|:-----------:|:------------------------------------------------------------|
-|    1    | babel-eslint        | 4.1.3       | <https://www.npmjs.com/package/babel-eslint>                |
-|         | cordova-lib         | 5.4.x       | <https://www.npmjs.com/package/cordova-lib>                 |
-|         | cordova-ios         | 3.9.1       | <https://www.npmjs.com/package/cordova-ios>                 |
-|         | cordova-android     | 4.1.1       | <https://www.npmjs.com/package/cordova-android>             |
-|         | cordova-tasks       | 0.2.0       | <https://www.npmjs.com/package/cordova-tasks>               |
-|         | gulp                | 3.9.0       | <https://www.npmjs.com/package/gulp>                        |
-|         | gulp-babel          | 5.2.1 (NOT 6.x)      | <https://www.npmjs.com/package/gulp-babel>                  |
-|         | gulp-bump           | 1.0.0       | <https://www.npmjs.com/package/gulp-bump>                   |
-|         | gulp-concat         | 2.6.0       | <https://www.npmjs.com/package/gulp-concat>                 |
-|         | gulp-jscs           | 3.0.0       | <https://www.npmjs.com/package/gulp-jscs>                   |
-|         | gulp-eslint         | 1.0.0       | <https://www.npmjs.com/package/gulp-eslint>                 |
-|         | gulp-notify         | 2.2.0       | <https://www.npmjs.com/package/gulp-notify>                 |
-|         | gulp-plumber        | 1.0.1       | <https://www.npmjs.com/package/gulp-plumber>                |
-|         | gulp-rename         | 1.2.2       | <https://www.npmjs.com/package/gulp-rename>                 |
-|         | gulp-replace-task   | 0.11.0      | <https://www.npmjs.com/package/gulp-replace-task>           |
-|         | gulp-sourcemaps     | 1.6.0       | <https://www.npmjs.com/package/gulp-sourcemaps>             |
-|         | gulp-uglify         | 1.4.1       | <https://www.npmjs.com/package/gulp-uglify>                 |
-|         | gulp-util           | 3.0.6       | <https://www.npmjs.com/package/gulp-util>                   |
-|         | merge-stream        | 1.0.0       | <https://www.npmjs.com/package/merge-stream>                |
-|         | rimraf              | 2.4.3       | <https://www.npmjs.com/package/rimraf>                      |
-|         | sprintf-js          | 1.0.3       | <https://www.npmjs.com/package/sprintf>                     |
-|         | tiny-lr             | 0.1.5       | <https://www.npmjs.com/package/tiny-lr>                     |
-|    2    | babel               | 5.8.23 (NOT 6.x)      | <https://www.npmjs.com/package/babelify>                    |
-|         | babelify            | 6.3.0       | <https://www.npmjs.com/package/babelify>                    |
-|         | browserify          | 11.2.0      | <https://www.npmjs.com/package/browserify>                  |
-|         | vinyl-buffer        | 1.0.0       | <https://www.npmjs.com/package/vinyl-buffer>                |
-|         | vinyl-source-stream | 1.1.0       | <https://www.npmjs.com/package/vinyl-source-stream>         |
-|         | yasmf-h             | 0.1.3       | <https://www.npmjs.com/package/yasmf-h>                     |
-|    3    | desassify           | 0.1.8       | <https://www.npmjs.com/package/desassify>                   |
-|         | gulp-sass           | 2.0.4       | <https://www.npmjs.com/package/gulp-sass>                   |
-|         | node-reset-scss     | 1.0.1       | <https://www.npmjs.com/package/node-reset-scss>             |
-|    7    | Indexed DB Plugin   | 0.1.0       | <http://plugreg.com/plugin/DickvdBrink/cordova-indexeddb>   |
-|    8    | SQLite Plugin       | 1.0.5       | <http://plugreg.com/plugin/brodysoft/Cordova-SQLitePlugin>  |
-|    9    | File Transfer Plugin| 0.5.0       | <http://plugins.cordova.io/#/package/org.apache.cordova.file-transfer> |
-|   11    | Adobe Illustrator   | CC 2014\*   | <http://www.adobe.com/products/illustrator.html>            |
-|         | Adobe Photoshop     | CC 2014\*   | <http://www.adobe.com/products/photoshop.html>              |
-
-> \* Adobe Illustrator is a vector editing program. You can use any vector editor with a similar feature set. Adobe Photoshop
-> is a reaster graphics editor (with some vector editing bolted on). You can use any raster graphics editor with a similar
-> feature set.
+In addition to the above, each chapter will introduce new requirements. These will be mentioned in each chapter, so you don't need them installed in advance (you can install them all using `npm install` in the project directory. Note that each chapter generally builds upon the requirements of the previous chapters.
 
 ## Device Requirements
 

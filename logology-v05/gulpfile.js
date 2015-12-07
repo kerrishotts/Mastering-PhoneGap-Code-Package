@@ -3,9 +3,9 @@
 require ("babel/register");
 
 var gulp = require("gulp");                         // Gulp itself
+var browserSync = require("browser-sync").create("www");
 
 var tasks = require("./gulp/tasks");
-//var help = require("./gulp/help");
 
 //
 // register tasks with gulp

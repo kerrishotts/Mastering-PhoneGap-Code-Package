@@ -1,0 +1,47 @@
+.DefinitionViewController {
+    .fav-icon, .note-icon {
+        transition: fill 0.3s ease-in-out;
+        fill: $bar-light-color;
+    }
+    .fav-icon[data-fav=yes],
+    .note-icon[data-note=yes] {
+        fill: $tint-color-contrast;
+    }
+    [is="y-scroll-container"] {
+        display: flex;
+        flex-direction: column;
+        [is="y-text-container"] {
+            flex: 1 0 auto;
+            user-select: text;
+        }
+    }
+    ol {
+        list-style-type: none;
+        counter-reset: definition-list;
+        margin-left: 1rem;
+        li {
+            &:before {
+                content: counter(definition-list) '.';
+                counter-increment: definition-list;
+                font-weight: bold;
+                margin-left: -3rem;
+                display: inline-block;
+                width: 3rem;
+                text-align: right;
+            }
+            color: $text-color;
+            margin: 1rem 2rem;
+            span.pos {
+                font-style: italic;
+                color: $lighter-text-color;
+                margin-left: 0.5rem;
+                display: inline-block;
+            }
+            span.def {
+                display: inline-block;
+                margin-left: 1.5rem;
+            }
+        }
+    }
+}
+

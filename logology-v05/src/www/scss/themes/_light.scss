@@ -1,0 +1,53 @@
+.theme-light {
+  $font-stack: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  $dp2: "only screen and (-webkit-min-device-pixel-ratio: 1.01), only screen and (min-resolution: 1.01dppx), only screen and (min-resolution: 191dpi)";
+  $tint-color: #A1E;
+  $tint-color-contrast: #E1A;
+  $tint-active-color: #EEEEEE;
+  $tint-border-color: #DDDDDD;
+  $tint-active-color-darker: #CCCCCC;
+  $view-background-color: #FFFFFF;
+  $ui-text-color: #000000;
+  $text-color: #333333;
+  $lighter-text-color: #666666;
+  $alert-background-color: #FFF;
+  $bar-light-color: #666666;
+  $list-heading-text-color: #666666;
+  $list-background-color: #FFFFFF;
+  $list-actions-background-color: #CCCCCC;
+  $list-actions-color: #FFFFFF;
+  $nav-background-color: #FFFFFF;
+  $nav-color: #666666;
+  $nav-border-color: $tint-border-color;
+
+  font-family: $font-stack;
+  color: $ui-text-color;
+
+    @import "../lib/button";
+    @import "../lib/container";
+    @import "../lib/bar";
+    @import "../lib/bar-navigation";
+    @import "../lib/glyphs";
+    @import "../lib/list";
+    @import "../lib/alert";
+    @import "../lib/svg";
+
+    @import "../lib/navigation-view-controller";
+    @import "../lib/split-view-controller";
+
+    .menu-icon, .back-icon {
+        margin-left: -0.75rem;
+    }
+
+    button {
+        font-family: inherit;
+    }
+
+    @import "./light-anims";
+    @import "../views/AboutViewController";
+    @import "../views/SettingsViewController";
+    @import "../views/SearchViewController";
+    @import "../views/NotesViewController";
+    @import "../views/DefinitionViewController";
+
+}

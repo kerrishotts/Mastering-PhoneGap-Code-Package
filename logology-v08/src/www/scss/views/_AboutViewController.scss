@@ -1,0 +1,29 @@
+.AboutViewController {
+    div.y-flex {
+        margin: auto auto;
+    }
+    .name {
+        font-weight: bold;
+        flex: 2 !important;
+    }
+    .comment {
+        text-align: center;
+    }
+    .licenseType {
+        text-align: right;
+    }
+    [is="y-text-container"] {
+        h1 {
+            font-size: 150%;
+            font-weight: bold;
+        }
+        a {
+            &:link {
+                color: $tint-color-contrast;
+            }
+            &:active {
+                color: $text-color;
+            }
+        }
+    }
+}

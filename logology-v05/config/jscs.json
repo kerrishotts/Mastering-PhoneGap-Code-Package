@@ -1,7 +1,7 @@
 {
   "requireCurlyBraces": [ "if", "else", "for", "while", "do" ],
   "requireSpaceAfterKeywords": [ "if", "else", "for", "while", "do", "switch", "return" ],
-  "requireMultipleVarDecl": true,
+  "disallowMultipleVarDecl": { "allExcept": ["undefined"] },
   "requireSpaceBeforeBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==" ],
   "disallowSpaceAfterPrefixUnaryOperators": [ "++", "--", "+", "-" ],
   "disallowSpaceBeforePostfixUnaryOperators": [ "++", "--" ],

@@ -7,51 +7,16 @@ $tint-active-color: #EEEAE1;
 $tint-border-color: #DEDAD1;
 $tint-active-color-darker: #CECAC1;
 $view-background-color: #EEEAE1;
-
+$list-heading-text-color: #303030;
+$ui-text-color: #000000;
+$text-color: #3E3A31;
+$list-background-color: #FFFFFF;
+$list-actions-background-color: #CECAC1;
+$list-actions-color: #FFFFFF;
 @import "./lib/base";
-@import "./lib/button";
-@import "./lib/container";
-@import "./lib/bar";
-@import "./lib/bar-navigation";
-@import "./lib/glyphs";
-@import "./lib/list";
-@import "./lib/alert";
-
-@import "./lib/navigation-view-controller";
-@import "./lib/split-view-controller";
-
 @import "./themes/default";
+@import "./themes/light";
+@import "./themes/dark";
 
-#svg-sprite {
-    display: none;
-}
 
-.svg-icon, [is='y-svg'] {
-  min-width: 2rem;
-  display: inline-block;
-  position: relative;
-  fill: currentColor;
-  transform: translateZ(0);
-  text-align: center !important;
-}
-
-.svg-icon svg, [is='y-svg'] svg {
-    width: 1.33rem;
-    height: 1.33rem;
-    padding: 0;
-    margin: 0;
-
-    use {
-        padding: 0;
-        margin: 0;
-    }
-}
-
-.list-indicator-icon {
-    margin-right: -1rem;
-    color: $tint-color;
-}
-.menu-icon {
-    margin-top: -0.25rem;
-}
 
