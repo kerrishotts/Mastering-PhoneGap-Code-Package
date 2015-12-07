@@ -69,7 +69,7 @@ create table WD.lemmas as
     select wordid, lemma
       from words;
 create table WD.senses as
-    select w.wordid, s.sensenum, p.posname
+    select w.wordid, s.sensenum, p.posname, syn.synsetid as wordNetRef
       from words w, senses s, synsets syn, postypes p
      where s.wordid = w.wordid
        and syn.synsetid = s.synsetid
