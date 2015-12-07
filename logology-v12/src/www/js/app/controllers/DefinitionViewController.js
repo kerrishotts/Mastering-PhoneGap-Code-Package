@@ -14,7 +14,9 @@ import {getFavorites} from "../models/Favorites";
 import {getNotes} from "../models/Notes";
 
 let _lemma = Symbol("_lemma"),
-    _dictionary = Symbol("_dictionary");
+    _dictionary = Symbol("_dictionary"),
+    _isFav = Symbol("_isFav"),
+    _hasNote = Symbol("_hasNote");
 
 export default class DefinitionViewController extends ViewController {
     constructor({model}={}) {
@@ -35,15 +37,17 @@ export default class DefinitionViewController extends ViewController {
         GCS.emit(`APP:DO:${action.value}Definition`, this.model.lemma);
     }
     onFavChanged(sender, notice, fav) {
+        this[_isFav] = fav;
         let actions = lemmaActions({isFavorite: fav});
         let favIcon = this.elementTree.querySelector(".fav-icon");
         favIcon.title = actions[0].title;
         favIcon.setAttribute("data-fav", actions[0].getAttribute("data-fav"));
     }
     onNoteChanged(sender, notice, note) {
+        this[_hasNote] = note;
         let actions = lemmaActions({hasNote: note});
         let noteIcon = this.elementTree.querySelector(".note-icon");
-        noteIcon.setAttribute("data-note", actions[0].getAttribute("data-note"));
+        noteIcon.setAttribute("data-note", actions[1].getAttribute("data-note"));
     }
     onDidChangeParentView() {
         // start listening for favorite changes
@@ -54,10 +58,10 @@ export default class DefinitionViewController extends ViewController {
                 }
             }
         }, this);
-        GCS.on("APP:DID:noteDefinition", (sender, notice, lemma, fav) => {
+        GCS.on("APP:DID:noteDefinition", (sender, notice, lemma, note) => {
             if (this.model) {
                 if (lemma === this.model.lemma) {
-                    this.emit("noteChanged", fav);
+                    this.emit("noteChanged", note);
                 }
             }
         }, this);
@@ -78,7 +82,7 @@ export default class DefinitionViewController extends ViewController {
                 widgetGroup({contents:[
                     h.el("h1?is=y-title", this.model && this.model.lemma)
                 ], flex: true}),
-                widgetGroup({contents: lemmaActions(), align:"right"})
+                widgetGroup({contents: lemmaActions({isFavorite:this[_isFav], hasNote:this[_hasNote]}), align:"right"})
             ]}),
             this.renderSubviews()
         ]);
