@@ -10,6 +10,10 @@ export default function lemmaActions({isFavorite = false, hasNote = false} = {})
                    props: { attrs: {"class": "fav-icon", "data-fav": isFavorite ? "yes" : "no",
                                     title: L.T(isFavorite ? "actions:unfavorite:title"
                                                           : "actions:favorite:title") } } }),
+             /* sharing disabled for now
              glyph({icon:"share", title: L.T("actions:share:title"),    contents: L.T("actions:share")}),
-             glyph({icon:"note",  title: L.T("actions:note:title"),     contents: L.T("actions:note")})];
+              */
+             glyph({icon:"note",  title: L.T("actions:note:title"),
+                   props: { attrs: {"class": "note-icon", "data-note": hasNote ? "yes" : "no",
+                                    title: L.T("actions:note")}} })];
 }
