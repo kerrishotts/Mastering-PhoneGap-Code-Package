@@ -2,8 +2,8 @@
 
 This repository stores the code for the book entitled Mastering PhoneGap Mobile Application Development published by Packt
 Publishing. You can purchase the book at [Packt's
-Site](http://www.packtpub.com/mastering_phonegap-mobile-application-development-hotshot/book). If you obtained the code package from
-Packt, you may wish to download the package from GitHub in order to receive the most recent changes. The package is available at
+Site](https://www.packtpub.com/application-development/mastering-phonegap-mobile-application-development). If you obtained the code package from
+Packt, you should download the package from GitHub in order to receive the most recent changes. The package is available at
 <https://github.com/kerrishotts/Mastering-PhoneGap-Code-Package>
 
 > **NOTE:** This book is under active development. As such, the contents of this repository are not yet finalized.
