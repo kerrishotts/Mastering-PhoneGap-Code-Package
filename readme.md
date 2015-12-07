@@ -203,5 +203,5 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ### WordNet License
 
-Portions of this repository use definitions from WordNet. See [./wordnet/LICENSE-WordNet.md](WordNet License).
+Portions of this repository use definitions from WordNet. See [WordNet License](./wordnet/LICENSE-WordNet.md).
 
