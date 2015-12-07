@@ -186,8 +186,11 @@
       "fullscreen": "false",
       "orientation": "default",
       "stay-in-webview": "false",
-      "show-splash-screen-spinner": "false",
-      "auto-hide-splash-screen": "true",
+      "ShowSplashScreenSpinner": "false",
+      "SplashScreen": "res/splash/android/screen.9.png",
+      "SplashMaintainAspectRatio": "true",
+      "SplashScreenDelay":"1000",
+      "AutoHideSplashScreen": "false",
       "disable-cursor": "false",
       "KeyboardDisplayRequiresUserAction": "false",
       "target-device": "universal",
@@ -296,7 +299,7 @@
     "treo-websql": "^3.0.0",
     "whatwg-fetch": "^0.10.1",
     "yasmf-emitter": "^0.1.5",
-    "yasmf-h": "file:///Users/kerrishotts/Documents/Mobile/YASMF/_y-h",
+    "yasmf-h": "^0.1.5",
     "yasmf-localization": "^0.0.2"
   },
   "sass": {
