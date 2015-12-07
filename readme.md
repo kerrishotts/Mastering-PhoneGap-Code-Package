@@ -58,7 +58,7 @@ The following chapters have snippets available in a browser context:
 
 * Chapter 9, File Transfer
 
-> NOTE: Chapters 9 through 11 do not have snippets available in a browser context.
+> NOTE: Chapters 10 through 12 do not have snippets available in a browser context.
 
 Assuming you already have Google Chrome installed, running the snippets requires the following steps:
 
