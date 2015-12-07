@@ -38,30 +38,30 @@ export default class Theme extends Emitter {
     /*
      * Here anims == animation setup, animd == animation doing, animh = animation hold
      */
-    get CLASS_VIEW_ANIMS_LEAVE_IN()/*: string*/ { return this.namespace + "anims-view-leave-in"; }
-    get CLASS_VIEW_ANIMD_LEAVE_IN()/*: string*/ { return this.namespace + "animd-view-leave-in"; }
-    get CLASS_VIEW_ANIMH_LEAVE_IN()/*: string*/ { return this.namespace + "animh-view-leave-in"; }
-    get CLASS_VIEW_ANIMS_ENTER_IN()/*: string*/ { return this.namespace + "anims-view-enter-in"; }
-    get CLASS_VIEW_ANIMD_ENTER_IN()/*: string*/ { return this.namespace + "animd-view-enter-in"; }
-    get CLASS_VIEW_ANIMH_ENTER_IN()/*: string*/ { return this.namespace + "animh-view-enter-in"; }
-    get CLASS_VIEW_ANIMS_LEAVE_OUT()/*: string*/ { return this.namespace + "anims-view-leave-out"; }
-    get CLASS_VIEW_ANIMD_LEAVE_OUT()/*: string*/ { return this.namespace + "animd-view-leave-out"; }
-    get CLASS_VIEW_ANIMH_LEAVE_OUT()/*: string*/ { return this.namespace + "animh-view-leave-out"; }
-    get CLASS_VIEW_ANIMS_ENTER_OUT()/*: string*/ { return this.namespace + "anims-view-enter-out"; }
-    get CLASS_VIEW_ANIMD_ENTER_OUT()/*: string*/ { return this.namespace + "animd-view-enter-out"; }
-    get CLASS_VIEW_ANIMH_ENTER_OUT()/*: string*/ { return this.namespace + "animh-view-enter-out"; }
+    get CLASS_VIEW_ANIMS_LEAVE_IN()/*: string*/ { return /*this.namespace +*/ "anims-view-leave-in"; }
+    get CLASS_VIEW_ANIMD_LEAVE_IN()/*: string*/ { return /*this.namespace +*/ "animd-view-leave-in"; }
+    get CLASS_VIEW_ANIMH_LEAVE_IN()/*: string*/ { return /*this.namespace +*/ "animh-view-leave-in"; }
+    get CLASS_VIEW_ANIMS_ENTER_IN()/*: string*/ { return /*this.namespace +*/ "anims-view-enter-in"; }
+    get CLASS_VIEW_ANIMD_ENTER_IN()/*: string*/ { return /*this.namespace +*/ "animd-view-enter-in"; }
+    get CLASS_VIEW_ANIMH_ENTER_IN()/*: string*/ { return /*this.namespace +*/ "animh-view-enter-in"; }
+    get CLASS_VIEW_ANIMS_LEAVE_OUT()/*: string*/ { return /*this.namespace +*/ "anims-view-leave-out"; }
+    get CLASS_VIEW_ANIMD_LEAVE_OUT()/*: string*/ { return /*this.namespace +*/ "animd-view-leave-out"; }
+    get CLASS_VIEW_ANIMH_LEAVE_OUT()/*: string*/ { return /*this.namespace +*/ "animh-view-leave-out"; }
+    get CLASS_VIEW_ANIMS_ENTER_OUT()/*: string*/ { return /*this.namespace +*/ "anims-view-enter-out"; }
+    get CLASS_VIEW_ANIMD_ENTER_OUT()/*: string*/ { return /*this.namespace +*/ "animd-view-enter-out"; }
+    get CLASS_VIEW_ANIMH_ENTER_OUT()/*: string*/ { return /*this.namespace +*/ "animh-view-enter-out"; }
 
-    get CLASS_SPLIT_ANIMS_ENTER()/*: string*/ { return this.namespace + "anims-split-enter"; }
-    get CLASS_SPLIT_ANIMD_ENTER()/*: string*/ { return this.namespace + "animd-split-enter"; }
-    get CLASS_SPLIT_ANIMH_ENTER()/*: string*/ { return this.namespace + "animh-split-enter"; }
-    get CLASS_SPLIT_ANIMS_LEAVE()/*: string*/ { return this.namespace + "anims-split-leave"; }
-    get CLASS_SPLIT_ANIMD_LEAVE()/*: string*/ { return this.namespace + "animd-split-leave"; }
-    get CLASS_SPLIT_ANIMH_LEAVE()/*: string*/ { return this.namespace + "animh-split-leave"; }
+    get CLASS_SPLIT_ANIMS_ENTER()/*: string*/ { return /*this.namespace +*/ "anims-split-enter"; }
+    get CLASS_SPLIT_ANIMD_ENTER()/*: string*/ { return /*this.namespace +*/ "animd-split-enter"; }
+    get CLASS_SPLIT_ANIMH_ENTER()/*: string*/ { return /*this.namespace +*/ "animh-split-enter"; }
+    get CLASS_SPLIT_ANIMS_LEAVE()/*: string*/ { return /*this.namespace +*/ "anims-split-leave"; }
+    get CLASS_SPLIT_ANIMD_LEAVE()/*: string*/ { return /*this.namespace +*/ "animd-split-leave"; }
+    get CLASS_SPLIT_ANIMH_LEAVE()/*: string*/ { return /*this.namespace +*/ "animh-split-leave"; }
 
-    get CLASS_VIEW_VISIBLE()/*: string*/ { return this.namespace + "visible"; }
-    get CLASS_VIEW_NOT_VISIBLE()/*: string*/ { return this.namespace + "not-visible"; }
-    get CLASS_VIEW_DISPLAYED()/*: string*/ { return this.namespace + "displayed"; }
-    get CLASS_VIEW_NOT_DISPLAYED()/*: string*/ { return this.namespace + "not-displayed"; }
+    get CLASS_VIEW_VISIBLE()/*: string*/ { return /*this.namespace +*/ "visible"; }
+    get CLASS_VIEW_NOT_VISIBLE()/*: string*/ { return /*this.namespace +*/ "not-visible"; }
+    get CLASS_VIEW_DISPLAYED()/*: string*/ { return /*this.namespace +*/ "displayed"; }
+    get CLASS_VIEW_NOT_DISPLAYED()/*: string*/ { return /*this.namespace +*/ "not-displayed"; }
 
 /// visibility and display for elements
 
