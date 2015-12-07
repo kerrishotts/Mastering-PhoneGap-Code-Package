@@ -15,7 +15,7 @@
         "nav:settings": "Settings...",
         "title:settings": "Settings",
         "nav:about": "About...",
-        "title:about": "About",
+        "title:about": "Logology {{{VERSION}}}",
         "title:notes": "Notes",
         "about:plugin": "Cordova Plugins",
         "about:package": "NPM Packages",
