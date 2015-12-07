@@ -15,7 +15,7 @@ directory as `gulpfile.all.in.one.js`. The modular tasks live under the `gulp/` 
 
 The code herein is not a complete Cordova project. The build artifacts such as `build/`, `platforms/`, etc. are ignored. Only the
 `src` directory, `config.xml`, and other assets for each project are provided. In order to execute any of these projects, you'll need to
-ensure you have the appropriate prerequisites installed (see [PREREQUISITES](./prerequisites.md)) and then execute the following to
+ensure you have the appropriate prerequisites installed (see [requirements](./requirements.md)) and then execute the following to
 create the build artifacts, after which you can build as normal:
 
 ```
