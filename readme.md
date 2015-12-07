@@ -110,14 +110,9 @@ See the [LICENSE](./snippets/LICENSE) file for information on the various librar
 The demonstration application demonstrates many of the same techniques used in the book. The app itself is intended to be a simple
 dictionary app: the user can search for words and see associated definitions.
 
-There are _twelve_ versions of this project -- with each version change matching what was discussed in the corresponding chapter.
-The final version of the project is in the `logology-v12/` directory.
+There are several versions of this project -- with each version change matching what was discussed in the corresponding chapter, except for chapters 9 and ten. The final version of the project is in the `logology-v12/` directory.
 
 Although the app is technically complete, there's a lot of ways you could improve it. Here's some ideas to get you started:
-
-* Definitions are typically listed in _sense order_. That is, the first definition for "cat" typically relates to a feline mammal.
-In this version, however, definitions are listed in internal order, which does not typically match the expected order. Consider
-adding code and indexes so that the app can list definitions in the appropriate order.
 
 * Search results are limited to a specific number of records (determined in the app's settings). Consider enabling infinite
 scrolling so that the number of returned results doesn't matter. As an added feature, allow the user to scroll through _all_ the
