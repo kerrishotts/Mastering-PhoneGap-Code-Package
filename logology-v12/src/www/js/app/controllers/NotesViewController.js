@@ -21,7 +21,7 @@ export default class NotesViewController extends ViewController {
     get TARGET_SELECTORS() {
         return [
             {selector: "tap:.back-icon", emit: "backTapped"},
-            {selector: "tap:.trash-icon", emit: "onTrashTapped"}
+            {selector: "tap:.trash-icon", emit: "trashTapped"}
         ];
     }
     onBackTapped() {
@@ -29,8 +29,21 @@ export default class NotesViewController extends ViewController {
     }
     onTrashTapped() {
         // delete note from word
+        this.model.removeNote();
+        GCS.emit("APP:DO:back");
+    }
+    autofocus() {
+        if (this.elementTree) {
+            setTimeout( () => {
+                this.elementTree.querySelector("textarea").focus();
+            }, 10);
+        }
+    }
+    onDidChangeParentView() {
+        this.model.on("model:changed:note", this.autofocus, this);
     }
     onDidRemoveFromParent() {
+        this.model.off("model:changed:note", this);
         this.destroy();
     }
     template() {
