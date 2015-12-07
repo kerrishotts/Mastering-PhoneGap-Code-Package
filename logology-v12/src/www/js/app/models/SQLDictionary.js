@@ -15,20 +15,18 @@ export default class SQLDictionary extends Dictionary {
 
     async load() {
         this[_db] = new WebSQLDB({
-            name: "dicts/" + this.options.path,
-            description: this.options.name
+            name: this.options.path,
+            description: this.options.name,
+            location: 2,
+            createFromLocation: 1
         });
         let db = this[_db];
-
-        return db.transaction((transaction) => {
-            this[_sortedIndex] = (db.select({
-                transaction,
-                fields: ["lemma"],
-                from: "lemmas",
-                orderBy: ["lemma"]
-            })).rows;
-
-        }, {readOnly: true}).then(() => {
+        db.select({
+            fields: ["lemma"],
+            from: "lemmas",
+            orderBy: ["lemma"]
+        }).then((r) => {
+            this[_sortedIndex] = r.rows.map((r) => r.lemma);
             this.loaded();
         });
 
@@ -44,31 +42,27 @@ export default class SQLDictionary extends Dictionary {
         if (!this.isLoaded) {
             return Promise.resolve(() => []);
         }
-        let arr = [], idx = 0, len = this[_json].length, id;
-        let searchKey = wordNetRef !== undefined ? "wordNetRef" : "lemmas";
-        let searchStr = wordNetRef !== undefined ? wordNetRef : lemma.toLowerCase().trim();
+        let sql = `
+        select d.wordNetRef, group_concat(l.lemma, ":::") lemmas, partOfSpeech, semantics, gloss
+        from lemmas l, senses s, definitions d
+        `
+        if (wordNetRef) {
+            sql += ` where d.wordNetRef= ? `;
+        } else {
+            sql += ` where l.lemma= ? `;
+        }
 
-        return new Promise((resolve, reject) => {
-            id = setInterval(() => {
-                if (idx<len) {
-                    let nextLen = idx + per;
-                    if (nextLen > len) {
-                        nextLen = len;
-                    }
-                    for (let i=idx;i<nextLen;i++) {
-                        let definition = this[_json][i];
-                        if (definition[searchKey].indexOf(searchStr) > -1) {
-                            arr.push(definition);
-                        }
-                        idx++;
-                    }
-                } else {
-                    clearInterval(id);
-                    resolve(arr.map(d => new Definition(d))
-                               .sort((a, b) => (a.wordNetRef === b.wordNetRef ? 0 : (a.wordNetRef < b.wordNetRef ? -1 : 1))));
-                }
-            }, 0);
-        });
+        sql += `
+        and s.wordid = l.wordid
+        and d.wordid = s.wordid
+        and d.wordNetRef = s.wordNetRef
+        group by d.wordNetRef
+        order by s.posname, s.sensenum`;
+
+        return this[_db].exec({
+            sql,
+            binds:[wordNetRef ? wordNetRef : lemma.toLowerCase().trim()]
+        }).then((r) => r.rows.map((d) => new Definition(d)));
     }
 }
 
