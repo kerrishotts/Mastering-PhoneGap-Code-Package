@@ -12,3 +12,4 @@
 *.apk
 todo.txt
 audit/
+dist/
