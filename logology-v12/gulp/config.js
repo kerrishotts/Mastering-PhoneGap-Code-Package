@@ -15,7 +15,6 @@ var config = {
                 {src: "www/img/**/*",       dest: "www/img"},
                 //{src: "www/js/lib/**/*",    dest: "www/js/lib"},
                 {src: "res/**/*",           dest: "res"},
-                {src: "www/dicts/**/*",     dest: "www/dicts"},
                 {src: "../node_modules/open-iconic/sprite/sprite.svg",
                 dest: "www/img/open-iconic"}
               ],
