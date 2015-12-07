@@ -18,11 +18,11 @@ y-widget-group, [is="y-widget-group"] {
     -webkit-appearance: none;
     -moz-appearance: none;
     border: 0;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid currentColor;
     padding: 0; margin: 0.5rem 0;
     height: 2rem;
     background-color: transparent;
-    color: white;
+    color: currentColor;
     outline: 0;
     min-width: 100px;
     width: 25vw;

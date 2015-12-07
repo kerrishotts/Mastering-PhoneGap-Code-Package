@@ -1,12 +1,12 @@
 y-nav, [is="y-nav"] {
   position: relative;
-  background: $tint-color;
-  color: white;
+  background: $nav-background-color;
+  color: $nav-color;
   display: flex;
   flex-wrap: wrap;
   flex: 0 0 auto;
   justify-content: flex-end;
-  border-bottom: 3px solid $tint-border-color;
+  border-bottom: 3px solid $nav-border-color;
   padding: 0 0.5rem;
   z-index: 9;
   line-height: 3rem;

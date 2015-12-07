@@ -47,8 +47,8 @@ y-list-actions, [is="y-list-actions"] {
   flex-wrap: wrap;
   position: absolute;
   top: 0; bottom: 0; right: 0;
-  color: white;
-  background-color: $tint-active-color-darker;
+  color: $list-actions-color;
+  background-color: $list-actions-background-color;
 
   * {
     margin: 0;
@@ -62,7 +62,7 @@ y-list-contents, [is="y-list-contents"] {
   z-index: 1;
   margin: 0;
   padding: 1rem;
-  background-color: white;
+  background-color: $list-background-color;
   width: 100%;
 
   * {

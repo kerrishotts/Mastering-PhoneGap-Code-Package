@@ -1,24 +1,24 @@
-.theme-default {
+.theme-dark {
   $font-stack: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
   $dp2: "only screen and (-webkit-min-device-pixel-ratio: 1.01), only screen and (min-resolution: 1.01dppx), only screen and (min-resolution: 191dpi)";
-  $tint-color: #EA1;
-  $tint-color-contrast: #A1E;
-  $tint-active-color: #EEEAE1;
-  $tint-border-color: #DEDAD1;
+  $tint-color: #40566F;
+  $tint-color-contrast: #CFA670;
+  $tint-active-color: #2F2620;
+  $tint-border-color: #000000;
   $tint-active-color-darker: #CECAC1;
-  $view-background-color: #EEEAE1;
-  $ui-text-color: #000000;
-  $text-color: #3E3A31;
+  $view-background-color: #3F3630;
+  $ui-text-color: #8F8680;
+  $text-color: #CFC6C0;
   $lighter-text-color: #6E6A61;
   $alert-background-color: #FFF;
   $bar-light-color: #FFF;
-  $list-heading-text-color: #6E6A61;
-  $list-background-color: #FFFFFF;
-  $list-actions-background-color: #CECAC1;
+  $list-heading-text-color: #8F8680;
+  $list-background-color: #1F1610;
+  $list-actions-background-color: $tint-color;
   $list-actions-color: #FFFFFF;
   $nav-background-color: $tint-color;
   $nav-color: #FFFFFF;
-  $nav-border-color: $tint-border-color;
+  $nav-border-color: $tint-color / 2;
 
   font-family: $font-stack;
   color: $ui-text-color;
@@ -43,7 +43,7 @@
         font-family: inherit;
     }
 
-    @import "./default-anims";
+    @import "./dark-anims";
     @import "../views/AboutViewController";
     @import "../views/SettingsViewController";
     @import "../views/SearchViewController";

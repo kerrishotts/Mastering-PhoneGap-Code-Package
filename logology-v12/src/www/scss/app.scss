@@ -10,8 +10,13 @@ $view-background-color: #EEEAE1;
 $list-heading-text-color: #303030;
 $ui-text-color: #000000;
 $text-color: #3E3A31;
+$list-background-color: #FFFFFF;
+$list-actions-background-color: #CECAC1;
+$list-actions-color: #FFFFFF;
 @import "./lib/base";
 @import "./themes/default";
+@import "./themes/light";
+@import "./themes/dark";
 
 
 
