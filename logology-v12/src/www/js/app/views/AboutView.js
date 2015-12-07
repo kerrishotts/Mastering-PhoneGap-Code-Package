@@ -21,7 +21,6 @@ import licenses from "$MODELS/licenses.json";
 
 const kp = require("keypather")();
 
-
 export default class AboutView extends View {
     get TARGET_SELECTORS() {
         return [

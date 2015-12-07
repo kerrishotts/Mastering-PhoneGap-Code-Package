@@ -88,7 +88,7 @@ export default class Dictionary extends Emitter {
                     if (nextLen > len) {
                         nextLen = len;
                     }
-                    for (let i=idx;i<nextLen;i++) {
+                    for (let i = idx;i < nextLen;i++) {
                         if (this[_sortedIndex][i].indexOf(filter) === 0) {
                             arr.push(this[_sortedIndex][i]);
                         }
@@ -101,7 +101,6 @@ export default class Dictionary extends Emitter {
             }, 0);
         });
     }
-
 
     async getEntries( {lemma="", wordNetRef} ) {
         if (!this.isLoaded) {

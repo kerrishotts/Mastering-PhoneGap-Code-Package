@@ -23,7 +23,6 @@ let settings = getSettings();
 
 const kp = require("keypather")();
 
-
 export default class SettingsView extends View {
     get TARGET_SELECTORS() {
         return [

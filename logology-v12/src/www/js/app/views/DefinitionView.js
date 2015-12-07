@@ -21,7 +21,6 @@ let settings = getSettings();
 
 const kp = require("keypather")();
 
-
 export default class DefinitionView extends View {
     get TARGET_SELECTORS() {
         return [
@@ -39,7 +38,7 @@ export default class DefinitionView extends View {
         let model = kp.get(this, "controller.model");
         if (!model) {model = {entries:[]}};  // we need to support an empty set of entries
         return scrollContainer({
-            contents: //h.el("div.fill-height",
+            contents:
             [
                 textContainer({contents: h.ol(
                         model.entries.map(d => h.li([
@@ -59,7 +58,7 @@ export default class DefinitionView extends View {
                         });
                     })
                 })
-            ] //)
+            ]
         });
     }
 

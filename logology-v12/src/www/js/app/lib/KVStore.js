@@ -33,7 +33,6 @@ export default class KVStore extends Emitter {
     }
 }
 
-
 export function createKVStore(options = {}) {
     return new KVStore(options);
 }

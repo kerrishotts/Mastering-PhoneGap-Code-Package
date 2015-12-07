@@ -10,7 +10,7 @@ var cordovaTasks = new cordova.CordovaTasks({pkg: pkg,
                                              basePath: process.cwd(),
                                              buildDir: config.paths.dest,
                                              sourceDir: config.paths.src,
-                                             gulp: gulp, 
+                                             gulp: gulp,
                                              replace: replace});
 
 module.exports = cordovaTasks;

@@ -169,5 +169,3 @@ export function getSettings() {
     return settings;
 }
 
-
-

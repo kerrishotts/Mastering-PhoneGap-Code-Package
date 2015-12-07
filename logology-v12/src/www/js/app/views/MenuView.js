@@ -20,7 +20,6 @@ import dictionariesList from "./dictionariesList";
 
 const kp = require("keypather")();
 
-
 export default class MenuView extends View {
     get TARGET_SELECTORS() {
         return [
@@ -46,7 +45,7 @@ export default class MenuView extends View {
             contents: dictionariesList(model).concat(
                 listItemSpacer(),
                 this.MENU_ITEMS.map(item => {
-                    return  listItem({
+                    return listItem({
                         contents: listItemContents({
                             props: {
                                 value: item.emit
@@ -68,7 +67,6 @@ export default class MenuView extends View {
 
     onNavItemTapped(sender: Object, notice: string, listItem: Node) {
         GCS.emit(listItem.value);   // notify the app that it needs to navigate
-        //GCS.emit("APP:DO:menu");   // close the sidebar
     }
 }
 
