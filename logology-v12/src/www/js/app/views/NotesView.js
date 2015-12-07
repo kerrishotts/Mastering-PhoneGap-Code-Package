@@ -1,7 +1,7 @@
 /* @flow */
 "use strict";
 
-import scrollContainer from "$WIDGETS/scrollContainer";
+import container from "$WIDGETS/container";
 import textContainer from "$WIDGETS/textContainer";
 import View from "$LIB/View";
 import glyph from "$WIDGETS/glyph";
@@ -19,17 +19,23 @@ import GCS from "$LIB/grandCentralStation";
 
 const kp = require("keypather")();
 
-
 export default class NotesView extends View {
     get TARGET_SELECTORS() {
         return [
-            {selector: "tap:ul li > button", emit: "externalResourceTapped"}
+            {selector: "input:textarea", emit: "noteEdited"}
         ];
+    }
+
+    onNoteEdited(sender, notice, textarea) {
+        let model = kp.get(this, "controller.model");
+        if (model) {
+            model.note = textarea.value;
+        }
     }
 
     template() {
         let model = kp.get(this, "controller.model");
-        return h.el("textarea");
+        return textContainer({contents: [h.el("textarea", {content:model && model.note})]});
     }
 
 }
