@@ -15,7 +15,7 @@ export default class XHRDictionary extends Dictionary {
     }
     async load() {
         // request definitions from a JSON file
-        let response = await fetch("dicts/" + this.options.path);
+        let response = await fetch(this.options.path);
         let [definitions, index] = await response.json();
         this[_sortedIndex] = Object.keys(index).sort((a,b) => (a === b ? 0 : ( a < b ? -1 : 1)));
         this[_defs] = definitions;
@@ -56,7 +56,7 @@ export default class XHRDictionary extends Dictionary {
                         if (nextLen > len) {
                             nextLen = len;
                         }
-                        for (let i=idx;i<nextLen;i++) {
+                        for (let i = idx;i < nextLen;i++) {
                             let definition = this[_defs][i];
                             let arrPos = -1;
                             if ((arrPos = _refs.indexOf(definition.wordNetRef)) > -1) {
