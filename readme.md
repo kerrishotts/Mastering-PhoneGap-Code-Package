@@ -146,11 +146,14 @@ adding this information into the app.
 
 ## [Application Demos](id:application-demos)
 
+Coming soon.
+<!--
 I've taken the time to upload the final version of Logology to both the Apple App Store and the Google Play Market. Links are as
 follows:
 
 * [Apple App Store](#)
 * [Google Play Market](#)
+-->
 
 ## [Useful Directories](id:useful-directories)
 
