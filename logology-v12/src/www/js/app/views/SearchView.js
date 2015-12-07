@@ -52,7 +52,7 @@ function translateElement(el: Node, v: number = 0, withAnimation: boolean = fals
             el.style[prefixedJSTransition] = "";
         }, 100);
     }
-    if (v!==0) {
+    if (v !== 0) {
         el.style[prefixedJSTransform] = `translateX(${v}px)`;
     } else {
         el.style[prefixedJSTransform] = "";
@@ -120,7 +120,7 @@ function panItemStart(listItem: Node, evt: Event): void {
     }).then(() => getNotes().doesWordHaveANote(lemma)).then((note) => {
         let actions = lemmaActions({hasNote: note});
         let noteIcon = this[_actionsElement].querySelector(".note-icon");
-        noteIcon.setAttribute("data-note", actions[0].getAttribute("data-note"));
+        noteIcon.setAttribute("data-note", actions[1].getAttribute("data-note"));
     });
 }
 
@@ -208,7 +208,7 @@ export default class SearchView extends View {
     template() {
         let model = kp.get(this, "controller.model");
         let dictionaryItems = model ? ((this[_filter] ? this[_filteredItems] : []).slice((this.page * settings.pageSize),settings.pageSize)) : [];
-        return  scrollContainer({contents: [lemmaList(dictionaryItems)].concat(textContainer({contents:h.el("p.search-info",
+        return scrollContainer({contents: [lemmaList(dictionaryItems)].concat(textContainer({contents:h.el("p.search-info",
             this[_filter] ? (
                 this[_filteredItems].length === 0 ? L.T("search:no-results") : (
                     this[_filteredItems].length > settings.pageSize ? L.T("search:too-many-results") : ""
