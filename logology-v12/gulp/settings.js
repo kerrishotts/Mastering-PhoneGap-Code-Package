@@ -11,7 +11,7 @@ var settings = {
     LR_PORT: parseInt(gutil.env.lrport ? gutil.env.lrport : "35729", 10),
     SERVE_PORT: parseInt(gutil.env.port ? gutil.env.port : "8080", 10),
     FAIL_ON_ERROR: gutil.env.continue ? (gutil.env.continue !== "yes") : true,
-    VERBOSE: gutil.env.verbose ? (gutil.env.verbose==="yes") : false
+    VERBOSE: gutil.env.verbose ? (gutil.env.verbose === "yes") : false
 }
 
 module.exports = settings;

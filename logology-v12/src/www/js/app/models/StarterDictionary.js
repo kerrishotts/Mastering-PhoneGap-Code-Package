@@ -4,7 +4,7 @@ import Definition from "./Definition";
 
 export default class StarterDictionary extends Dictionary {
     load() {
-         // create a few definitions
+        // create a few definitions
         // definitions from Princeton's WordNet
         // Princeton University "About WordNet." WordNet. Princeton University. 2010. <http://wordnet.princeton.edu>
         let definitions = [

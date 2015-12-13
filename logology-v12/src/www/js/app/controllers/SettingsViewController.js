@@ -7,7 +7,7 @@ import GenericViewController from "./GenericViewController";
 
 export default class SettingsViewController extends GenericViewController {
     constructor({model}={}) {
-        super({title: "title:settings", model, view: createSettingsView(), viewClass:"Settings"});
+        super({title: "title:settings", model, view: createSettingsView(), viewClass: "Settings"});
     }
 }
 

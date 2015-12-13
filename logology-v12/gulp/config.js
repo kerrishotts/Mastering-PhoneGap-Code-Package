@@ -39,8 +39,8 @@ var config = {
         "$CONTROLLERS": "src/www/js/app/controllers"
     },
     sass: {
-        includeModules: [ "node-reset-scss" ],
-        includePaths: [ "./node_modules/node-reset-scss/scss" ]
+        includeModules: ["node-reset-scss"],
+        includePaths: ["./node_modules/node-reset-scss/scss"]
     }
 }
 

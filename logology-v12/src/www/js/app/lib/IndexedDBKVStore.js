@@ -4,7 +4,7 @@ import Emitter from "yasmf-emitter";
 import treo from "treo";
 let treoWebSql;
 if (typeof window !== "undefined") {
-    treoWebSql= require("treo/plugins/treo-websql");
+    treoWebSql = require("treo/plugins/treo-websql");
 }
 
 //region private properties

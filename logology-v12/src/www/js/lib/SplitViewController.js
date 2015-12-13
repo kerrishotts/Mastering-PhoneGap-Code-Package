@@ -22,7 +22,7 @@ export default class SplitViewController extends ViewController {
             invisibleClass = this.themeManager.currentTheme.CLASS_VIEW_NOT_DISPLAYED;
         }
         return h.el("main.SplitViewController?is=y-split-view-controller",
-            this.renderSubviews().map( elTree => h.el("div.y-split-view-wrapper?is=y-split-view-wrapper", {
+            this.renderSubviews().map(elTree => h.el("div.y-split-view-wrapper?is=y-split-view-wrapper", {
                 attrs: {
                     class: elTree.classList.contains(visibleClass) ? visibleClass : invisibleClass
                 }
@@ -98,10 +98,10 @@ export default class SplitViewController extends ViewController {
     hideSidebar(options = {}) {
         if (this.themeManager && this.themeManager.currentTheme) {
             return this.themeManager.currentTheme.animateSplitViewSidebarLeave({splitViewElement: this.elementTree, options})
-            .then( () => {
+            .then(() => {
                 this.firstView.visible = false;
                 this.firstView.displayed = false;
-            } );
+            });
         } else {
             return Promise.reject("No theme manager, or no current theme. Can't hide sidebar.");
         }

@@ -6,7 +6,6 @@ var gulp = require("gulp"),
     paths = require("../utils/paths"),
     licenseFinder = require("gulp-license-finder");
 
-
 function findLicenses() {
     var p = paths.makeFullPath("audit", paths.BASE);
     return licenseFinder().pipe(gulp.dest(p));

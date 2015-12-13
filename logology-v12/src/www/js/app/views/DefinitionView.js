@@ -30,13 +30,13 @@ export default class DefinitionView extends View {
 
     onExternalResourceTapped(sender, notice, listItem) {
         let model = kp.get(this, "controller.model");
-        if (!model) {model = {lemma:""};}
+        if (!model) {model = {lemma: ""};}
         GCS.emit("APP:DO:URL", listItem.value.replace("%WORD%", model.lemma));
     }
 
     template() {
         let model = kp.get(this, "controller.model");
-        if (!model) {model = {entries:[]}};  // we need to support an empty set of entries
+        if (!model) {model = {entries: []}};  // we need to support an empty set of entries
         return scrollContainer({
             contents:
             [
@@ -53,7 +53,7 @@ export default class DefinitionView extends View {
                                 props: {
                                     value: v
                                 },
-                                contents: h.el("div.y-flex", L.T("actions:external", {resource:k}))
+                                contents: h.el("div.y-flex", L.T("actions:external", {resource: k}))
                             })
                         });
                     })

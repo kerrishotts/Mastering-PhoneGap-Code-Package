@@ -17,7 +17,7 @@ export default class XHRDictionary extends Dictionary {
         // request definitions from a JSON file
         let response = await fetch(this.options.path);
         let [definitions, index] = await response.json();
-        this[_sortedIndex] = Object.keys(index).sort((a,b) => (a === b ? 0 : ( a < b ? -1 : 1)));
+        this[_sortedIndex] = Object.keys(index).sort((a,b) => (a === b ? 0 : (a < b ? -1 : 1)));
         this[_defs] = definitions;
         this[_order] = index;
         this.loaded();
@@ -29,7 +29,7 @@ export default class XHRDictionary extends Dictionary {
         return this[_sortedIndex];
     }
 
-    getEntries( {lemma="", wordNetRef, _refs, per=10000} ) {
+    getEntries({lemma="", wordNetRef, _refs, per=10000}) {
         if (!this.isLoaded) {
             return Promise.resolve(() => []);
         }
@@ -39,11 +39,11 @@ export default class XHRDictionary extends Dictionary {
             if (normalizedLemma !== "") {
                 let refs = this[_order][normalizedLemma];
                 if (refs) {
-                    return this.getEntries({_refs:refs, per});
+                    return this.getEntries({_refs: refs, per});
                 }
             }
             if (wordNetRef) {
-                return this.getEntries({_refs:[wordNetRef], per});
+                return this.getEntries({_refs: [wordNetRef], per});
             }
             return Promise.resolve(() => []);
         } else {
@@ -51,12 +51,12 @@ export default class XHRDictionary extends Dictionary {
 
             return new Promise((resolve, reject) => {
                 id = setInterval(() => {
-                    if (idx<len) {
+                    if (idx < len) {
                         let nextLen = idx + per;
                         if (nextLen > len) {
                             nextLen = len;
                         }
-                        for (let i = idx;i < nextLen;i++) {
+                        for (let i = idx; i < nextLen; i++) {
                             let definition = this[_defs][i];
                             let arrPos = -1;
                             if ((arrPos = _refs.indexOf(definition.wordNetRef)) > -1) {

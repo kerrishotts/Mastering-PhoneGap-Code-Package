@@ -6,7 +6,6 @@ var gulp = require("gulp"),
     settings = require("../settings"),
     paths = require("../utils/paths");
 
-
 function lintCode() {
     return gulp.src(paths.makeFullPath(config.lint))
         .pipe(eslint(paths.makeFullPath("eslint.json", paths.CONFIG)))

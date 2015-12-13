@@ -29,7 +29,7 @@ module.exports = function showHelp(tasks) {
                 }
                 if (task.examples) {
                     console.log();
-                    task.examples.forEach( function (example) {
+                    task.examples.forEach(function (example) {
                         var lines;
                         if (example instanceof Array) {
                             lines = example;

@@ -11,7 +11,7 @@ import listItemContents from "$WIDGETS/listItemContents";
 import listIndicator from "$WIDGETS/listIndicator";
 
 export default function dictionariesList(dictionaries) {
-    return dictionaries.dictionaries.map( dictionaryName => {
+    return dictionaries.dictionaries.map(dictionaryName => {
         return listItem({
             contents: listItemContents({
                 props: {

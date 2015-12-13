@@ -75,14 +75,14 @@ export default class DefinitionViewController extends ViewController {
     }
     template() {
         return h.el("main.DefinitionViewController y-container?is=y-definition-view-controller", [
-            navigationBar({contents:[
-                widgetGroup({contents:[
-                    glyph({icon:"back", contents: L.T("icon:back"), title: L.T("general:tap-to-go-back")})
+            navigationBar({contents: [
+                widgetGroup({contents: [
+                    glyph({icon: "back", contents: L.T("icon:back"), title: L.T("general:tap-to-go-back")})
                 ]}),
-                widgetGroup({contents:[
+                widgetGroup({contents: [
                     h.el("h1?is=y-title", this.model && this.model.lemma)
                 ], flex: true}),
-                widgetGroup({contents: lemmaActions({isFavorite:this[_isFav], hasNote:this[_hasNote]}), align:"right"})
+                widgetGroup({contents: lemmaActions({isFavorite: this[_isFav], hasNote: this[_hasNote]}), align: "right"})
             ]}),
             this.renderSubviews()
         ]);

@@ -76,7 +76,7 @@ function getInternalItems(listItem: Node): Array<Node> {
  * @return {number}
  */
 function getWidth(el: Node): number {
-    return el ? parseInt(window.getComputedStyle(el).getPropertyValue("width"),10) : 0;
+    return el ? parseInt(window.getComputedStyle(el).getPropertyValue("width"), 10) : 0;
 }
 
 /**
@@ -207,8 +207,8 @@ export default class SearchView extends View {
 
     template() {
         let model = kp.get(this, "controller.model");
-        let dictionaryItems = model ? ((this[_filter] ? this[_filteredItems] : []).slice((this.page * settings.pageSize),settings.pageSize)) : [];
-        return scrollContainer({contents: [lemmaList(dictionaryItems)].concat(textContainer({contents:h.el("p.search-info",
+        let dictionaryItems = model ? ((this[_filter] ? this[_filteredItems] : []).slice((this.page * settings.pageSize), settings.pageSize)) : [];
+        return scrollContainer({contents: [lemmaList(dictionaryItems)].concat(textContainer({contents: h.el("p.search-info",
             this[_filter] ? (
                 this[_filteredItems].length === 0 ? L.T("search:no-results") : (
                     this[_filteredItems].length > settings.pageSize ? L.T("search:too-many-results") : ""
@@ -219,9 +219,9 @@ export default class SearchView extends View {
 
     get TARGET_SELECTORS() {
         return [
-            {selector: "tap:ul li > button", emit:"listItemTapped"},
-            {selector: "panstart panmove panend:ul li", emit:"listItemPanned"},
-            {selector: "tap:ul li div button", emit:"actionTapped"}
+            {selector: "tap:ul li > button", emit: "listItemTapped"},
+            {selector: "panstart panmove panend:ul li", emit: "listItemPanned"},
+            {selector: "tap:ul li div button", emit: "actionTapped"}
         ];
     }
 

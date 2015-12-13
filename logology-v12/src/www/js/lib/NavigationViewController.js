@@ -37,16 +37,16 @@ export default class NavigationViewController extends ViewController {
 
     get topView()/*: View*/ {
         const subviews = this.subviews;
-        if (subviews.length > 0 ) {
-           return subviews[subviews.length - 1];
+        if (subviews.length > 0) {
+            return subviews[subviews.length - 1];
         } else {
-           return null;
+            return null;
         }
     }
 
     get viewUnderTopView()/*: View*/ {
         const subviews = this.subviews;
-        if (subviews.length > 1 ) {
+        if (subviews.length > 1) {
             return subviews[subviews.length - 2];
         } else {
             return null;
@@ -107,7 +107,6 @@ export default class NavigationViewController extends ViewController {
         let leavingViewElement = leavingView.elementTree;//.parentNode;
         let enteringViewElement = enteringView.elementTree;//.parentNode;
 
-
         let themeManager = this.themeManager;
         if (themeManager && themeManager.currentTheme) {
             return themeManager.currentTheme.animateViewHierarchyPop({enteringViewElement, leavingViewElement, options})
@@ -124,9 +123,9 @@ export default class NavigationViewController extends ViewController {
         if (this.subviews.length < 2) {
             return Promise.resolve();
         }
-        
+
         var p: Promise<{}> = Promise.resolve();
-        for (var i=this.subviews.length; i>=2; i--) {
+        for (var i = this.subviews.length; i >= 2; i--) {
             p = p.then(() => this.pop({animate: false}));
         }
         return p.then(() => {return;});

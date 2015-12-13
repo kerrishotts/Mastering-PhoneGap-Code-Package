@@ -34,7 +34,7 @@ export default class NotesViewController extends ViewController {
     }
     autofocus() {
         if (this.elementTree) {
-            setTimeout( () => {
+            setTimeout(() => {
                 this.elementTree.querySelector("textarea").focus();
             }, 10);
         }
@@ -48,17 +48,17 @@ export default class NotesViewController extends ViewController {
     }
     template() {
         return h.el("main.NotesViewController y-container?is=y-definition-view-controller", [
-            navigationBar({contents:[
-                widgetGroup({contents:[
-                    glyph({icon:"back", contents: L.T("icon:back"), title: L.T("general:tap-to-go-back")})
+            navigationBar({contents: [
+                widgetGroup({contents: [
+                    glyph({icon: "back", contents: L.T("icon:back"), title: L.T("general:tap-to-go-back")})
                 ]}),
-                widgetGroup({contents:[
+                widgetGroup({contents: [
                     h.el("h1?is=y-title", L.T("title:notes"))
                 ], flex: true}),
                 widgetGroup({contents: [
-                    glyph({icon:"trash", title: L.T("actions:delete-note:title"),
+                    glyph({icon: "trash", title: L.T("actions:delete-note:title"),
                            contents: L.T("actions:delete-note")})
-                ], align:"right"})
+                ], align: "right"})
             ]}),
             this.renderSubviews()
         ]);

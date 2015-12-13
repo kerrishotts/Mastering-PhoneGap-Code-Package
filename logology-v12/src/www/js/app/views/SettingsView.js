@@ -38,10 +38,10 @@ export default class SettingsView extends View {
         let model = settings.entries;
         return scrollContainer({contents:
             list({
-                contents: model.map( setting => {
-                            return listItem({
-                                tag: "label",
-                                contents: listItemContents({
+                contents: model.map(setting => {
+                    return listItem({
+                        tag: "label",
+                        contents: listItemContents({
                                     props: {
                                         value: setting.key
                                     },
@@ -52,7 +52,7 @@ export default class SettingsView extends View {
                                                 {attrs: {
                                                     "data-key": setting.key
                                                 }},
-                                                setting.options.map( option => h.option(option.value, L.T(option.name),
+                                                setting.options.map(option => h.option(option.value, L.T(option.name),
                                                                                         {attrs: {
                                                                                             selected: settings[setting.key] == option.value ? "selected" : undefined
                                                                                         }}
@@ -60,8 +60,8 @@ export default class SettingsView extends View {
                                             )
                                         )
                                     ]})
-                                });
-                        })
+                    });
+                })
             })
         });
     }

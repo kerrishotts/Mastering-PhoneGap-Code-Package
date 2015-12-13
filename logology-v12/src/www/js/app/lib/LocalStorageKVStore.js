@@ -48,7 +48,7 @@ export default class LocalStorageKVStore extends Emitter {
         return new Promise ((resolve, reject) => {
             let v = this.localStorage.getItem(`${this.namespace}:${key}`);
             resolve(!(v === null || v === undefined));
-       });
+        });
     }
 
     remove(key) {

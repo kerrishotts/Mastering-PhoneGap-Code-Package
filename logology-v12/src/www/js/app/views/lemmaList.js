@@ -13,7 +13,7 @@ import lemmaActions from "./lemmaActions";
 
 export default function lemmaList(lemmas) {
     return list({
-        contents: lemmas.map( lemma => {
+        contents: lemmas.map(lemma => {
             return listItem({
                 contents: listItemContents({
                     props: {
@@ -23,7 +23,7 @@ export default function lemmaList(lemmas) {
                         h.el("div.y-flex", lemma)
                     ]
                 })
-           });
+            });
         })
     });
 }

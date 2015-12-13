@@ -32,8 +32,8 @@ export default class MenuView extends View {
         return [/*
             {label: "nav:get-more-dictionaries", emit: "APP:DO:moreDictionaries"},
             {label: "nav:readability", emit:"APP:DO:readability"},*/
-            {label: "nav:settings", emit:"APP:DO:settings"},
-            {label: "nav:about", emit:"APP:DO:about"}];
+            {label: "nav:settings", emit: "APP:DO:settings"},
+            {label: "nav:about", emit: "APP:DO:about"}];
     }
 
     template() {
@@ -51,17 +51,17 @@ export default class MenuView extends View {
                                 value: item.emit
                             },
                             contents: [
-                                h.el("div.y-flex",L.T(item.label) )
+                                h.el("div.y-flex", L.T(item.label))
                             ]
                         })
                     });
                 }))
-            })
-        });
+        })
+    });
     }
 
     onDictionaryItemTapped(sender: Object, notice: string, listItem: Node) {
-        GCS.emit("APP:DO:viewDictionary",listItem.value);   // select another dictionary
+        GCS.emit("APP:DO:viewDictionary", listItem.value);   // select another dictionary
         GCS.emit("APP:DO:menu");   // close the sidebar
     }
 

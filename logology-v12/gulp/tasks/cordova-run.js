@@ -5,8 +5,8 @@ var settings = require("../settings"),
 
 function runCordova() {
     return cordovaTasks.run({
-        buildMode: settings.BUILD_MODE, 
-        platform: settings.PLATFORM, 
+        buildMode: settings.BUILD_MODE,
+        platform: settings.PLATFORM,
         options: [settings.TARGET_DEVICE]});
 }
 

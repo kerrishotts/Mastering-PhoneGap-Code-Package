@@ -27,9 +27,9 @@ export default class WebSQLKVStore extends Emitter {
     }
 
     _createTables(transaction) {
-        this.db.createTable({name:"KV", ifNotExists: true, transaction,
-                        fields: [ ["K", "TEXT PRIMARY KEY"],
-                                    ["V", "TEXT"]]});
+        this.db.createTable({name: "KV", ifNotExists: true, transaction,
+                        fields: [["K", "TEXT PRIMARY KEY"],
+                                 ["V", "TEXT"]]});
     }
 
     set(key, value) {
@@ -37,7 +37,7 @@ export default class WebSQLKVStore extends Emitter {
             return this.db.transaction(transaction=> {
                 this._createTables(transaction);
                 this.db.replace({transaction, intoTable: "KV",
-                            data: { K:key, V:value }})
+                            data: { K: key, V: value }})
                 this.emit(`model:changed:${key}`, value);
                 resolve();
             }).catch(err => reject(err));
@@ -54,7 +54,7 @@ export default class WebSQLKVStore extends Emitter {
                 });
             }).then((r) => {
                 if (r.rows.length > 0) {
-                    resolve(r.rows[0]["V"]);
+                    resolve(r.rows[0].V);
                 } else {
                     resolve(defaultValue);
                 }
@@ -80,7 +80,7 @@ export default class WebSQLKVStore extends Emitter {
         return new Promise((resolve,reject) => {
             return this.db.transaction(transaction=> {
                 this._createTables(transaction);
-                this.db.exec({transaction, sql:"DELETE FROM KV WHERE K=?", binds: [key]});
+                this.db.exec({transaction, sql: "DELETE FROM KV WHERE K=?", binds: [key]});
                 this.emit(`model:changed:${key}`);
                 resolve();
             }).catch(err => reject(err));

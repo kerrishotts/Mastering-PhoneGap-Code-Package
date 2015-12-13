@@ -7,7 +7,7 @@ import GenericViewController from "./GenericViewController";
 
 export default class AboutViewController extends GenericViewController {
     constructor({model}={}) {
-        super({title: "title:about", model, view: createAboutView(), viewClass:"About"});
+        super({title: "title:about", model, view: createAboutView(), viewClass: "About"});
     }
 }
 

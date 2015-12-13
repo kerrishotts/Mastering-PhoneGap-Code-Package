@@ -16,9 +16,9 @@ function copySCSS() {
     var includePaths = [];
     var includeModules = config.sass && config.sass.includeModules;
     if (includeModules instanceof Array) {
-        includePaths = includePaths.concat(includeModules.map( function (moduleName) {
-        var module = require(moduleName);
-        return module.includePath;
+        includePaths = includePaths.concat(includeModules.map(function (moduleName) {
+            var module = require(moduleName);
+            return module.includePath;
         }));
     }
     var moreIncludePaths = config.sass && config.sass.includePaths;
@@ -31,10 +31,10 @@ function copySCSS() {
                    includePaths: includePaths,
                    outputStyle: (isRelease ? "compressed" : "nested")
                }))
-               .on("error", function(error) {
+               .on("error", function (error) {
                    this.emit("end");
                })
-               .on("error", notify.onError(function(error) {
+               .on("error", notify.onError(function (error) {
                    return "SASS: " + error.message;
                }))
                .pipe(autoprefixer({browsers: ["last 2 versions"]}))
@@ -52,7 +52,7 @@ module.exports = {
             "include."],
     examples: [{
         "sass": {
-            "includeModules": [ "node-reset-scss" ],
+            "includeModules": ["node-reset-scss"],
             "includePaths": ["./node_modules/node-reset-scss/scss"]
         }
     }]

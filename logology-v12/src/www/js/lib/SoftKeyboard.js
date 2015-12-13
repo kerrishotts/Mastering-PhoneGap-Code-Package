@@ -104,7 +104,7 @@ export default class SoftKeyboard extends Emitter {
     init({selectors=[], useSmoothScrolling = true, smoothScrollDuration = 100,
           showElementUnderKeyboard = false} = {}) {
         // selectors: Array, useSmoothScrolling: boolean, smoothScrollDuration: number
-        if (typeof cordova !== "undefined" ) {
+        if (typeof cordova !== "undefined") {
             if (cordova.plugins && cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.disableScroll(true);
                 window.addEventListener("native.keyboardshow", this.keyboardShown.bind(this));
@@ -112,7 +112,7 @@ export default class SoftKeyboard extends Emitter {
             }
         }
         this[_selectors] = new Set();
-        selectors.forEach( sel => this.addSelector(sel) );
+        selectors.forEach(sel => this.addSelector(sel));
         this[_useSmoothScrolling] = useSmoothScrolling;
         this[_smoothScrollDuration] = smoothScrollDuration;
         this[_showElementUnderKeyboard] = showElementUnderKeyboard;
@@ -178,7 +178,7 @@ export default class SoftKeyboard extends Emitter {
             }
         }
         if (force) {
-            this.keyboardShown({keyboardHeight:240});
+            this.keyboardShown({keyboardHeight: 240});
         }
     }
 

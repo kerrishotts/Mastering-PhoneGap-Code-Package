@@ -38,19 +38,19 @@ export default class SearchViewController extends ViewController {
     }
     template() {
         return h.el("main.SearchViewController y-container?is=y-search-view-controller", [
-            navigationBar({contents:[
-                widgetGroup({contents:[
-                    glyph({icon:"menu", contents: L.T("icon:menu"), title: L.T("general:tap-to-reveal-the-sidebar")})
+            navigationBar({contents: [
+                widgetGroup({contents: [
+                    glyph({icon: "menu", contents: L.T("icon:menu"), title: L.T("general:tap-to-reveal-the-sidebar")})
                 ]}),
-                widgetGroup({contents:[
+                widgetGroup({contents: [
                     h.el("h1?is=y-title", L.T("app:title"))
                 ], flex: true}),
-                widgetGroup({contents:[
+                widgetGroup({contents: [
                     h.el("label?role=search", [
-                        glyph({tag:"div", icon:"search", contents: L.T("icon:search")}),
-                        el({tag:"input?type=text&autocapitalize=off&autocorrect=off", value: this.view && this.view.filter})
+                        glyph({tag: "div", icon: "search", contents: L.T("icon:search")}),
+                        el({tag: "input?type=text&autocapitalize=off&autocorrect=off", value: this.view && this.view.filter})
                     ])
-                ], align:"right"})
+                ], align: "right"})
             ]}),
             this.renderSubviews()
         ]);

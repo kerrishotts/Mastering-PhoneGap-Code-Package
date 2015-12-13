@@ -35,7 +35,7 @@ export default class NotesView extends View {
 
     template() {
         let model = kp.get(this, "controller.model");
-        return textContainer({contents: [h.el("textarea", {content:model && model.note})]});
+        return textContainer({contents: [h.el("textarea", {content: model && model.note})]});
     }
 
 }

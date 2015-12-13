@@ -2,7 +2,7 @@
 /*eslint comma-spacing: 0, no-unused-vars: 0*/
 
 function stringOrArrayJoin(v, joinWith = " ") {
-return (v instanceof Array) ? v.join(joinWith) : v;
+    return (v instanceof Array) ? v.join(joinWith) : v;
 }
 
 function constructWhere(where) {
@@ -70,7 +70,7 @@ export default class WebSQLDB {
             this.supportsReadOnlyTransactions = true;
         }
 
-        this.db.error = function(err) {
+        this.db.error = function (err) {
             console.log(err.message);
         }
     }
@@ -97,7 +97,7 @@ export default class WebSQLDB {
     }
 
     exec({transaction, sql, binds, readOnly = false} = {}) {
-        if (this.log) { console.log(`[WebSQL] exec ${sql}, ${JSON.stringify(binds,null,2)}, ${readOnly}`); }
+        if (this.log) { console.log(`[WebSQL] exec ${sql}, ${JSON.stringify(binds, null, 2)}, ${readOnly}`); }
         if (!transaction) {
             if (this.log) { console.log("[WebSQL] No transaction; wrapping."); }
             return this.transaction((transaction) => {
@@ -111,7 +111,7 @@ export default class WebSQLDB {
                     if (this.log) { console.log("[WebSQL] creating return result"); }
                     returnResults.rowsAffected = results && results.rowsAffected && results.rowsAffected;
                     returnResults.rows = [];
-                    if (results.rows && results.rows.length>0) {
+                    if (results.rows && results.rows.length > 0) {
                         if (this.log) { console.log("[WebSQL] iterating over rows"); }
                         for (let i = 0, l = results.rows.length; i < l; i++) {
                             returnResults.rows.push(results.rows.item(i));

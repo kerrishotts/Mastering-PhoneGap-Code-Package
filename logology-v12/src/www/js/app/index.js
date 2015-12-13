@@ -132,13 +132,13 @@ class App extends Emitter {
     showAbout() {
         let avc = createAboutViewController();
         GCS.emit("APP:DO:menu");
-        return this.splitViewController.rightView.push(avc, {animate:false});
+        return this.splitViewController.rightView.push(avc, {animate: false});
     }
 
     showSettings() {
         let svc = createSettingsViewController();
         GCS.emit("APP:DO:menu");
-        return this.splitViewController.rightView.push(svc, {animate:false});
+        return this.splitViewController.rightView.push(svc, {animate: false});
     }
 
     toggleFavorite(word) {
@@ -219,7 +219,7 @@ class App extends Emitter {
         document.body.style.fontFamily = settings.fontFamily === "default" ? "" : settings.fontFamily;
 
         Array.from(document.styleSheets).forEach((ss) => {
-            if (ss.href && ss.href.indexOf("app.css")>-1) {
+            if (ss.href && ss.href.indexOf("app.css") > -1) {
                 Array.from(ss.rules).forEach((r) => {
                     if (r.selectorText === "html") {
                         r.style.fontSize = settings.fontSize == 0 ? "100%" : `${settings.fontSize}%`;
@@ -239,7 +239,7 @@ class App extends Emitter {
                     "Light": {color: "#FFFFFF", bg: "styleDefault"},
                     "Dark": {color: "#40566F", bg: "styleLightContent"}
                 }
-                StatusBar.backgroundColorByHexString( barColor[settings.theme].color );
+                StatusBar.backgroundColorByHexString(barColor[settings.theme].color);
                 StatusBar[barColor[settings.theme].bg]();
             }
         } catch (err) {
@@ -280,20 +280,22 @@ class App extends Emitter {
             // starter only useful for quick testing
             // this.dictionaries.addDictionary({name: "Starter", Dictionary: StarterDictionary});
 
-            //if (typeof sqlitePlugin !== "undefined") {
-                // introduced ch8
-            //} else {
-                // introduced ch4
-                this.dictionaries.addDictionary({name: "WordNet - JSON", Dictionary: XHRDictionary, options: {path: "wordnet.json"}});
-                //this.dictionaries.addDictionary({name: "WordNet - SQL", Dictionary: SQLDictionary, options: {path: "wordnet.db"}});
-            //}
+            /*
+            if (typeof sqlitePlugin !== "undefined") {
+               introduced ch8
+               this.dictionaries.addDictionary({name: "WordNet - SQL", Dictionary: SQLDictionary, options: {path: "wordnet.db"}});
+            } else {
+               introduced ch4
+            }
+            */
+            this.dictionaries.addDictionary({name: "WordNet - JSON", Dictionary: XHRDictionary, options: {path: "wordnet.json"}});
 
             let mvc = createMenuViewController({model: this.dictionaries});
             let rrv = createViewController();
             let nvc = createNavigationViewController({subviews: [rrv]});
             let mvnc = createNavigationViewController({subviews: [mvc]});
 
-            this.splitViewController = createSplitViewController( {subviews: [mvnc, nvc], themeManager: this.themeManager, renderElement: rootElement});
+            this.splitViewController = createSplitViewController({subviews: [mvnc, nvc], themeManager: this.themeManager, renderElement: rootElement});
             this.splitViewController.visible = true;
 
             // logging, debug only

@@ -14,7 +14,7 @@ import L from "$APP/localization/localization";
 
 export default class GenericViewController extends ViewController {
     constructor({model, title, view, viewClass}={}) {
-        super({title, model, view, tag:viewClass});
+        super({title, model, view, tag: viewClass});
     }
     get TARGET_SELECTORS() {
         return [
@@ -34,15 +34,15 @@ export default class GenericViewController extends ViewController {
         }
         let viewClassLower = viewClass.toLowerCase();
         return h.el(`main.${viewClass}ViewController y-container?is=y-${viewClassLower}-view-controller`, [
-            navigationBar({contents:[
-                widgetGroup({contents:[
-                    glyph({icon:"back", contents: L.T("icon:back"), title: L.T("general:tap-to-go-back")})
+            navigationBar({contents: [
+                widgetGroup({contents: [
+                    glyph({icon: "back", contents: L.T("icon:back"), title: L.T("general:tap-to-go-back")})
                 ]}),
-                widgetGroup({contents:[
+                widgetGroup({contents: [
                     h.el("h1?is=y-title", L.T(this.title))
                 ], flex: true}),
-                widgetGroup({contents:[
-                ], align:"right"})
+                widgetGroup({contents: [
+                ], align: "right"})
             ]}),
             this.renderSubviews()
         ]);

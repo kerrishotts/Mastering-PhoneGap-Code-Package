@@ -39,7 +39,7 @@ export default class Dictionary extends Emitter {
         throw new Error("must override load()!");
     }
 
-    _addDefinition( definition ) {
+    _addDefinition(definition) {
         let {lemmas, wordNetRef} = definition;
         this[_definitions].set(wordNetRef, definition);
         for (let lemma of lemmas) {
@@ -83,12 +83,12 @@ export default class Dictionary extends Emitter {
         let arr = [], idx = 0, len = this[_sortedIndex].length, id;
         return new Promise((resolve, reject) => {
             id = setInterval(() => {
-                if (idx<len) {
+                if (idx < len) {
                     let nextLen = idx + per;
                     if (nextLen > len) {
                         nextLen = len;
                     }
-                    for (let i = idx;i < nextLen;i++) {
+                    for (let i = idx; i < nextLen; i++) {
                         if (this[_sortedIndex][i].indexOf(filter) === 0) {
                             arr.push(this[_sortedIndex][i]);
                         }
@@ -102,7 +102,7 @@ export default class Dictionary extends Emitter {
         });
     }
 
-    async getEntries( {lemma="", wordNetRef} ) {
+    async getEntries({lemma="", wordNetRef}) {
         if (!this.isLoaded) {
             return [];
         }

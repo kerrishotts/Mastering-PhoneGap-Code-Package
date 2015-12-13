@@ -38,7 +38,7 @@ export default class SQLDictionary extends Dictionary {
         return this[_sortedIndex];
     }
 
-    getEntries( {lemma="", wordNetRef, per=10000} ) {
+    getEntries({lemma="", wordNetRef, per=10000}) {
         if (!this.isLoaded) {
             return Promise.resolve(() => []);
         }
@@ -61,7 +61,7 @@ export default class SQLDictionary extends Dictionary {
 
         return this[_db].exec({
             sql,
-            binds:[wordNetRef ? wordNetRef : lemma.toLowerCase().trim()]
+            binds: [wordNetRef ? wordNetRef : lemma.toLowerCase().trim()]
         }).then((r) => r.rows.map((d) => new Definition(d)));
     }
 }

@@ -1,11 +1,11 @@
 "use strict";
 
 var gulp = require("gulp"),
+    gutil = require("gulp-util"),
     jscs = require("gulp-jscs"),
     config = require ("../config"),
     settings = require("../settings"),
     paths = require("../utils/paths");
-
 
 function checkCodeStyle() {
     var p = paths.makeFullPath("jscs.json", paths.CONFIG);
@@ -14,7 +14,9 @@ function checkCodeStyle() {
         .pipe(jscs({
             configPath: p,
             esnext: true
-        }));
+        }))
+        .pipe(jscs.reporter())
+        .pipe(settings.FAIL_ON_ERROR ? gutil.noop() : jscs.reporter('fail'));
 }
 
 module.exports = {

@@ -101,14 +101,14 @@ export default class Theme extends Emitter {
         let existingClears = e.getAttribute("y-anim-clear-class");
         if (existingClears) {
             existingClears = existingClears.split(" ");
-            existingClears.forEach( c => {
+            existingClears.forEach(c => {
                 e.classList.remove(c);
             });
             e.removeAttribute("y-anim-clear-class");
         }
     }
 
-    animateElementWithAnimSequence ( [e, setup, doing, hold], { animate/*: boolean*/ = true } = {} ) {
+    animateElementWithAnimSequence ([e, setup, doing, hold], { animate/*: boolean*/ = true } = {}) {
         return new Promise((resolve) => {
             let finalAnimationStep = () => {
                 e.classList.remove(setup);
@@ -120,7 +120,7 @@ export default class Theme extends Emitter {
             this.clearElementClasses(e);
             if (animate) {
                 e.classList.add(setup);
-                setTimeout( () => {
+                setTimeout(() => {
                     e.classList.add(doing);
                     this.addClearClassToElement(doing, e);
                     setTimeout(finalAnimationStep, this.ANIMATION_TIMING);
@@ -133,15 +133,15 @@ export default class Theme extends Emitter {
 
     animateViewHierarchyPush({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/, options} = {})/*: Promise*/ {
         return Promise.all(
-            [ [ leavingViewElement, this.CLASS_VIEW_ANIMS_LEAVE_IN, this.CLASS_VIEW_ANIMD_LEAVE_IN, this.CLASS_VIEW_ANIMH_LEAVE_IN ],
-              [ enteringViewElement, this.CLASS_VIEW_ANIMS_ENTER_IN, this.CLASS_VIEW_ANIMD_ENTER_IN, this.CLASS_VIEW_ANIMH_ENTER_IN ] ]
-                .map( arr => this.animateElementWithAnimSequence(arr, options)));
+            [[leavingViewElement, this.CLASS_VIEW_ANIMS_LEAVE_IN, this.CLASS_VIEW_ANIMD_LEAVE_IN, this.CLASS_VIEW_ANIMH_LEAVE_IN],
+              [enteringViewElement, this.CLASS_VIEW_ANIMS_ENTER_IN, this.CLASS_VIEW_ANIMD_ENTER_IN, this.CLASS_VIEW_ANIMH_ENTER_IN]]
+                .map(arr => this.animateElementWithAnimSequence(arr, options)));
     }
     animateViewHierarchyPop({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/, options} = {})/*: Promise*/ {
         return Promise.all(
-            [ [ leavingViewElement, this.CLASS_VIEW_ANIMS_LEAVE_OUT, this.CLASS_VIEW_ANIMD_LEAVE_OUT, this.CLASS_VIEW_ANIMH_LEAVE_OUT ],
-              [ enteringViewElement, this.CLASS_VIEW_ANIMS_ENTER_OUT, this.CLASS_VIEW_ANIMD_ENTER_OUT, this.CLASS_VIEW_ANIMH_ENTER_OUT ] ]
-                .map( arr => this.animateElementWithAnimSequence(arr, options)));
+            [[leavingViewElement, this.CLASS_VIEW_ANIMS_LEAVE_OUT, this.CLASS_VIEW_ANIMD_LEAVE_OUT, this.CLASS_VIEW_ANIMH_LEAVE_OUT],
+              [enteringViewElement, this.CLASS_VIEW_ANIMS_ENTER_OUT, this.CLASS_VIEW_ANIMD_ENTER_OUT, this.CLASS_VIEW_ANIMH_ENTER_OUT]]
+                .map(arr => this.animateElementWithAnimSequence(arr, options)));
     }
     animateModalViewEnter({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/} = {})/*: Promise*/ {
     }
@@ -153,17 +153,17 @@ export default class Theme extends Emitter {
     }
     animateSplitViewSidebarEnter({splitViewElement/*: Node*/, options})/*: Promise*/ {
         return Promise.all(
-            [ [ splitViewElement, this.CLASS_SPLIT_ANIMS_ENTER,
+            [[splitViewElement, this.CLASS_SPLIT_ANIMS_ENTER,
                                   this.CLASS_SPLIT_ANIMD_ENTER,
-                                  this.CLASS_SPLIT_ANIMH_ENTER ] ]
-                .map( arr => this.animateElementWithAnimSequence(arr, options)));
+                                  this.CLASS_SPLIT_ANIMH_ENTER]]
+                .map(arr => this.animateElementWithAnimSequence(arr, options)));
     }
     animateSplitViewSidebarLeave({splitViewElement/*: Node*/, options})/*: Promise*/ {
         return Promise.all(
-            [ [ splitViewElement, this.CLASS_SPLIT_ANIMS_LEAVE,
+            [[splitViewElement, this.CLASS_SPLIT_ANIMS_LEAVE,
                                   this.CLASS_SPLIT_ANIMD_LEAVE,
-                                  this.CLASS_SPLIT_ANIMH_LEAVE ] ]
-                .map( arr => this.animateElementWithAnimSequence(arr, options)));
+                                  this.CLASS_SPLIT_ANIMH_LEAVE]]
+                .map(arr => this.animateElementWithAnimSequence(arr, options)));
     }
 
 }

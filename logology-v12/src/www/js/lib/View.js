@@ -229,7 +229,7 @@ export default class View extends Emitter {
      * @return {Array<Node>} [description]
      */
     renderSubviews()/*: Array<Node>*/ {
-        return this.subviews.map(function(view) {return view.render(); });
+        return this.subviews.map(function (view) {return view.render(); });
     }
 
 ///mark: events

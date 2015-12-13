@@ -28,11 +28,11 @@ export default class MenuViewController extends ViewController {
     }
     template() {
         return h.el("main.MenuViewController y-container?is=menu-view-controller", [
-            navigationBar({contents:[
-                widgetGroup({contents:[
-                    glyph({icon:"menu", contents: L.T("icon:menu"), title: L.T("general:tap-to-hide-the-sidebar")})
+            navigationBar({contents: [
+                widgetGroup({contents: [
+                    glyph({icon: "menu", contents: L.T("icon:menu"), title: L.T("general:tap-to-hide-the-sidebar")})
                 ]}),
-                widgetGroup({contents:[
+                widgetGroup({contents: [
                     h.el("h1?is=y-title", L.T("app:menu-title"))
                 ], flex: true})
             ]}),

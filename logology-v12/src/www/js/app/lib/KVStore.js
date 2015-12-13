@@ -13,9 +13,9 @@ export default class KVStore extends Emitter {
     }
 
     set(key, value) {
-        return this[_backingStore].set(key, value).then( () => {
-                  this.emit("model:changed:" + key, value);
-              });
+        return this[_backingStore].set(key, value).then(() => {
+            this.emit("model:changed:" + key, value);
+        });
     }
 
     get(key, defaultValue) {
@@ -27,9 +27,9 @@ export default class KVStore extends Emitter {
     }
 
     remove(key) {
-        return this[_backingStore].remove(key).then( () => {
-                  this.emit("model:changed:" + key);
-              });
+        return this[_backingStore].remove(key).then(() => {
+            this.emit("model:changed:" + key);
+        });
     }
 }
 
