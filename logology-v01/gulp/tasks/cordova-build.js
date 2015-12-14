@@ -14,8 +14,8 @@ function buildCordova() {
         target = "--device";
     }
     return cordovaTasks.build({
-        buildMode: settings.BUILD_MODE, 
-        platforms: settings.BUILD_PLATFORMS, 
+        buildMode: settings.BUILD_MODE,
+        platforms: settings.BUILD_PLATFORMS,
         options: [target]});
 }
 

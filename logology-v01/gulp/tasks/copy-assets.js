@@ -4,7 +4,6 @@ var merge = require("merge-stream"),
     gulp = require("gulp"),
     config = require("../config"),
     paths = require("../utils/paths"),
-    changedInPlace = require('gulp-changed-in-place'),
     copyConfig = require("./copy-config").task,
     browserSync = require("browser-sync").get("www");
 
@@ -13,10 +12,8 @@ function copyAssets() {
         var fqSourcePath = paths.makeFullPath(asset.src, paths.SRC);
         var fqTargetPath = paths.makeFullPath(asset.dest, paths.DEST);
         return gulp.src([fqSourcePath])
-//                   .pipe(changedInPlace())
                    .pipe(gulp.dest(fqTargetPath));
-    }).concat(copyConfig()))
-    .pipe(browserSync.stream());
+    })).pipe(browserSync.stream());
 }
 
 module.exports = {
