@@ -6,7 +6,6 @@ var gulp = require("gulp"),
     settings = require("../settings"),
     paths = require("../utils/paths");
 
-
 function checkCodeStyle() {
     var p = paths.makeFullPath("jscs.json", paths.CONFIG);
     console.log(p);
@@ -14,7 +13,9 @@ function checkCodeStyle() {
         .pipe(jscs({
             configPath: p,
             esnext: true
-        }));
+        }))
+        .pipe(jscs.reporter())
+        .pipe(jscs.reporter('fail'));
 }
 
 module.exports = {
