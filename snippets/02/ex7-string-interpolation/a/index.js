@@ -26,11 +26,8 @@
 {
     // WE CAN DO THIS INSTEAD
     function sql(s, ...binds) {
-    let len = binds.length;
-    return { sql: s.map((val, idx)=>
-                    ("" + val + (idx<len ? "?" : "")))
-                    .join(""),
-            binds };
+        let len = binds.length;
+        return { sql: s.map((val, idx) => (`${val}${idx < len ? "?" : ""}`)).join(""), binds };
     }
 
     let name = "Bob";
