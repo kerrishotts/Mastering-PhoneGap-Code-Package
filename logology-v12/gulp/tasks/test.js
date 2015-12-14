@@ -9,7 +9,7 @@ var gulp = require("gulp"),
 function test() {
     return gulp.src(paths.makeFullPath(config.test.code), {read: false})
                 .pipe(mocha({reporter: "spec"}))
-                .on("error", notify.onError("TEST: <%= error.message %>"))
+                .once("error", notify.onError("TEST: <%= error.message %>\n <%= error.stack %>"))
                 .once("error", function () {
                     process.exit(1);
                 })

@@ -12,8 +12,9 @@ describe("Favorites", () => {
     });
 
     describe("#Manage", () => {
-        let favorites = new Favorites();
+        let favorites = {};
         it ("should report a new word as not a favorite", () => {
+            favorites = new Favorites();
             favorites.isWordAFavorite("mumble").should.become(false);
         });
         it ("should save a word as a favorite", () => {

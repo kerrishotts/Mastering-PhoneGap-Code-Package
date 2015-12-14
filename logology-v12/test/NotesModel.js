@@ -12,8 +12,9 @@ describe("Notes", () => {
     });
 
     describe("#Manage", () => {
-        let notes = new Notes();
+        let notes = {};
         it ("report that an un-noted word should not have a note", () => {
+            notes = new Notes();
             notes.doesWordHaveANote("mumble").should.become(false);
         });
         it ("should be able to save a note", () => {

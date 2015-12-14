@@ -25,7 +25,7 @@ function constructWhere(where) {
 }
 
 export default class WebSQLDB {
-    constructor({name, version = "1", description, quota = (5 * 1024 * 1024),
+    constructor({name, version = "1", description, quota = (1 * 1024 * 1024),
                 location = 0, createFromLocation = 0,
                 androidDatabaseImplementation = 2, androidLockWorkaround = 1} = {}) {
         this.db = null;
@@ -59,7 +59,7 @@ export default class WebSQLDB {
                 }
             }
         } catch (err) {
-            throw new Error("No Web SQL Interface available, or failed to open database.");
+            throw new Error("No Web SQL Interface available, or failed to open database. Details:" + err.message);
         }
 
         if (!this.db) {

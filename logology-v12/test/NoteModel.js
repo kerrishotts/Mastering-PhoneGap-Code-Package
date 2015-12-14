@@ -5,7 +5,6 @@ import Note from "../src/www/js/app/models/Note";
 import {getNotes} from "../src/www/js/app/models/Notes";
 
 describe("Note", () => {
-
     describe("#Create", () => {
         it("should be able to create a new Note object for a cat", () => {
             let note = new Note({lemma:"cat"});
@@ -14,9 +13,11 @@ describe("Note", () => {
     });
 
     describe("#Manage", () => {
-        let note = new Note({lemma:"cat"});
-        let notes = getNotes();
+        let note = {},
+            notes = {};
         it ("should be able to save a note", () => {
+            note = new Note({lemma:"cat"});
+            notes = getNotes();
             note.note = "Cats are cute";
             return notes.getNoteForWord("cat").should.become(note.note);
         });

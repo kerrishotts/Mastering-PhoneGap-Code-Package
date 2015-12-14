@@ -48,12 +48,10 @@ function copyCode() {
         }))
         //.plugin(licensify)
         .bundle()
-        //.on("error", notify.onError("BABEL: <%= error.message %>"))
         .on("error", function (error) {
             this.emit("end");
         })
         .on("error", notify.onError(function (error) {
-            // this.emit("end");
             return "BABEL: " + error.message;
         }))
         .pipe(source("app.js"))
