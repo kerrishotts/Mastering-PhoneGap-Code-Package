@@ -2,6 +2,9 @@
     div.y-flex {
         margin: auto auto;
     }
+    label {
+        flex: 1 1 100%;
+    }
     .name {
     }
     .value {
@@ -20,8 +23,10 @@
             right: 0;
             bottom: 0;
             padding-left: 50%;
+            padding-right: 1rem;
             color: $tint-color-contrast;
             font-family: inherit;
+            direction: rtl;
         }
     }
 }
