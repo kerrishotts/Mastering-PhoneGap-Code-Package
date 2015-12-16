@@ -110,6 +110,9 @@ class App extends Emitter {
                        let svc = createSearchViewController({model: dictionary});
                        this.splitViewController.rightView.popToRoot()
                            .then(() => this.splitViewController.rightView.push(svc, {animate: false}));
+                   })
+                   .catch(err => {
+                       GCS.emit("APP:DO:viewDictionary", this.dictionaries.dictionaries[0]);
                    });
     }
 
@@ -175,7 +178,7 @@ class App extends Emitter {
         let [, , command] = notice.split(":");
         switch (command) {
             case "menu":
-                this.splitViewController.toggleSidebar({animate: false});
+                this.splitViewController.toggleSidebar({animate: true});
                 break;
             case "back":
                 this.splitViewController.rightView.pop({animate: false});
@@ -280,11 +283,12 @@ class App extends Emitter {
             // starter only useful for quick testing
             // this.dictionaries.addDictionary({name: "Starter", Dictionary: StarterDictionary});
 
-            // introduced ch4
-            this.dictionaries.addDictionary({name: "WordNet - JSON", Dictionary: XHRDictionary, options: {path: "wordnet.json"}});
             if (typeof sqlitePlugin !== "undefined") {
                 // introduced ch8
-                this.dictionaries.addDictionary({name: "WordNet - SQL", Dictionary: SQLDictionary, options: {path: "wordnet.db"}});
+                this.dictionaries.addDictionary({name: "WordNet", Dictionary: SQLDictionary, options: {path: "wordnet.db"}});
+            } else {
+                // introduced ch4
+                this.dictionaries.addDictionary({name: "WordNet", Dictionary: XHRDictionary, options: {path: "wordnet.json"}});                
             }
 
             let mvc = createMenuViewController({model: this.dictionaries});
