@@ -20,104 +20,104 @@
     "icon": {
       "ios": [
         {
-          "src": "res/icon/ios/icon-60.png",
+          "src": "./res/icon/ios/icon-60.png",
           "w": 60,
           "h": 60
         },
         {
-          "src": "res/icon/ios/icon-60@2x.png",
+          "src": "./res/icon/ios/icon-60@2x.png",
           "w": 120,
           "h": 120
         },
         {
-          "src": "res/icon/ios/icon-60@3x.png",
+          "src": "./res/icon/ios/icon-60@3x.png",
           "w": 180,
           "h": 180
         },
         {
-          "src": "res/icon/ios/icon-76.png",
+          "src": "./res/icon/ios/icon-76.png",
           "w": 76,
           "h": 76
         },
         {
-          "src": "res/icon/ios/icon-76@2x.png",
+          "src": "./res/icon/ios/icon-76@2x.png",
           "w": 152,
           "h": 152
         },
         {
-          "src": "res/icon/ios/icon-40.png",
+          "src": "./res/icon/ios/icon-40.png",
           "w": 40,
           "h": 40
         },
         {
-          "src": "res/icon/ios/icon-40@2x.png",
+          "src": "./res/icon/ios/icon-40@2x.png",
           "w": 80,
           "h": 80
         },
         {
-          "src": "res/icon/ios/icon.png",
+          "src": "./res/icon/ios/icon.png",
           "w": 57,
           "h": 57
         },
         {
-          "src": "res/icon/ios/icon@2x.png",
+          "src": "./res/icon/ios/icon@2x.png",
           "w": 114,
           "h": 114
         },
         {
-          "src": "res/icon/ios/icon-72.png",
+          "src": "./res/icon/ios/icon-72.png",
           "w": 72,
           "h": 72
         },
         {
-          "src": "res/icon/ios/icon-72@2x.png",
+          "src": "./res/icon/ios/icon-72@2x.png",
           "w": 144,
           "h": 144
         },
         {
-          "src": "res/icon/ios/icon-small.png",
+          "src": "./res/icon/ios/icon-small.png",
           "w": 29,
           "h": 29
         },
         {
-          "src": "res/icon/ios/icon-small@2x.png",
+          "src": "./res/icon/ios/icon-small@2x.png",
           "w": 58,
           "h": 58
         },
         {
-          "src": "res/icon/ios/icon-50.png",
+          "src": "./res/icon/ios/icon-50.png",
           "w": 50,
           "h": 50
         },
         {
-          "src": "res/icon/ios/icon-50@2x.png",
+          "src": "./res/icon/ios/icon-50@2x.png",
           "w": 100,
           "h": 100
         }
       ],
       "android": [
         {
-          "src": "res/icon/android/ldpi.png",
+          "src": "./res/icon/android/ldpi.png",
           "d": "ldpi"
         },
         {
-          "src": "res/icon/android/mdpi.png",
+          "src": "./res/icon/android/mdpi.png",
           "d": "mdpi"
         },
         {
-          "src": "res/icon/android/hdpi.png",
+          "src": "./res/icon/android/hdpi.png",
           "d": "hdpi"
         },
         {
-          "src": "res/icon/android/xhdpi.png",
+          "src": "./res/icon/android/xhdpi.png",
           "d": "xhdpi"
         },
         {
-          "src": "res/icon/android/xxhdpi.png",
+          "src": "./res/icon/android/xxhdpi.png",
           "d": "xxhdpi"
         },
         {
-          "src": "res/icon/android/xxhdpi.png",
+          "src": "./res/icon/android/xxhdpi.png",
           "d": "xxxhdpi"
         }
       ]
@@ -125,59 +125,59 @@
     "splash": {
       "ios": [
         {
-          "src": "res/splash/ios/Default~iphone.png",
+          "src": "./res/splash/ios/Default~iphone.png",
           "w": 320,
           "h": 480
         },
         {
-          "src": "res/splash/ios/Default@2x~iphone.png",
+          "src": "./res/splash/ios/Default@2x~iphone.png",
           "w": 640,
           "h": 960
         },
         {
-          "src": "res/splash/ios/Default-Portrait~ipad.png",
+          "src": "./res/splash/ios/Default-Portrait~ipad.png",
           "w": 768,
           "h": 1024
         },
         {
-          "src": "res/splash/ios/Default-Portrait@2x~ipad.png",
+          "src": "./res/splash/ios/Default-Portrait@2x~ipad.png",
           "w": 1536,
           "h": 2048
         },
         {
-          "src": "res/splash/ios/Default-Landscape~ipad.png",
+          "src": "./res/splash/ios/Default-Landscape~ipad.png",
           "w": 1024,
           "h": 768
         },
         {
-          "src": "res/splash/ios/Default-Landscape@2x~ipad.png",
+          "src": "./res/splash/ios/Default-Landscape@2x~ipad.png",
           "w": 2048,
           "h": 1536
         },
         {
-          "src": "res/splash/ios/Default-568h@2x~iphone.png",
+          "src": "./res/splash/ios/Default-568h@2x~iphone.png",
           "w": 640,
           "h": 1136
         },
         {
-          "src": "res/splash/ios/Default-667h.png",
+          "src": "./res/splash/ios/Default-667h.png",
           "w": 750,
           "h": 1334
         },
         {
-          "src": "res/splash/ios/Default-736h.png",
+          "src": "./res/splash/ios/Default-736h.png",
           "w": 736,
           "h": 2208
         },
         {
-          "src": "res/splash/ios/Default-Landscape-736h.png",
+          "src": "./res/splash/ios/Default-Landscape-736h.png",
           "w": 2208,
           "h": 736
         }
       ],
       "android": [
         {
-          "src": "res/splash/android/screen.9.png"
+          "src": "./res/splash/android/screen.9.png"
         }
       ]
     },
@@ -188,6 +188,8 @@
       "stay-in-webview": "false",
       "ShowSplashScreenSpinner": "false",
       "SplashScreen": "res/splash/android/screen.9.png",
+      "FadeSplashScreen": "true",
+      "FadeSplashScreenDuration": "1.0",
       "SplashMaintainAspectRatio": "true",
       "SplashScreenDelay": "1000",
       "AutoHideSplashScreen": "false",
@@ -212,14 +214,15 @@
       "cordova-plugin-device@1.1.0",
       "cordova-plugin-network-information@1.1.0",
       "cordova-plugin-globalization@1.0.2",
-      "cordova-plugin-whitelist@1.1.0",
-      "https://github.com/phonegap/phonegap-mobile-accessibility",
+      "cordova-plugin-whitelist@1.2.0",
+      "https://github.com/kerrishotts/phonegap-mobile-accessibility#cordova-ios-4-0-0-fix",
       "ionic-plugin-keyboard@1.0.8",
       "cordova-sqlite-ext@0.8.0",
       "cordova-plugin-splashscreen@2.1.0",
       "cordova-plugin-statusbar@1.0.1",
-      "cordova-plugin-inappbrowser@1.0.1",
-      "cordova-plugin-safariviewcontroller@1.1.1"
+      "cordova-plugin-inappbrowser@1.1.1",
+      "cordova-plugin-safariviewcontroller@1.1.1",
+      "https://github.com/apache/cordova-plugins.git#master:wkwebview-engine-localhost"
     ]
   },
   "keywords": [
@@ -243,9 +246,9 @@
     "chai": "^3.2.0",
     "chai-as-promised": "^5.1.0",
     "colors": "^1.1.2",
-    "cordova-android": "^4.1.1",
-    "cordova-ios": "^3.9.2",
-    "cordova-lib": "^5.4.0",
+    "cordova-android": "^5.0.0",
+    "cordova-ios": "^4.0.0",
+    "cordova-lib": "^5.4.1",
     "cordova-tasks": "^0.2.0",
     "desassify": "^0.1.8",
     "dom-storage": "^2.0.1",
