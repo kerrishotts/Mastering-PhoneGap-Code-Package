@@ -3,13 +3,14 @@ import Emitter from "yasmf-emitter";
 import GCS from "../../lib/grandCentralStation";
 
 // private property symbols
-let _fontFamily = Symbol("fontFamily"), // font family
-    _fontSize = Symbol("fontSize"),   // 0 = use system default, otherwise specific point sizes
-    _theme = Symbol("theme"),      // light, dark, lightHighContrast, etc.
-    _externalResources = Symbol("externalResources"), // link templates to external resources, like Wikipedia
-    _showImages = Symbol("images"), // determines if images are shown (if possible)
-    _lastDictionary = Symbol("lastDictionary"), // records the last dictionary
-    _pageSize = Symbol("pageSize"),   // page length (search results, etc.)
+let _fontFamily = Symbol("_fontFamily"), // font family
+    _fontSize = Symbol("_fontSize"),   // 0 = use system default, otherwise specific point sizes
+    _theme = Symbol("_theme"),      // light, dark, lightHighContrast, etc.
+    _externalResources = Symbol("_externalResources"), // link templates to external resources, like Wikipedia
+    _showImages = Symbol("_images"), // determines if images are shown (if possible)
+    _lastDictionary = Symbol("_lastDictionary"), // records the last dictionary
+    _pageSize = Symbol("_pageSize"),   // page length (search results, etc.)
+    _lastLemma = Symbol("_lastLemma"),
     _localStorage = Symbol("_localStorage"); // for testing
 
 export default class Settings extends Emitter {
@@ -18,6 +19,7 @@ export default class Settings extends Emitter {
         this[_fontFamily] = "default"; // will just use the default font family
         this[_fontSize] = 0;           // 0 will use app default (from system)
         this[_theme] = "Default";      // default theme
+        this[_lastLemma] = "";         // no word last looked up
         this[_showImages] = true;      // not currently used
         this[_pageSize] = 100;         // search result limit
         this[_lastDictionary] = undefined; // if undefined, the app will pick the first one
@@ -85,6 +87,7 @@ export default class Settings extends Emitter {
         if (storage.externalResources !== undefined) { this[_externalResources] = JSON.parse(storage.externalResources); }
         if (storage.pageSize !== undefined) { this[_pageSize] = storage.pageSize; }
         if (storage.lastDictionary !== undefined) { this[_lastDictionary] = storage.lastDictionary; }
+        if (storage.lastLemma !== undefined) { this[_lastLemma] = storage.lastLemma; }
         this.emit("settingsRetrieved");
         GCS.emit("APP:SETTINGS:loaded");
         this.emit("settingsChanged"); // this will save the settings again, but that's OK
@@ -99,6 +102,7 @@ export default class Settings extends Emitter {
         storage.externalResources = JSON.stringify(this.externalResources);
         if (this.pageSize !== undefined) { storage.pageSize = this.pageSize; }
         if (this.lastDictionary !== undefined) { storage.lastDictionary = this.lastDictionary; }
+        if (this.lastLemma !== undefined) { storage.lastLemma = this.lastLemma; }
         this.emit("settingsPersisted");
         GCS.emit("APP:SETTINGS:persisted");
     }
@@ -143,6 +147,12 @@ export default class Settings extends Emitter {
     set lastDictionary(d) {
         this._emitChangeNotice("lastDictionary", d, this[_lastDictionary]);
         this[_lastDictionary] = d;
+    }
+    
+    get lastLemma() { return this[_lastLemma]; }
+    set lastLemma(l) {
+        this._emitChangeNotice("lastLemma", l, this[_lastLemma]);
+        this[_lastLemma] = l;
     }
 
     get externalResources() { return this[_externalResources]; }
