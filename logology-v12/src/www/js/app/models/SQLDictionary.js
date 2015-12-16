@@ -21,13 +21,19 @@ export default class SQLDictionary extends Dictionary {
             createFromLocation: 1
         });
         let db = this[_db];
-        db.select({
-            fields: ["lemma"],
-            from: "lemmas",
-            orderBy: ["lemma"]
-        }).then((r) => {
-            this[_sortedIndex] = r.rows.map((r) => r.lemma);
-            this.loaded();
+        db.query({sql: "select count(*) as numLemmas from lemmas"})
+        .then((r) => {
+            const ITEMS_PER = 10000;
+            let numLemmas = r.rows[0].numLemmas;
+            let p = Promise.resolve();
+            for (let i = 0; i < numLemmas; i += ITEMS_PER) {
+                p = p.then(() => db.query({sql: "select lemma from lemmas order by lemma limit ?, ?", binds:[i, ITEMS_PER]}))
+                     .then((r) => this[_sortedIndex].push(...r.rows.map((r) => r.lemma)));
+            }
+            p = p.then(() => {
+                this.loaded();
+            });
+            return p;            
         });
 
     }
