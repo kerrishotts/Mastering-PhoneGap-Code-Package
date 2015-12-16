@@ -42,8 +42,8 @@ export default class MenuView extends View {
         // return a list of all the available dictionaries along with options for downloading
         // more and changing settings.
         return scrollContainer({contents: list({
-            contents: dictionariesList(model).concat(
-                listItemSpacer(),
+            contents: /*dictionariesList(model).concat(
+                listItemSpacer(),*/
                 this.MENU_ITEMS.map(item => {
                     return listItem({
                         contents: listItemContents({
@@ -55,7 +55,7 @@ export default class MenuView extends View {
                             ]
                         })
                     });
-                }))
+                }) /*)*/
         })
     });
     }
