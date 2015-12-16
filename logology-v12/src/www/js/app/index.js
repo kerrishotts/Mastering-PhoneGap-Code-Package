@@ -280,15 +280,12 @@ class App extends Emitter {
             // starter only useful for quick testing
             // this.dictionaries.addDictionary({name: "Starter", Dictionary: StarterDictionary});
 
-            /*
-            if (typeof sqlitePlugin !== "undefined") {
-               introduced ch8
-               this.dictionaries.addDictionary({name: "WordNet - SQL", Dictionary: SQLDictionary, options: {path: "wordnet.db"}});
-            } else {
-               introduced ch4
-            }
-            */
+            // introduced ch4
             this.dictionaries.addDictionary({name: "WordNet - JSON", Dictionary: XHRDictionary, options: {path: "wordnet.json"}});
+            if (typeof sqlitePlugin !== "undefined") {
+                // introduced ch8
+                this.dictionaries.addDictionary({name: "WordNet - SQL", Dictionary: SQLDictionary, options: {path: "wordnet.db"}});
+            }
 
             let mvc = createMenuViewController({model: this.dictionaries});
             let rrv = createViewController();
