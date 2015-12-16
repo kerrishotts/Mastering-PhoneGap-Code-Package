@@ -3,14 +3,13 @@
 import GCS from "$LIB/grandCentralStation";
 import ViewController from "$LIB/ViewController";
 import {createSearchView} from "$VIEWS/SearchView";
-
 import h from "yasmf-h";
 import el from "$LIB/templates/el";
 import navigationBar from "$WIDGETS/bars/navigation";
 import widgetGroup from "$WIDGETS/group";
 import glyph from "$WIDGETS/glyph";
-
 import L from "$APP/localization/localization";
+import {getSettings} from "../models/Settings";
 
 export default class SearchViewController extends ViewController {
     constructor({model}={}) {
@@ -29,6 +28,7 @@ export default class SearchViewController extends ViewController {
         } else {
             this.view.filter = target.value;
         }
+        getSettings().lastLemma = filter;
     }
     onMenuTapped() {
         GCS.emit("APP:DO:menu");
