@@ -38,4 +38,8 @@ y-widget-group, [is="y-widget-group"] {
 
 .y-group-align-right {
   text-align: right !important;
+
+  y-svg:last-child, [is="y-svg"]:last-child {
+      margin-right: -0.75rem;
+  }
 }
