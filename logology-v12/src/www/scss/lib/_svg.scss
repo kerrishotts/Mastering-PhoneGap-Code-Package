@@ -3,7 +3,7 @@
 }
 
 .svg-icon, [is='y-svg'] {
-  min-width: 44px; // 2rem can be a bit small
+  min-width: 2.66rem;
   display: inline-flex;
   position: relative;
   fill: currentColor;
@@ -14,6 +14,7 @@
 .svg-icon svg, [is='y-svg'] svg {
     width: 1.33rem;
     height: 1.33rem;
+    min-width: 44px;
     padding: 0;
     margin: auto auto;
     flex: 0 0 auto;
