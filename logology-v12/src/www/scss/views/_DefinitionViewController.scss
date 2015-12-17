@@ -23,23 +23,26 @@
             &:before {
                 content: counter(definition-list) '.';
                 counter-increment: definition-list;
-                font-weight: bold;
-                margin-left: -3rem;
                 display: inline-block;
-                width: 3rem;
+                min-width: 1.25rem;
                 text-align: right;
+                font-style: italic;
+                color: $tint-color-contrast;
             }
             color: $text-color;
-            margin: 1rem 2rem;
+            padding: 1rem 2rem;
+            margin: 0 auto;
+            max-width: 45rem;
             span.pos {
                 font-style: italic;
                 color: $lighter-text-color;
-                margin-left: 0.5rem;
-                display: inline-block;
+                margin: 0 0.5rem;
             }
             span.def {
-                display: inline-block;
-                margin-left: 1.5rem;
+            }
+
+            &:nth-child(even) {
+                background-color: $list-background-color-alt;
             }
         }
     }
