@@ -68,7 +68,7 @@ export default class Settings extends Emitter {
                 {name: "setting:theme:Dark", value: "Dark"}
             ]},
             {name: "setting:page-size", key: "pageSize", value: this.pageSize, type: "select", options: [
-                {name: "setting:page-size:20", value: 25},
+                {name: "setting:page-size:20", value: 20},
                 {name: "setting:page-size:50", value: 50},
                 {name: "setting:page-size:80", value: 80},
                 {name: "setting:page-size:100", value: 100},
