@@ -14,6 +14,7 @@
   $bar-light-color: #FFF;
   $list-heading-text-color: #8F8680;
   $list-background-color: #1F1610;
+  $list-background-color-alt: #2F2620;
   $list-actions-background-color: $tint-color;
   $list-actions-color: #FFFFFF;
   $nav-background-color: $tint-color;
@@ -43,7 +44,7 @@
         font-family: inherit;
     }
 
-    @import "./dark-anims";
+    @import "./default-anims";
     @import "../views/AboutViewController";
     @import "../views/SettingsViewController";
     @import "../views/SearchViewController";
