@@ -14,9 +14,11 @@ y-list-heading, [is="y-list-heading"] {
   display: flex;
   border-bottom: 1px solid $tint-border-color;
   border-right: 1px solid $tint-border-color;
-  flex: 1 1 320px;
+  flex: 1 1 20rem; //320px;
   position: relative;
   overflow: hidden;
+  //word-break: break-all;
+  -webkit-hyphens: auto;
 }
 
 y-list-item-spacer, [is="y-list-item-spacer"],
