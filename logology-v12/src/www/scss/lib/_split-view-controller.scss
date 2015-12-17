@@ -10,7 +10,7 @@ y-split-view-controller, [is="y-split-view-controller"], .y-split-view-controlle
     y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
         position: relative;
         flex: 1;
-        border-right: 1px solid $tint-border-color;
+        border-right: 0 solid $tint-border-color;
         overflow: hidden;
 
         &:first-child {
