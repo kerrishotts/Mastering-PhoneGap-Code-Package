@@ -47,6 +47,8 @@ import XHRDictionary from "./models/XHRDictionary";
 import SQLDictionary from "./models/SQLDictionary";
 let settings = getSettings();
 
+const animate = false;
+
 class App extends Emitter {
     constructor() {
         super();
@@ -73,6 +75,55 @@ class App extends Emitter {
         // zoom our text for accessibility
         if (typeof MobileAccessibility !== "undefined") {
             MobileAccessibility.usePreferredTextZoom(true);
+        }
+    }
+
+    screenReaderSpeak(s) {
+        MobileAccessibility.isScreenReaderRunning(active => {
+            if (active) {
+                MobileAccessibility.speak(s, 1);
+            }
+        });
+    }
+
+    notifyAccessibility() {
+        // when a view is pushed / popped, we need to notify accessibility
+        // that the view changed on iOS.
+        // We also need to focus the first navigable element.
+
+        function focusElement() {
+            MobileAccessibility.isScreenReaderRunning(active => {
+                if (active) {
+                    app.contentnvc.topView.elementTree.querySelector("[class*='icon']").focus();
+                }
+            });
+        }
+        if (typeof MobileAccessibility !== "undefined") {
+            let viewNameToSpeak = app.contentnvc.topView.elementTree.querySelector("h1").textContent;
+            if (device.platform === "iOS") {
+                setTimeout( () => {
+                    MobileAccessibility.postNotification(MobileAccessibilityNotifications.SCREEN_CHANGED,
+                        "", ({wasSuccessful} = {}) => {
+                            setTimeout( () => {
+                                MobileAccessibility.postNotification(MobileAccessibilityNotifications.ANNOUNCEMENT,
+                                    viewNameToSpeak, ({wasSuccessful} = {}) => {
+                                        if (!wasSuccessful) {
+                                            console.log("Couldn't speak view name");
+                                        } else {
+                                            focusElement();
+                                        }
+                                    });
+                            }, 10);
+                        });
+                }, 10);
+            } else {
+                MobileAccessibility.isScreenReaderRunning(active => {
+                    if (active) {
+                        MobileAccessibility.speak(viewNameToSpeak, 1);
+                        focusElement();
+                    }
+                });
+            }
         }
     }
 
@@ -110,6 +161,7 @@ class App extends Emitter {
                        let svc = createSearchViewController({model: dictionary});
                        this.contentnvc.popToRoot()
                            .then(() => this.contentnvc.push(svc, {animate: false}))
+                           .then(() => this.notifyAccessibility())
                            .then(() => GCS.emit("APP:DO:hideSplash")); // hide the splash screen, if necessary
                    })
                    .catch(err => {
@@ -123,52 +175,66 @@ class App extends Emitter {
                    .then(dictionary => {
                        let model = createDefinitions({dictionary, lemma});
                        let dvc = createDefinitionViewController({model});
-                       return this.contentnvc.push(dvc, {animate: false});
+                       return this.contentnvc.push(dvc, {animate})
+                                  .then(() => this.notifyAccessibility());
                    });
     }
 
     viewNotes(lemma) {
         let model = createNote({lemma});
         let nvc = createNotesViewController({model});
-        return this.contentnvc.push(nvc, {animate: false});
+        return this.contentnvc.push(nvc, {animate})
+                   .then(() => this.notifyAccessibility());
     }
 
     showAbout() {
         let avc = createAboutViewController();
         //GCS.emit("APP:DO:menu");
-        return this.contentnvc.push(avc, {animate: false});
+        return this.contentnvc.push(avc, {animate})
+                   .then(() => this.notifyAccessibility());
     }
 
     showSettings() {
         let svc = createSettingsViewController();
         //GCS.emit("APP:DO:menu");
-        return this.contentnvc.push(svc, {animate: false});
+        return this.contentnvc.push(svc, {animate})
+                   .then(() => this.notifyAccessibility());
     }
 
     toggleFavorite(word) {
         let favorites = getFavorites();
         favorites.toggleFavorite(word)
                  .then(() => favorites.isWordAFavorite(word))
-                 .then(r => GCS.emit("APP:DID:favDefinition", word, r));
+                 .then(r => {
+                     GCS.emit("APP:DID:favDefinition", word, r);
+                     this.screenReaderSpeak(L.T(r ? "sr:word-favorited" : "sr:word-unfavorited"));
+                 });
     }
 
     openURL(url) {
+        // encode the URL; if not, iOS crashes with spaces
+        let encodedURL = encodeURI(url);
         function continueOpen() {
             if (typeof cordova !== "undefined" && cordova.inAppBrowser) {
-                cordova.inAppBrowser.open(url, "_blank", `location=no,closebuttoncaption=${L.T("browser:done")}`);
+                cordova.inAppBrowser.open(encodedURL, "_blank", `location=no,closebuttoncaption=${L.T("browser:done")}`);
             } else {
-                window.open(url, '_blank', 'location=yes');
+                window.open(encodedURL, '_blank', 'location=yes');
             }
         }
         // can we use the Safari View Controller?
-        if (typeof SafariViewController !== "undefined") {
-            SafariViewController.isAvailable(available => {
-                if (available) {
-                    SafariViewController.show({url});
-                } else {
-                    continueOpen();
-                }
-            });
+        if (typeof SafariViewController !== "undefined" &&
+            typeof device !== "undefined") {
+            if (device.platform === "iOS") {
+                SafariViewController.isAvailable(available => {
+                    if (available) {
+                        SafariViewController.show({url: encodedURL});
+                    } else {
+                        continueOpen();
+                    }
+                });
+            } else {
+                continueOpen();
+            }
         } else {
             continueOpen();
         }
@@ -179,13 +245,14 @@ class App extends Emitter {
         let [, , command] = notice.split(":");
         switch (command) {
             case "menu":
-                this.splitViewController.toggleSidebar({animate: true});
+                this.splitViewController.toggleSidebar({animate});
                 break;
             case "back":
-                this.contentnvc.pop({animate: false});
+                this.contentnvc.pop({animate})
+                    .then(() => this.notifyAccessibility());
                 break;
             case "menuBack":
-                this.sidenvc.pop({animate: false});
+                this.sidenvc.pop({animate});
                 break;
             case "about":
                 this.showAbout();
@@ -217,7 +284,7 @@ class App extends Emitter {
             case "hideSplash":
                 if (typeof navigator !== "undefined") {
                     if (navigator.splashscreen) {
-                        navigator.splashscreen.hide();
+                        setTimeout(() => navigator.splashscreen.hide(), 500);
                     }
                 }
                 break;
@@ -340,13 +407,18 @@ class App extends Emitter {
             // handle back button for Android
             document.addEventListener("backbutton", (e) => {
                 e.preventDefault();
-                if (this.contentnvc.view < 2) {
+                if (this.contentnvc.subviews.length < 3) {
                     // quit instead
                     navigator.app.exitApp();
                 } else {
                     GCS.emit("APP:DO:back")
                 }
             }, false);
+
+            // handle tap of status bar to scroll any view to top.
+            window.addEventListener("statusTap", (e) => {
+                Array.from(this.contentnvc.topView.elementTree.querySelectorAll('[is*=scroll], textarea')).forEach((el) => el.scrollTop=0);
+            })
 
         } catch (err) {
             GCS.emit("APP:startupFailure", err);
