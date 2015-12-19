@@ -20,6 +20,13 @@
 
   <!-- local phonegap/cordova -->
   {{{PREFS}}}
+  <platform name="android">
+      <preference name="Orientation" value="default" />
+  </platform>
+  <platform name="ios">
+      <preference name="Orientation" value="all" />
+  </platform>
+
   {{{PLUGINS}}}
   {{{ICONS}}}
   {{{SPLASHES}}}

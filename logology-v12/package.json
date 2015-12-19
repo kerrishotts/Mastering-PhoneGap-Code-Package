@@ -184,7 +184,6 @@
     "preferences": {
       "permissions": "none",
       "fullscreen": "false",
-      "orientation": "default",
       "stay-in-webview": "false",
       "ShowSplashScreenSpinner": "false",
       "SplashScreen": "res/splash/android/screen.9.png",
