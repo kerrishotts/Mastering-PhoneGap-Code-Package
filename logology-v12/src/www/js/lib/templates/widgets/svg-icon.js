@@ -7,6 +7,7 @@ const ICONMAP = {
     "arrow-down": "arrow-bottom",
 //    "back": "chevron-left",
     "back": "arrow-thick-left",
+    "bookmark": "bookmark",
     "caret-up": "caret-top",
     "caret-down": "caret-bottom",
     "check": "check",
@@ -17,23 +18,20 @@ const ICONMAP = {
     "clock": "clock",
     "cog": "cog",
     "data-list": "list",
+    "favorite": "heart",
+    "fav": "heart",
     "gear": "cog",
     "history": "clock",
+    "home": "home",
     "list-indicator": "chevron-right",
     "info": "info",
     "menu": "menu",
+    "note": "pencil",
     "navicon": "menu",
     "search": "magnifying-glass",
+    "settings": "cog",
     "share": "share-boxed",
-    "bookmark": "bookmark",
-    "favorite": "heart",
-    "fav": "heart",
-    "clock": "clock",
-    "history": "clock",
-    "home": "home",
-    "note": "pencil",
-    "trash": "trash",
-    "settings": "cog"
+    "trash": "trash"
 };
 
 module.exports.svgIcon = function svgIcon(glyph, text) {
