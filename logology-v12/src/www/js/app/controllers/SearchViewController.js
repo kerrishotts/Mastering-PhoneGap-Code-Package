@@ -18,7 +18,8 @@ export default class SearchViewController extends ViewController {
     get TARGET_SELECTORS() {
         return [
             {selector: "input:label[role='search'] input", emit: "searchChanged"},
-            {selector: "tap:.settings-icon", emit: "settingsTapped"}
+            {selector: "tap:.settings-icon", emit: "settingsTapped"},
+            {selector: "submit:form", emit: "searchSubmitted"}
         ];
     }
     onSearchChanged(sender, notice, target/*, e*/) {
@@ -36,6 +37,13 @@ export default class SearchViewController extends ViewController {
     onSettingsTapped() {
         GCS.emit("APP:DO:settings");
     }
+    onSearchSubmitted(sender, notice, target, evt) {
+        evt.preventDefault();
+        let focusedElement = document.querySelector(":focus");
+        if (focusedElement) {
+            focusedElement.blur();
+        }
+    }
     onDidRemoveFromParent() {
         this.destroy();
     }
@@ -49,10 +57,12 @@ export default class SearchViewController extends ViewController {
                     h.el("h1?is=y-title", L.T("app:title"))
                 ], flex: true}),
                 widgetGroup({contents: [
-                    h.el("label?role=search", [
-                        glyph({tag: "div", icon: "search", contents: L.T("icon:search")}),
-                        el({tag: "input?type=text&autocapitalize=off&autocorrect=off", value: this.view && this.view.filter})
-                    ])
+                    h.el("form?method=post&onsubmit=return false;",
+                        h.el("label?role=search", [
+                            glyph({tag: "div", icon: "search", contents: L.T("icon:search")}),
+                            el({tag: "input?type=text&autocapitalize=off&autocorrect=off", value: this.view && this.view.filter})
+                        ])
+                    )
                 ], align: "right"})
             ]}),
             this.renderSubviews()
