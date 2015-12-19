@@ -1,5 +1,6 @@
 y-navigation-view-controller, [is="y-navigation-view-controller"], .y-navigation-view-controller {
   @extend y-container;
+  overflow: hidden;
 }
 
 y-navigation-wrapper, [is="y-navigation-wrapper"], .y-navigation-wrapper {

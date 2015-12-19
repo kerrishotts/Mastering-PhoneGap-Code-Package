@@ -18,11 +18,13 @@
   $list-actions-background-color: #CECAC1;
   $list-actions-color: #FFFFFF;
   $nav-background-color: $tint-color;
+  $nav-background-color-darker: hsl(42, 87%, 40%);
   $nav-color: #FFFFFF;
-  $nav-border-color: $tint-border-color;
+  $nav-border-color: $tint-color / 1.25;
 
   font-family: $font-stack;
   color: $ui-text-color;
+  background-color: $view-background-color;
 
     @import "../lib/button";
     @import "../lib/container";

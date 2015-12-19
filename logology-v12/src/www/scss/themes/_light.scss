@@ -18,11 +18,13 @@
   $list-actions-background-color: #CCCCCC;
   $list-actions-color: #FFFFFF;
   $nav-background-color: #FFFFFF;
+  $nav-background-color-darker: #CCCCCC;
   $nav-color: #666666;
   $nav-border-color: $tint-border-color;
 
   font-family: $font-stack;
   color: $ui-text-color;
+  background-color: $view-background-color;
 
     @import "../lib/button";
     @import "../lib/container";
