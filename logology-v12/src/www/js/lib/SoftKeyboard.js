@@ -204,6 +204,7 @@ export default class SoftKeyboard extends Emitter {
     keyboardShown(e)/*: void*/ {
         this.emit("keyboardShown", e);
         this.emit("willResize", e);
+        console.log ("keyboard shown", e.keyboardHeight);
         setTimeout(() => {
             let screenHeight = window.innerHeight; //(document.body.clientWidth === window.screen.height ? window.screen.width : window.screen.height);
             let scrollContainers = getScrollContainers(this.selectorString);
@@ -220,7 +221,11 @@ export default class SoftKeyboard extends Emitter {
                 // now that we know the top of the scroll container, the height of the
                 // the screen, and the height of the keyboard, we can calculate the
                 // appropriate max-height for the container.
-                sc.style.maxHeight = "" + (screenHeight - keyboardHeight - scTop) + "px";
+                let maxHeight = "" + (screenHeight - keyboardHeight - scTop);
+                console.log("New height", maxHeight);
+                if (maxHeight > 100) {
+                    sc.style.maxHeight = maxHeight + "px";
+                }
             });
             this.emit("didResize", e);
             // changing the height isn't sufficient: we need to scroll any focused
