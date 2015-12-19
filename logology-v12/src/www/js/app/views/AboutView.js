@@ -44,7 +44,8 @@ export default class AboutView extends View {
                 h.img({
                     attrs: {
                         srcset: "img/book-cover-xhidpi.jpg 2500w, img/book-cover-hidpi.jpg 1250w, img/book-cover-lodpi.jpg 625w",
-                        src: "img/book-cover-lodpi.jpg"
+                        src: "img/book-cover-lodpi.jpg",
+                        title: L.T("sr:book-cover")
                     },
                     styles: {
                         width: "100%"
