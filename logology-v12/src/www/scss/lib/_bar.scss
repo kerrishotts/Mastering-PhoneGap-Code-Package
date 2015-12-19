@@ -35,6 +35,13 @@ y-widget-group, [is="y-widget-group"] {
   }
 }
 
+.y-group-align-left {
+  text-align: left !important;
+
+  y-svg:first-child, [is="y-svg"]:first-child {
+      margin-left: -0.75rem;
+  }
+}
 
 .y-group-align-right {
   text-align: right !important;
