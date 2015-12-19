@@ -40,6 +40,7 @@ export default class DefinitionView extends View {
         return scrollContainer({
             contents:
             [
+                textContainer({contents: h.h2(model.lemma)}),
                 textContainer({contents: h.ol(
                         model.entries.map(d => h.li([
                             h.el("span.pos", d.partOfSpeech),
