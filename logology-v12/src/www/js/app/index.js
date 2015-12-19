@@ -12,7 +12,7 @@
 
 // we need to use the Fetch API (replaces XHR), but not available in all
 // instances, so we use a polyfill
-require("whatwg-fetch");
+require("whatwg-fetch-local");
 
 // inject SVG assets
 let SVGInjector = require("svg-injector");
@@ -108,8 +108,9 @@ class App extends Emitter {
                    .then(dictionary => {
                        this.settings.lastDictionary = dictionaryName;
                        let svc = createSearchViewController({model: dictionary});
-                       this.splitViewController.rightView.popToRoot()
-                           .then(() => this.splitViewController.rightView.push(svc, {animate: false}));
+                       this.contentnvc.popToRoot()
+                           .then(() => this.contentnvc.push(svc, {animate: false}))
+                           .then(() => GCS.emit("APP:DO:hideSplash")); // hide the splash screen, if necessary
                    })
                    .catch(err => {
                        GCS.emit("APP:DO:viewDictionary", this.dictionaries.dictionaries[0]);
@@ -122,26 +123,26 @@ class App extends Emitter {
                    .then(dictionary => {
                        let model = createDefinitions({dictionary, lemma});
                        let dvc = createDefinitionViewController({model});
-                       return this.splitViewController.rightView.push(dvc, {animate: false});
+                       return this.contentnvc.push(dvc, {animate: false});
                    });
     }
 
     viewNotes(lemma) {
         let model = createNote({lemma});
         let nvc = createNotesViewController({model});
-        return this.splitViewController.rightView.push(nvc, {animate: false});
+        return this.contentnvc.push(nvc, {animate: false});
     }
 
     showAbout() {
         let avc = createAboutViewController();
-        GCS.emit("APP:DO:menu");
-        return this.splitViewController.rightView.push(avc, {animate: false});
+        //GCS.emit("APP:DO:menu");
+        return this.contentnvc.push(avc, {animate: false});
     }
 
     showSettings() {
         let svc = createSettingsViewController();
-        GCS.emit("APP:DO:menu");
-        return this.splitViewController.rightView.push(svc, {animate: false});
+        //GCS.emit("APP:DO:menu");
+        return this.contentnvc.push(svc, {animate: false});
     }
 
     toggleFavorite(word) {
@@ -181,10 +182,10 @@ class App extends Emitter {
                 this.splitViewController.toggleSidebar({animate: true});
                 break;
             case "back":
-                this.splitViewController.rightView.pop({animate: false});
+                this.contentnvc.pop({animate: false});
                 break;
             case "menuBack":
-                this.splitViewController.leftView.pop({animate: false});
+                this.sidenvc.pop({animate: false});
                 break;
             case "about":
                 this.showAbout();
@@ -213,6 +214,13 @@ class App extends Emitter {
             case "URL":
                 this.openURL(data[0]);
                 break;
+            case "hideSplash":
+                if (typeof navigator !== "undefined") {
+                    if (navigator.splashscreen) {
+                        navigator.splashscreen.hide();
+                    }
+                }
+                break;
             default:
                 console.log(["Couldn't handle a navigation request:", sender, notice, data]);
         }
@@ -238,12 +246,22 @@ class App extends Emitter {
             this.themeManager.currentTheme = theme;
             if (typeof StatusBar !== "undefined") {
                 let barColor = {
-                    "Default": {color: "#EEAA11", bg: "styleLightContent"},
-                    "Light": {color: "#FFFFFF", bg: "styleDefault"},
-                    "Dark": {color: "#40566F", bg: "styleLightContent"}
+                    "iOS": {
+                        "Default": {color: "#eeac11", bg: "styleLightContent"},
+                        "Light": {color: "#FFFFFF", bg: "styleDefault"},
+                        "Dark": {color: "#40566F", bg: "styleLightContent"}
+                    },
+                    "Android": {
+                        "Default": {color: "#c68f0e", bg: "styleLightContent"},
+                        "Light": {color: "#CCCCCC", bg: "styleDefault"},
+                        "Dark": {color: "#212d3a", bg: "styleLightContent"}
+                    }
                 }
-                StatusBar.backgroundColorByHexString(barColor[settings.theme].color);
-                StatusBar[barColor[settings.theme].bg]();
+                if (typeof device !== "undefined") {
+                    let platform = device.platform;
+                    StatusBar.backgroundColorByHexString(barColor[platform][settings.theme].color);
+                    StatusBar[barColor[platform][settings.theme].bg]();
+                }
             }
         } catch (err) {
             console.log("couldn't change theme to ", settings.theme);
@@ -288,16 +306,22 @@ class App extends Emitter {
                 this.dictionaries.addDictionary({name: "WordNet", Dictionary: SQLDictionary, options: {path: "wordnet.db"}});
             } else {
                 // introduced ch4
-                this.dictionaries.addDictionary({name: "WordNet", Dictionary: XHRDictionary, options: {path: "wordnet.json"}});                
+                this.dictionaries.addDictionary({name: "WordNet", Dictionary: XHRDictionary, options: {path: "wordnet.json"}});
             }
 
-            let mvc = createMenuViewController({model: this.dictionaries});
             let rrv = createViewController();
-            let nvc = createNavigationViewController({subviews: [rrv]});
-            let mvnc = createNavigationViewController({subviews: [mvc]});
 
-            this.splitViewController = createSplitViewController({subviews: [mvnc, nvc], themeManager: this.themeManager, renderElement: rootElement});
-            this.splitViewController.visible = true;
+            // if you want a split view:
+            // let mvc = createMenuViewController({model: this.dictionaries});
+            // let nvc = createNavigationViewController({subviews: [rrv]);
+            // let mvnc = createNavigationViewController({subviews: [mvc]});
+            // this.splitViewController = createSplitViewController({subviews: [mvnc, nvc], themeManager: this.themeManager, renderElement: rootElement});
+            // this.contentnvc = nvc;
+            // this.sidenvc = mvnc;
+
+            let nvc = createNavigationViewController({subviews: [rrv], themeManager: this.themeManager, renderElement: rootElement});
+            this.contentnvc = nvc;
+            this.contentnvc.visible = true;
 
             // logging, debug only
             // GCS.on("/.*/", (...args) => console.log(args));
@@ -313,12 +337,17 @@ class App extends Emitter {
             // and ask the app to go to the last dictionary
             GCS.emit("APP:DO:viewLastDictionary");
 
-            // hide splash screen if visible
-            if (typeof navigator !== "undefined") {
-                if (navigator.splashscreen) {
-                    navigator.splashscreen.hide();
+            // handle back button for Android
+            document.addEventListener("backbutton", (e) => {
+                e.preventDefault();
+                if (this.contentnvc.view < 2) {
+                    // quit instead
+                    navigator.app.exitApp();
+                } else {
+                    GCS.emit("APP:DO:back")
                 }
-            }
+            }, false);
+
         } catch (err) {
             GCS.emit("APP:startupFailure", err);
             this.emit("startupFailure", err);

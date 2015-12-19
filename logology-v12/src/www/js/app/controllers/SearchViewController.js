@@ -18,7 +18,7 @@ export default class SearchViewController extends ViewController {
     get TARGET_SELECTORS() {
         return [
             {selector: "input:label[role='search'] input", emit: "searchChanged"},
-            {selector: "tap:.menu-icon", emit: "menuTapped"}
+            {selector: "tap:.settings-icon", emit: "settingsTapped"}
         ];
     }
     onSearchChanged(sender, notice, target/*, e*/) {
@@ -33,6 +33,9 @@ export default class SearchViewController extends ViewController {
     onMenuTapped() {
         GCS.emit("APP:DO:menu");
     }
+    onSettingsTapped() {
+        GCS.emit("APP:DO:settings");
+    }
     onDidRemoveFromParent() {
         this.destroy();
     }
@@ -40,8 +43,8 @@ export default class SearchViewController extends ViewController {
         return h.el("main.SearchViewController y-container?is=y-search-view-controller", [
             navigationBar({contents: [
                 widgetGroup({contents: [
-                    glyph({icon: "menu", contents: L.T("icon:menu"), title: L.T("general:tap-to-reveal-the-sidebar")})
-                ]}),
+                    glyph({icon: "settings", contents: L.T("icon:settings"), title: L.T("general:tap:settings")})
+                ], align: "left"}),
                 widgetGroup({contents: [
                     h.el("h1?is=y-title", L.T("app:title"))
                 ], flex: true}),

@@ -26,12 +26,21 @@ const kp = require("keypather")();
 export default class SettingsView extends View {
     get TARGET_SELECTORS() {
         return [
+            {selector: "tap:ul li > button", emit: "listItemTapped"},
             {selector: "input:select", emit: "settingChanged"}
         ];
     }
 
     onSettingChanged(sender, notice, select) {
         settings[select.getAttribute("data-key")] = select.value;
+    }
+
+    onListItemTapped(sender, notice, listItem) {
+        switch (listItem.value) {
+            case "about":
+                GCS.emit("APP:DO:about");
+                break;
+        }
     }
 
     template() {
@@ -61,7 +70,16 @@ export default class SettingsView extends View {
                                         )
                                     ]})
                     });
-                })
+                }).concat(listItem({
+                    contents: listItemContents({
+                        props: {
+                            value: "about"
+                        },
+                        contents: [
+                            h.el("div.y-flex", L.T("nav:about"))
+                        ]
+                    })
+                }))
             })
         });
     }
