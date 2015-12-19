@@ -80,7 +80,7 @@ export default class DefinitionViewController extends ViewController {
                     glyph({icon: "back", contents: L.T("icon:back"), title: L.T("general:tap-to-go-back")})
                 ]}),
                 widgetGroup({contents: [
-                    h.el("h1?is=y-title", this.model && this.model.lemma)
+                    h.el("h1?is=y-title", L.T("title:definitions"))
                 ], flex: true}),
                 widgetGroup({contents: lemmaActions({isFavorite: this[_isFav], hasNote: this[_hasNote]}), align: "right"})
             ]}),
