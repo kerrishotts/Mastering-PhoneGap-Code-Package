@@ -5,6 +5,25 @@ You can find the demonstration app, Logology, in various stages of completion in
 
 ## Design
 
+### Statistics
+
+```
+           Source    Tests    Tasks  | Total
+           --------------------------+-------
+Physical     5744      603      800  |  7147
+Source:      4513      529      674  |  5716
+Comment:      741       20       40  |   801
+ - Single:    269       14       11  |   294
+ - Block:     472        6       29  |   507
+Mixed:        166        6       11  |   183
+Empty:        658       60       97  |   815
+Files:         85       19       37  |   141
+
+996K Source, 48K Test, 32K Test-ui, 148K Gulp = 1224K
+Build generate 458MiB
+Node modules 646MiB
+```
+
 ### Directory Structure
 
 ```text
