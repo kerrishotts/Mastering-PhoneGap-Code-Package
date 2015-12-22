@@ -33,6 +33,13 @@ export default class Theme extends Emitter {
         return 300; // milliseconds
     }
 
+    get ANIMATION_TIMING_FUZZ() {
+        if (typeof device !== "undefined") {
+            return device.platform === "Android" ? 200 : 0;
+        }
+        return 0;
+    }
+
 ///mark: CSS classes
 
     /*
@@ -123,7 +130,7 @@ export default class Theme extends Emitter {
                 setTimeout(() => {
                     e.classList.add(doing);
                     this.addClearClassToElement(doing, e);
-                    setTimeout(finalAnimationStep, this.ANIMATION_TIMING);
+                    setTimeout(finalAnimationStep, this.ANIMATION_TIMING + this.ANIMATION_TIMING_FUZZ);
                 }, 10);
             } else {
                 finalAnimationStep();
