@@ -39,10 +39,10 @@ export default class NotesViewController extends ViewController {
             }, 10);
         }
     }
-    onDidChangeParentView() {
+    onDidEnterByPush() {
         this.model.on("model:changed:note", this.autofocus, this);
     }
-    onDidRemoveFromParent() {
+    onDidLeaveByPop() {
         this.model.off("model:changed:note", this);
         this.destroy();
     }

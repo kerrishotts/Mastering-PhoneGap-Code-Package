@@ -49,7 +49,7 @@ export default class DefinitionViewController extends ViewController {
         let noteIcon = this.elementTree.querySelector(".note-icon");
         noteIcon.setAttribute("data-note", actions[1].getAttribute("data-note"));
     }
-    onDidChangeParentView() {
+    onDidEnterByPush() {
         // start listening for favorite changes
         GCS.on("APP:DID:favDefinition", (sender, notice, lemma, fav) => {
             if (this.model) {
@@ -68,7 +68,7 @@ export default class DefinitionViewController extends ViewController {
         getFavorites().isWordAFavorite(this.model.lemma).then((fav) => this.emit("favChanged", fav));
         getNotes().doesWordHaveANote(this.model.lemma).then((note) => this.emit("noteChanged", note));
     }
-    onDidRemoveFromParent() {
+    onDidLeaveByPop() {
         GCS.off("APP:DID:favDefinition", this);
         GCS.off("APP:DID:noteDefinition", this);
         this.destroy();

@@ -24,7 +24,7 @@ export default class GenericViewController extends ViewController {
     onBackTapped() {
         GCS.emit("APP:DO:back");
     }
-    onDidRemoveFromParent() {
+    onDidLeaveByPop() {
         this.destroy();
     }
     template() {
