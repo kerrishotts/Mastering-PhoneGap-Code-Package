@@ -15,9 +15,9 @@
 .anims-view-enter-in, .anims-view-enter-out {
     @extend %animation-timing;
 
-    y-nav *, [is="y-nav"] * {
-        transition: opacity .3s ease-out;
-    }
+//    y-nav *, [is="y-nav"] * {
+//        transition: opacity .3s ease-out;
+//    }
 }
 
 .anims-split-enter, .anims-split-leave,
@@ -28,15 +28,15 @@
 }
 
 .anims-view-leave-out, .anims-view-leave-in {
-    y-nav *, [is="y-nav"] * {
-        opacity: 1;
-    }
+//    y-nav *, [is="y-nav"] * {
+//        opacity: 1;
+//    }
 }
 
 .anims-view-enter-in, .anims-view-enter-out {
-    y-nav *, [is="y-nav"] * {
-        opacity: 0.5;
-    }
+//    y-nav *, [is="y-nav"] * {
+//        opacity: 0.5;
+//    }
 }
 
 .anims-view-enter-in {
@@ -84,15 +84,15 @@
 
 // perform/hold animation
 .animd-view-leave-out, .animd-view-leave-in, .animh-view-leave-out, .animh-view-leave-in {
-    y-nav *, [is="y-nav"] * {
-        opacity: 0.5;
-    }
+//    y-nav *, [is="y-nav"] * {
+//        opacity: 0.5;
+//    }
 }
 
 .animd-view-enter-in, .animd-view-enter-out, .animh-view-enter-in, .animh-view-enter-out {
-    y-nav *, [is="y-nav"] * {
-        opacity: 1;
-    }
+//    y-nav *, [is="y-nav"] * {
+//        opacity: 1;
+//    }
 }
 
 .animd-view-enter-in, .animh-view-enter-in {
