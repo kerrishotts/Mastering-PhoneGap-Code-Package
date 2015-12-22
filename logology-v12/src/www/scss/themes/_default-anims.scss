@@ -1,5 +1,5 @@
 // animations
-//
+// in == push, out == pop
 // view        -100<----0 leaving    0<----100 entering
 //                          in                    in
 //             entering -100---->0   leaving 0---->100
@@ -7,7 +7,7 @@
 //
 // setup
 %animation-timing {
-    transition: transform .3s linear;
+    transition: transform .3s ease-out, filter .3s ease-out;
     visibility: visible;
 }
 
@@ -15,9 +15,9 @@
 .anims-view-enter-in, .anims-view-enter-out {
     @extend %animation-timing;
 
-    //y-nav *, [is="y-nav"] * {
-    //    transition: opacity .3s linear;
-    //}
+    y-nav *, [is="y-nav"] * {
+        transition: opacity .3s ease-out;
+    }
 }
 
 .anims-split-enter, .anims-split-leave,
@@ -28,15 +28,15 @@
 }
 
 .anims-view-leave-out, .anims-view-leave-in {
-    //y-nav *, [is="y-nav"] * {
-    //    opacity: 1;
-    //}
+    y-nav *, [is="y-nav"] * {
+        opacity: 1;
+    }
 }
 
 .anims-view-enter-in, .anims-view-enter-out {
-    //y-nav *, [is="y-nav"] * {
-    //    opacity: 0;
-    //}
+    y-nav *, [is="y-nav"] * {
+        opacity: 0.5;
+    }
 }
 
 .anims-view-enter-in {
@@ -48,11 +48,13 @@
 }
 
 .anims-view-enter-out {
-    transform: translate3d(-100%, 0, 10px);
+    transform: translate3d(-0%, 0, 10px);
+    filter: brightness(0.75);
 }
 
 .anims-view-leave-in {
     transform: translate3d(0, 0, 10px);
+    filter: brightness(1);
 }
 
 // split       stage       left            right
@@ -82,15 +84,15 @@
 
 // perform/hold animation
 .animd-view-leave-out, .animd-view-leave-in, .animh-view-leave-out, .animh-view-leave-in {
-    //y-nav *, [is="y-nav"] * {
-    //    opacity: 0;
-    //}
+    y-nav *, [is="y-nav"] * {
+        opacity: 0.5;
+    }
 }
 
 .animd-view-enter-in, .animd-view-enter-out, .animh-view-enter-in, .animh-view-enter-out {
-    //y-nav *, [is="y-nav"] * {
-    //    opacity: 1;
-    //}
+    y-nav *, [is="y-nav"] * {
+        opacity: 1;
+    }
 }
 
 .animd-view-enter-in, .animh-view-enter-in {
@@ -98,11 +100,13 @@
 }
 
 .animd-view-leave-in, .animh-view-leave-in {
-    transform: translate3d(-100%, 0, 10px);
+    transform: translate3d(-0%, 0, 10px);
+    filter: brightness(0.75);
 }
 
 .animd-view-enter-out, .animh-view-enter-out {
     transform: translate3d(0, 0, 10px);
+    filter: brightness(1);
 }
 
 .animd-view-leave-out, .animh-view-leave-out {
