@@ -220,7 +220,7 @@
       "cordova-plugin-splashscreen@2.1.0",
       "cordova-plugin-statusbar@1.0.1",
       "cordova-plugin-inappbrowser@1.1.1",
-      "cordova-plugin-safariviewcontroller@1.1.1",
+      "cordova-plugin-safariviewcontroller@1.2.0",
       "https://github.com/apache/cordova-plugins.git#master:wkwebview-engine-localhost"
     ]
   },
@@ -246,7 +246,7 @@
     "chai-as-promised": "^5.1.0",
     "colors": "^1.1.2",
     "cordova-android": "^5.0.0",
-    "cordova-ios": "^4.0.0",
+    "cordova-ios": "^4.0.1",
     "cordova-lib": "^5.4.1",
     "cordova-tasks": "^0.2.0",
     "desassify": "^0.1.8",
