@@ -11,9 +11,12 @@ import glyph from "$WIDGETS/glyph";
 import L from "$APP/localization/localization";
 import {getSettings} from "../models/Settings";
 
+const _scrollTop = Symbol("_scrollTop");
+
 export default class SearchViewController extends ViewController {
     constructor({model}={}) {
         super({title: "Search", model, view: createSearchView()});
+        this[_scrollTop] = 0;
     }
     get TARGET_SELECTORS() {
         return [
@@ -22,14 +25,17 @@ export default class SearchViewController extends ViewController {
             {selector: "submit:form", emit: "searchSubmitted"}
         ];
     }
-    onSearchChanged(sender, notice, target/*, e*/) {
-        let filter = target.value.trim();
+    performSearch(filter) {
         if (filter === "") {
             this.view.clearFilter();
         } else {
-            this.view.filter = target.value;
+            this.view.filter = filter;
         }
         getSettings().lastLemma = filter;
+    }
+    onSearchChanged(sender, notice, target/*, e*/) {
+        let filter = target.value.trim();
+        this.performSearch(filter);
     }
     onMenuTapped() {
         GCS.emit("APP:DO:menu");
@@ -43,9 +49,24 @@ export default class SearchViewController extends ViewController {
         if (focusedElement) {
             focusedElement.blur();
         }
+        // in case the filter hasn't been updated properly:
+        let inputElement = this.elementTree.querySelector("input");
+        if (inputElement) {
+            this.performSearch(inputElement.value.trim());
+        }
     }
-    onDidRemoveFromParent() {
+    onDidLeaveByPop() {
         this.destroy();
+    }
+    onWillLeaveByPush() {
+        if (this.view) {
+            this[_scrollTop] = this.view.elementTree.scrollTop;
+        }
+    }
+    onDidEnterByPop() {
+        if (this.view) {
+            setTimeout( () => this.view.elementTree.scrollTop = this[_scrollTop],10);
+        }
     }
     template() {
         return h.el("main.SearchViewController y-container?is=y-search-view-controller", [
