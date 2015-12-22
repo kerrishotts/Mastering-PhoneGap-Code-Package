@@ -78,6 +78,9 @@ export default class NavigationViewController extends ViewController {
         let enteringView = v;
         enteringView.visible = undefined;
 
+        leavingView.emitSync("willLeaveByPush", options);
+        enteringView.emitSync("willEnterByPush", options);
+
         this.addSubview(v);
 
         let leavingViewElement = leavingView.elementTree;//.parentNode;
@@ -88,6 +91,8 @@ export default class NavigationViewController extends ViewController {
             return themeManager.currentTheme.animateViewHierarchyPush({enteringViewElement, leavingViewElement, options})
                 .then(() => {
                     leavingView.visible = false;
+                    leavingView.emitSync("didLeaveByPush", options);
+                    enteringView.emitSync("didEnterByPush", options);
                 });
         }
 
@@ -102,6 +107,10 @@ export default class NavigationViewController extends ViewController {
 
         let leavingView = this.topView;
         let enteringView = this.viewUnderTopView;
+
+        leavingView.emitSync("willLeaveByPop", options);
+        enteringView.emitSync("willEnterByPop", options);
+
         enteringView.visible = undefined;
 
         let leavingViewElement = leavingView.elementTree;//.parentNode;
@@ -112,6 +121,8 @@ export default class NavigationViewController extends ViewController {
             return themeManager.currentTheme.animateViewHierarchyPop({enteringViewElement, leavingViewElement, options})
             .then(() => {
                 leavingView.visible = false;
+                leavingView.emitSync("didLeaveByPop", options);
+                enteringView.emitSync("didEnterByPop", options);
                 this.removeSubview(leavingView);
             });
         }
