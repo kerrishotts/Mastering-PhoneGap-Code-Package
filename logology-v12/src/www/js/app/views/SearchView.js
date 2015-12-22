@@ -31,6 +31,7 @@ const _panningItem = Symbol("_panningItem"),
       _filter = Symbol("_filter"),
       _filteredItems = Symbol("_filteredItems"),
       _page = Symbol("_page"),
+      _dirty = Symbol("_dirty"),
       _actionsElement = Symbol("_actionsElement");
 //-----------------------------------------------------------------------------
 //endregion
@@ -187,6 +188,8 @@ export default class SearchView extends View {
 
         // get one shared set of list actions
         this[_actionsElement] = listItemActions({contents: lemmaActions()});
+
+        this[_dirty] = true;
     }
 
     get page() {
@@ -206,6 +209,11 @@ export default class SearchView extends View {
     }
 
     template() {
+        if (!this[_dirty]) {
+            return this.elementTree;
+        }
+        this[_dirty] = false;
+
         let model = kp.get(this, "controller.model");
         let dictionaryItems = model ? ((this[_filter] ? this[_filteredItems] : []).slice((this.page * settings.pageSize), settings.pageSize)) : [];
         return scrollContainer({contents: [lemmaList(dictionaryItems)].concat(textContainer({contents: h.el("p.search-info",
@@ -253,6 +261,7 @@ export default class SearchView extends View {
 
     onFilterChanged(_, notice, data) {
         this[_page] = 0;
+        this[_dirty] = true;
         this.elementTree.scrollTop = 0; // scroll the page back to the top
 
         let model = kp.get(this, "controller.model");
