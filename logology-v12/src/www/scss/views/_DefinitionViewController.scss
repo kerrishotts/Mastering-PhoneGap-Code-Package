@@ -17,6 +17,9 @@
         [is="y-text-container"]:nth-child(2) {
             flex: 1 0 auto;
         }
+        [is="y-list"] {
+            flex: 0 0 auto;
+        }
     }
     ol {
         list-style-type: none;
