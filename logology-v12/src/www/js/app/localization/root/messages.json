@@ -50,6 +50,10 @@
         "actions:note:title": "Create or edit a note for this word",
         "actions:delete-note:title": "Tap to delete this note",
         "actions:external": "Search {resource}...",
+        "setting:category:accessibility": "Accessibility",
+        "setting:category:readability": "Readability",
+        "setting:category:performance": "Performance",
+        "setting:category:about": "About",
         "setting:font-family": "Font Family",
         "setting:font-family-desc": "Select a comfortable typeface for reading.",
         "setting:font-family:Default": "System",
@@ -81,6 +85,10 @@
         "setting:page-size:150":"One hundred fifty results",
         "setting:page-size:200":"Two hundred results",
         "setting:external-resources":"External Resources",
-        "setting:external-resources-desc":"Additional external web pages."
+        "setting:external-resources-desc":"Additional external web pages.",
+        "setting:reduce-motion": "Reduce Motion",
+        "setting:reduce-motion-desc": "If animations between views affects you negatively, you can disable most of them.",
+        "setting:reduce-motion:no": "Don't reduce",
+        "setting:reduce-motion:yes": "Reduce"
     }
 }

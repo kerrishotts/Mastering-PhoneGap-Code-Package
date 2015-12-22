@@ -47,7 +47,7 @@ import XHRDictionary from "./models/XHRDictionary";
 import SQLDictionary from "./models/SQLDictionary";
 let settings = getSettings();
 
-const animate = false;
+let animate = true;
 
 class App extends Emitter {
     constructor() {
@@ -221,6 +221,9 @@ class App extends Emitter {
                 window.open(encodedURL, '_blank', 'location=yes');
             }
         }
+        continueOpen();
+        return;
+        // the following is great, but SafariView Controller doesn't always want to re-appear ATM
         // can we use the Safari View Controller?
         if (typeof SafariViewController !== "undefined" &&
             typeof device !== "undefined") {
@@ -294,6 +297,9 @@ class App extends Emitter {
     }
 
     applySettings() {
+
+        animate = (settings.reduceMotion === "no");
+
         document.body.style.fontFamily = settings.fontFamily === "default" ? "" : settings.fontFamily;
 
         Array.from(document.styleSheets).forEach((ss) => {

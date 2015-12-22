@@ -11,6 +11,7 @@ let _fontFamily = Symbol("_fontFamily"), // font family
     _lastDictionary = Symbol("_lastDictionary"), // records the last dictionary
     _pageSize = Symbol("_pageSize"),   // page length (search results, etc.)
     _lastLemma = Symbol("_lastLemma"),
+    _reduceMotion = Symbol("_reduceMotion"),
     _localStorage = Symbol("_localStorage"); // for testing
 
 export default class Settings extends Emitter {
@@ -23,6 +24,7 @@ export default class Settings extends Emitter {
         this[_showImages] = true;      // not currently used
         this[_pageSize] = 100;         // search result limit
         this[_lastDictionary] = undefined; // if undefined, the app will pick the first one
+        this[_reduceMotion] = "no";    // if yes, animations will be reduced
         this[_externalResources] = {
             "Wikipedia": "http://www.wikipedia.org/search-redirect.php?language=en&search=%WORD%",
             "WordNet": "http://wordnetweb.princeton.edu/perl/webwn?s=%WORD%"
@@ -45,36 +47,52 @@ export default class Settings extends Emitter {
 
     get entries() {
         return [
-            {name: "setting:font-family", key: "fontFamily", value: this.fontFamily, type: "select", options: [
-                {name: "setting:font-family:Default", value: "default"},
-                {name: "setting:font-family:Helvetica-Neue", value: "HelveticaNeue, 'Helvetica Neue', Helvetica, Arial, sans-serif"},
-                {name: "setting:font-family:Lucida-Grande", value: "'Lucida Sans Unicode', 'Lucida Grande', sans-serif"},
-                {name: "setting:font-family:Georgia", value: "Georgia, serif"},
-                {name: "setting:font-family:Palatino", value: "'Palatino Linotype', 'Book Antiqua', Palatino, serif"},
-                {name: "setting:font-family:Times-New-Roman", value: "'Times New Roman', Times, serif"}
-            ]},
-            {name: "setting:font-size",   key: "fontSize", value: this.fontSize, type: "select", options: [
-                {name: "setting:font-size:Default", value: 0},
-                {name: "setting:font-size:Tiny", value: 50},
-                {name: "setting:font-size:Small", value: 75},
-                {name: "setting:font-size:Normal", value: 100},
-                {name: "setting:font-size:Large", value: 125},
-                {name: "setting:font-size:Huge", value: 150},
-                {name: "setting:font-size:Gigantic", value: 250}
-            ]},
-            {name: "setting:theme", key: "theme", value: this.theme, type: "select", options: [
-                {name: "setting:theme:Default", value: "Default"},
-                {name: "setting:theme:Light", value: "Light"},
-                {name: "setting:theme:Dark", value: "Dark"}
-            ]},
-            {name: "setting:page-size", key: "pageSize", value: this.pageSize, type: "select", options: [
-                {name: "setting:page-size:20", value: 20},
-                {name: "setting:page-size:50", value: 50},
-                {name: "setting:page-size:80", value: 80},
-                {name: "setting:page-size:100", value: 100},
-                {name: "setting:page-size:150", value: 150},
-                {name: "setting:page-size:200", value: 200}
-            ]}
+            {category: "setting:category:accessibility",
+             items: [
+                 {name: "setting:reduce-motion", key: "reduceMotion", value: this.reduceMotion, type: "select", options: [
+                     {name: "setting:reduce-motion:no", value: "no"},
+                     {name: "setting:reduce-motion:yes", value: "yes"}
+                 ]}
+             ]
+            },
+            {category: "setting:category:readability",
+             items: [
+                {name: "setting:font-family", key: "fontFamily", value: this.fontFamily, type: "select", options: [
+                    {name: "setting:font-family:Default", value: "default"},
+                    {name: "setting:font-family:Helvetica-Neue", value: "HelveticaNeue, 'Helvetica Neue', Helvetica, Arial, sans-serif"},
+                    {name: "setting:font-family:Lucida-Grande", value: "'Lucida Sans Unicode', 'Lucida Grande', sans-serif"},
+                    {name: "setting:font-family:Georgia", value: "Georgia, serif"},
+                    {name: "setting:font-family:Palatino", value: "'Palatino Linotype', 'Book Antiqua', Palatino, serif"},
+                    {name: "setting:font-family:Times-New-Roman", value: "'Times New Roman', Times, serif"}
+                ]},
+                {name: "setting:font-size",   key: "fontSize", value: this.fontSize, type: "select", options: [
+                    {name: "setting:font-size:Default", value: 0},
+                    {name: "setting:font-size:Tiny", value: 50},
+                    {name: "setting:font-size:Small", value: 75},
+                    {name: "setting:font-size:Normal", value: 100},
+                    {name: "setting:font-size:Large", value: 125},
+                    {name: "setting:font-size:Huge", value: 150},
+                    {name: "setting:font-size:Gigantic", value: 250}
+                ]},
+                {name: "setting:theme", key: "theme", value: this.theme, type: "select", options: [
+                    {name: "setting:theme:Default", value: "Default"},
+                    {name: "setting:theme:Light", value: "Light"},
+                    {name: "setting:theme:Dark", value: "Dark"}
+                ]},
+             ]
+            },
+            {category: "setting:category:performance",
+             items: [
+                {name: "setting:page-size", key: "pageSize", value: this.pageSize, type: "select", options: [
+                    {name: "setting:page-size:20", value: 20},
+                    {name: "setting:page-size:50", value: 50},
+                    {name: "setting:page-size:80", value: 80},
+                    {name: "setting:page-size:100", value: 100},
+                    {name: "setting:page-size:150", value: 150},
+                    {name: "setting:page-size:200", value: 200}
+                ]}
+             ]
+            }
         ];
     }
 
@@ -88,6 +106,7 @@ export default class Settings extends Emitter {
         if (storage.pageSize !== undefined) { this[_pageSize] = storage.pageSize; }
         if (storage.lastDictionary !== undefined) { this[_lastDictionary] = storage.lastDictionary; }
         if (storage.lastLemma !== undefined) { this[_lastLemma] = storage.lastLemma; }
+        if (storage.reduceMotion !== undefined) { this[_reduceMotion] = storage.reduceMotion; }
         this.emit("settingsRetrieved");
         GCS.emit("APP:SETTINGS:loaded");
         this.emit("settingsChanged"); // this will save the settings again, but that's OK
@@ -103,6 +122,7 @@ export default class Settings extends Emitter {
         if (this.pageSize !== undefined) { storage.pageSize = this.pageSize; }
         if (this.lastDictionary !== undefined) { storage.lastDictionary = this.lastDictionary; }
         if (this.lastLemma !== undefined) { storage.lastLemma = this.lastLemma; }
+        if (this.reduceMotion !== undefined) { storage.reduceMotion = this.reduceMotion; }
         this.emit("settingsPersisted");
         GCS.emit("APP:SETTINGS:persisted");
     }
@@ -123,6 +143,12 @@ export default class Settings extends Emitter {
     set fontSize(v) {
         this._emitChangeNotice("fontSize", v, this[_fontFamily]);
         this[_fontSize] = v;
+    }
+
+    get reduceMotion() { return this[_reduceMotion]; }
+    set reduceMotion(v) {
+        this._emitChangeNotice("reduceMotion", v, this[_reduceMotion]);
+        this[_reduceMotion] = v;
     }
 
     get theme() { return this[_theme]; }
