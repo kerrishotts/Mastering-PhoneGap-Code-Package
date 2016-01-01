@@ -46,7 +46,29 @@
         font-family: inherit;
     }
 
-    @import "./default-anims";
+    &.browser {
+        button, select, textarea {
+            &:focus::before {
+                border: 3px solid #a811ee;
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+            }
+        }
+    }
+
+    &.browser {
+        @import "./default-anims-browser";
+    }
+    &.ios {
+        @import "./default-anims-ios";
+    }
+    &.android {
+        @import "./default-anims-android";
+    }
     @import "../views/AboutViewController";
     @import "../views/SettingsViewController";
     @import "../views/SearchViewController";
