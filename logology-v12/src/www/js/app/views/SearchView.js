@@ -227,9 +227,9 @@ export default class SearchView extends View {
 
     get TARGET_SELECTORS() {
         return [
-            {selector: "tap:ul li > button", emit: "listItemTapped"},
+            {selector: "tap spacepressed:ul li > button", emit: "listItemTapped"},
             {selector: "panstart panmove panend:ul li", emit: "listItemPanned"},
-            {selector: "tap:ul li div button", emit: "actionTapped"}
+            {selector: "tap spacepressed:ul li div button", emit: "actionTapped"}
         ];
     }
 

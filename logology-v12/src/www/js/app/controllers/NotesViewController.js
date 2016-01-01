@@ -20,8 +20,8 @@ export default class NotesViewController extends ViewController {
     }
     get TARGET_SELECTORS() {
         return [
-            {selector: "tap:.back-icon", emit: "backTapped"},
-            {selector: "tap:.trash-icon", emit: "trashTapped"}
+            {selector: "tap spacepressed:.back-icon", emit: "backTapped"},
+            {selector: "tap spacepressed:.trash-icon", emit: "trashTapped"}
         ];
     }
     onBackTapped() {
@@ -44,6 +44,8 @@ export default class NotesViewController extends ViewController {
     }
     onDidLeaveByPop() {
         this.model.off("model:changed:note", this);
+    }
+    onDidRemoveFromParent() {
         this.destroy();
     }
     template() {

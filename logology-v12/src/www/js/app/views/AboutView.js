@@ -24,8 +24,8 @@ const kp = require("keypather")();
 export default class AboutView extends View {
     get TARGET_SELECTORS() {
         return [
-            {selector: "tap:a", emit: "linkTapped"},
-            {selector: "tap:ul li > button", emit: "licenseTapped"}
+            {selector: "tap spacepressed:a", emit: "linkTapped"},
+            {selector: "tap spacepressed:ul li > button", emit: "licenseTapped"}
         ];
     }
 

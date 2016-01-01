@@ -24,7 +24,7 @@ const kp = require("keypather")();
 export default class DefinitionView extends View {
     get TARGET_SELECTORS() {
         return [
-            {selector: "tap:ul li > button", emit: "externalResourceTapped"}
+            {selector: "tap spacepressed:ul li > button", emit: "externalResourceTapped"}
         ];
     }
 

@@ -21,7 +21,7 @@ export default class SearchViewController extends ViewController {
     get TARGET_SELECTORS() {
         return [
             {selector: "input:label[role='search'] input", emit: "searchChanged"},
-            {selector: "tap:.settings-icon", emit: "settingsTapped"},
+            {selector: "tap spacepressed:.settings-icon", emit: "settingsTapped"},
             {selector: "submit:form", emit: "searchSubmitted"}
         ];
     }
@@ -55,7 +55,7 @@ export default class SearchViewController extends ViewController {
             this.performSearch(inputElement.value.trim());
         }
     }
-    onDidLeaveByPop() {
+    onDidRemoveFromParent() {
         this.destroy();
     }
     onWillLeaveByPush() {

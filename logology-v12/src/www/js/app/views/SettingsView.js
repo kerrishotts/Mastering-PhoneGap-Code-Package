@@ -26,7 +26,7 @@ const kp = require("keypather")();
 export default class SettingsView extends View {
     get TARGET_SELECTORS() {
         return [
-            {selector: "tap:ul li > button", emit: "listItemTapped"},
+            {selector: "tap spacepressed:ul li > button", emit: "listItemTapped"},
             {selector: "input:select", emit: "settingChanged"}
         ];
     }

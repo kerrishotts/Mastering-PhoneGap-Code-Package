@@ -18,13 +18,13 @@ export default class GenericViewController extends ViewController {
     }
     get TARGET_SELECTORS() {
         return [
-            {selector: "tap:.back-icon", emit: "backTapped"}
+            {selector: "tap spacepressed:.back-icon", emit: "backTapped"}
         ];
     }
     onBackTapped() {
         GCS.emit("APP:DO:back");
     }
-    onDidLeaveByPop() {
+    onDidRemoveFromParent() {
         this.destroy();
     }
     template() {

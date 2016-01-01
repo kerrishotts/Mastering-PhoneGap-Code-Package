@@ -24,10 +24,10 @@ export default class DefinitionViewController extends ViewController {
     }
     get TARGET_SELECTORS() {
         return [
-            {selector: "tap:.back-icon", emit: "backTapped"},
-            {selector: "tap:.fav-icon", emit: "actionTapped"},
-            {selector: "tap:.share-icon", emit: "actionTapped"},
-            {selector: "tap:.note-icon", emit: "actionTapped"}
+            {selector: "tap spacepressed:.back-icon", emit: "backTapped"},
+            {selector: "tap spacepressed:.fav-icon", emit: "actionTapped"},
+            {selector: "tap spacepressed:.share-icon", emit: "actionTapped"},
+            {selector: "tap spacepressed:.note-icon", emit: "actionTapped"}
         ];
     }
     onBackTapped() {
@@ -71,6 +71,8 @@ export default class DefinitionViewController extends ViewController {
     onDidLeaveByPop() {
         GCS.off("APP:DID:favDefinition", this);
         GCS.off("APP:DID:noteDefinition", this);
+    }
+    onDidRemoveFromParent() {
         this.destroy();
     }
     template() {
