@@ -6,6 +6,8 @@ import h from "yasmf-h";
 import Hammer from "hammerjs";
 import matchesSelector from "matches-selector";
 
+let debounce=require("debounce");
+
 /******************************************************************************
  *
  * VIEW
@@ -124,6 +126,11 @@ function triggerTargetSelectors(e/*: Event*/)/*: void*/ {
         }
     }
 }
+
+let debouncedDispatch = debounce( (evtType, target) => {
+    let evt = new CustomEvent(evtType);
+    target.dispatchEvent(evt);
+}, 100, true);
 
 /**
  * View Class
@@ -305,7 +312,7 @@ export default class View extends Emitter {
             [Hammer.Pan, { direction: Hammer.DIRECTION_HORIZONTAL }, ['swipe']],
             [Hammer.Tap, { threshold: 10 }],
             [Hammer.Tap, { event: 'doubletap', taps: 2 }, ['tap']],
-            [Hammer.Press, { threshold: 10 }]
+            [Hammer.Press, { threshold: 44 }]
         ]
     }
 
@@ -316,7 +323,7 @@ export default class View extends Emitter {
      * If you need to change the events, override this method.
      */
     get DOM_EVENTS() {
-        return "input focus blur keyup keydown change submit reset select";
+        return "input focus blur keyup keydown change submit reset select spacepressed enterpressed";
     }
 
     /**
@@ -344,6 +351,20 @@ export default class View extends Emitter {
      * @param  {Event}  e      DOM/Hammer Event
      */
     onDOMEvent(sender/*: Object*/, notice/*: string*/, e/*: Event*/) {
+        if (e.type === "keyup") {
+            let customEventType;
+            switch (e.key || e.keyCode) {
+                case 13:
+                    customEventType = "enterpressed";
+                    break;
+                case 32:
+                    customEventType = "spacepressed";
+                    break;
+            }
+            if (customEventType) {
+                debouncedDispatch(customEventType, e.target);
+            }
+        }
         triggerTargetSelectors.call(this, e);
     }
 
