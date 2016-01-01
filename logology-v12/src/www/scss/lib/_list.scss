@@ -71,7 +71,7 @@ y-list-contents, [is="y-list-contents"] {
     flex: 0 0 auto;
   }
 
-  &:active, &:focus {
+  &:active {
     background-color: $tint-active-color;
   }
 }
