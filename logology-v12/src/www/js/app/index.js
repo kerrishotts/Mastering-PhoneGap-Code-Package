@@ -175,8 +175,10 @@ class App extends Emitter {
                    .then(dictionary => {
                        let model = createDefinitions({dictionary, lemma});
                        let dvc = createDefinitionViewController({model});
+                       //model.on("model:changed:entries", once(() => {
                        return this.contentnvc.push(dvc, {animate})
                                   .then(() => this.notifyAccessibility());
+                       //}), this);
                    });
     }
 
@@ -293,6 +295,15 @@ class App extends Emitter {
                 break;
             default:
                 console.log(["Couldn't handle a navigation request:", sender, notice, data]);
+        }
+    }
+
+    applyDeviceProperties() {
+        document.body.classList.add((typeof device !== "undefined" ? device.platform.toLowerCase() : "browser"));
+        if (typeof orientation !== "undefined") {
+            document.body.classList.add(Math.abs(orientation) === 90 ? "landscape" : "portrait");
+        } else {
+            document.body.classList.add(window.innerWidth > window.innerHeight ? "landscape" : "portrait");
         }
     }
 
@@ -424,7 +435,13 @@ class App extends Emitter {
             // handle tap of status bar to scroll any view to top.
             window.addEventListener("statusTap", (e) => {
                 Array.from(this.contentnvc.topView.elementTree.querySelectorAll('[is*=scroll], textarea')).forEach((el) => el.scrollTop=0);
-            })
+            });
+
+            // handle changes in orientation / etc
+            document.addEventListener("resume", this.applyDeviceProperties, false);
+            document.addEventListener("orientationchange", this.applyDeviceProperties, false);
+            document.addEventListener("resize", this.applyDeviceProperties, false);
+            GCS.on("APP:SETTINGS:changed", this.applyDeviceProperties, this);
 
         } catch (err) {
             GCS.emit("APP:startupFailure", err);
