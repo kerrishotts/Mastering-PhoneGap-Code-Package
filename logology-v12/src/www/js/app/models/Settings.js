@@ -25,6 +25,12 @@ export default class Settings extends Emitter {
         this[_pageSize] = 100;         // search result limit
         this[_lastDictionary] = undefined; // if undefined, the app will pick the first one
         this[_reduceMotion] = "no";    // if yes, animations will be reduced
+        if (typeof device !== "undefined") {
+            if (device.platform === "Android") {
+                this[_reduceMotion] = "yes"; // because Android doesn't like do animate well. *sigh*
+                this[_pageSize] = 50;         // reduce search result limit
+            }
+        }
         this[_externalResources] = {
             "Wikipedia": "http://www.wikipedia.org/search-redirect.php?language=en&search=%WORD%",
             "WordNet": "http://wordnetweb.princeton.edu/perl/webwn?s=%WORD%"
