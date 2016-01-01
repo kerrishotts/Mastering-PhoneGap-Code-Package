@@ -35,7 +35,7 @@ export default class Theme extends Emitter {
 
     get ANIMATION_TIMING_FUZZ() {
         if (typeof device !== "undefined") {
-            return device.platform === "Android" ? 200 : 0;
+            return device.platform === "Android" ? 0 : 0;
         }
         return 0;
     }
@@ -75,8 +75,8 @@ export default class Theme extends Emitter {
     markElementVisibility(e/*: Node*/, visibility = false) {
         if (e) {
             if (visibility === undefined) {
-                e.classList.remove(this.CLASS_VIEW_VISIBLE);
-                e.classList.remove(this.CLASS_VIEW_NOT_VISIBLE);
+                e.classList.remove(this.CLASS_VIEW_VISIBLE, this.CLASS_VIEW_NOT_VISIBLE);
+                //e.classList.remove(this.CLASS_VIEW_NOT_VISIBLE);
             } else {
                 e.classList.remove(visibility ? this.CLASS_VIEW_NOT_VISIBLE : this.CLASS_VIEW_VISIBLE);
                 e.classList.add(visibility ? this.CLASS_VIEW_VISIBLE : this.CLASS_VIEW_NOT_VISIBLE);
@@ -108,9 +108,10 @@ export default class Theme extends Emitter {
         let existingClears = e.getAttribute("y-anim-clear-class");
         if (existingClears) {
             existingClears = existingClears.split(" ");
-            existingClears.forEach(c => {
-                e.classList.remove(c);
-            });
+            e.classList.remove.apply(e.classList, existingClears);
+            //existingClears.forEach(c => {
+            //    e.classList.remove(c);
+            //});
             e.removeAttribute("y-anim-clear-class");
         }
     }
@@ -118,8 +119,8 @@ export default class Theme extends Emitter {
     animateElementWithAnimSequence ([e, setup, doing, hold], { animate/*: boolean*/ = true } = {}) {
         return new Promise((resolve) => {
             let finalAnimationStep = () => {
-                e.classList.remove(setup);
-                e.classList.remove(doing);
+                e.classList.remove(setup, doing);
+                //e.classList.remove(doing);
                 e.classList.add(hold);
                 this.addClearClassToElement(hold, e);
                 resolve();
