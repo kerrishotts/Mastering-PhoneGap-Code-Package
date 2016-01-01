@@ -1,28 +1,45 @@
-# Sample Application Structure
+# Logology Application Structure
 
 You can find the demonstration app, Logology, in various stages of completion in the directories `logology-v04` through
-`logology-v12`. The final version is in `logology-v12`.
+`logology-v12`. The final version is in `logology-v12`. This document describes
+the final version (12), with notes for the other versions as applicable.
 
 ## Design
 
-### Statistics
+The visual design is fairly standard for an app that displays lists of data. You
+can see [the visual design PDF](design/visual design and flow.pdf), which
+describes the appearance and functionality at a very high level. Alternatively,
+you can refer to the screen captures below, which show the app as it actually
+renders.
 
-```
-           Source    Tests    Tasks  | Total
-           --------------------------+-------
-Physical     5744      603      800  |  7147
-Source:      4513      529      674  |  5716
-Comment:      741       20       40  |   801
- - Single:    269       14       11  |   294
- - Block:     472        6       29  |   507
-Mixed:        166        6       11  |   183
-Empty:        658       60       97  |   815
-Files:         85       19       37  |   141
+As of this writing, Logology has the following features:
 
-996K Source, 48K Test, 32K Test-ui, 148K Gulp = 1224K
-Build generate 458MiB
-Node modules 646MiB
-```
+ - Search for words in a dictionary
+ - View definitions for a word
+ - Add a word to favorites (or remove)
+ - Create / Edit notes for a word (or remove)
+ - Change Settings (Including Accessibility, Readability, About)
+
+Internally, the application itself demonstrates several uses that hybrid
+applications can use:
+
+ - Accessibility
+ - Responsive design
+ - Complex layout using Flex-Box
+ - Gesture support and fast click via Hammer.js
+ - Persistent storage using localStorage, IndexedDB, and SQLite
+ - Management of the Status Bar using the Cordova Status Bar plugin
+ - Management of the Launch Image using the Cordova Splash Screen plugin
+ - Soft-keyboard avoidance using the Ionic Keyboard plugin
+ - Adjustment of settings and visual appearance based on device platform using
+ the Cordova Device plugin
+
+ Visually the application consists of five screens:
+
+
+## Structure
+
+
 
 ### Directory Structure
 
@@ -198,7 +215,6 @@ package.json               # Package settings
 
 ### Visual Design
 
-See [the visual design PDF](design/visual design and flow.pdf).
 
 ### Library Functions
 
@@ -213,3 +229,21 @@ See [the visual design PDF](design/visual design and flow.pdf).
 
 
 
+### Statistics
+
+```
+           Source    Tests    Tasks  | Total
+           --------------------------+-------
+Physical     5744      603      800  |  7147
+Source:      4513      529      674  |  5716
+Comment:      741       20       40  |   801
+   Single:    269       14       11  |   294
+   Block:     472        6       29  |   507
+Mixed:        166        6       11  |   183
+Empty:        658       60       97  |   815
+Files:         85       19       37  |   141
+
+996K Source, 48K Test, 32K Test-ui, 148K Gulp = 1224K
+Build generate 458MiB
+Node modules 646MiB
+```
