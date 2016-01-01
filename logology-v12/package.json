@@ -75,6 +75,11 @@
           "h": 144
         },
         {
+          "src": "res/icon/ios/icon-83@2x.png",
+          "w": 167,
+          "h": 167
+        },
+        {
           "src": "res/icon/ios/icon-small.png",
           "w": 29,
           "h": 29
@@ -83,6 +88,11 @@
           "src": "res/icon/ios/icon-small@2x.png",
           "w": 58,
           "h": 58
+        },
+        {
+          "src": "res/icon/ios/icon-small@3x.png",
+          "w": 87,
+          "h": 87
         },
         {
           "src": "res/icon/ios/icon-50.png",
@@ -287,6 +297,7 @@
   "dependencies": {
     "babel": "^5.8.23",
     "cldr-data": "^28.0.2",
+    "debounce": "^1.0.0",
     "globalize": "^1.0.0-alpha.19",
     "hammerjs": "^2.0.4",
     "keypather": "^1.10.1",
