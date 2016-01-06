@@ -33,14 +33,18 @@ describe ("KVStore", () => {
         describe ("Using " + adapterName, () => {
             if (mock) {
             describe ("#Create", () => {
+                let store;
+                afterEach(() => {
+                    store.close();
+                });
                 it ("should be able to create a new store", () => {
-                    let store = createKVStore({adapter:adapterFn({[mockProperty]:mock})});
+                    store = createKVStore({adapter:adapterFn({[mockProperty]:mock})});
                     return store.should.exist;
                 });
                 it ("should be able to create a new store using a specific namespace", () => {
                     let adapter = adapterFn({namespace:"test", [mockProperty]:mock});
-                    let store = createKVStore({adapter});
-                    return adapter.namespace.should.equal("test");;
+                    store = createKVStore({adapter});
+                    return adapter.namespace.should.equal("test");
                 });
             });
             describe ("#Using", function()  {
@@ -48,7 +52,13 @@ describe ("KVStore", () => {
                     namespace: "test",
                     [mockProperty]: mock
                 };
-                let store = createKVStore({adapter:adapterFn(options)});
+                let store;
+                beforeEach(() => {
+                    store = createKVStore({adapter:adapterFn(options)});
+                });
+                afterEach(() => {
+                    store.close();
+                });
                 it ("should be able to store a value", () => {
                     return store.set("key", "value").should.be.fulfilled;
                 });
