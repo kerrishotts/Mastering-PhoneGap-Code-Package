@@ -14,6 +14,8 @@ This is the final version of the Logology project, and it corresponds with Chapt
 The version of the application in the Apple App Store has been modified in the following manner in order to support the iPad Pro and
 to properly fit on smaller devices:
 
+ - Screenshots were processed with the Status Barred app, set to obscure the status bar.
+
  - General
 
      - Remove the `Icon File` property from the `Logology-Info.plist` file.
