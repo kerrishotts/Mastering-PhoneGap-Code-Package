@@ -1,0 +1,110 @@
+y-list, [is="y-list"] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  list-style: none outside none;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 2rem;
+
+  .android & {
+      display: block;
+  }
+}
+
+y-list-item, [is="y-list-item"],
+y-list-item-spacer, [is="y-list-item-spacer"],
+y-list-heading, [is="y-list-heading"] {
+  display: flex;
+  border-bottom: 1px solid $tint-border-color;
+  border-right: 1px solid $tint-border-color;
+  flex: 1 1 20rem; //320px;
+  position: relative;
+  overflow: hidden;
+  //word-break: break-all;
+  -webkit-hyphens: auto;
+  .android & {
+      display: block;
+  }
+}
+
+y-list-item-spacer, [is="y-list-item-spacer"],
+y-list-heading, [is="y-list-heading"] {
+    border-right: 0;
+    height: 2rem;
+}
+
+y-list-heading, [is="y-list-heading"] {
+    color: $list-heading-text-color;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 90%;
+    height: auto;
+    padding: 0.5rem;
+    flex: 1 1 100%;
+}
+
+.list-indicator-icon {
+    margin-right: -1rem;
+    color: $tint-color;
+}
+
+y-list-actions, [is="y-list-actions"] {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 0; bottom: 0; right: 0;
+  color: $list-actions-color;
+  background-color: $list-actions-background-color;
+
+  * {
+    margin: 0;
+    padding: 0 0.5rem;
+  }
+
+  .android & {
+      display: none;
+  }
+}
+
+y-list-contents, [is="y-list-contents"] {
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 1;
+  margin: 0;
+  padding: 1rem;
+  background-color: $list-background-color;
+  width: 100%;
+
+  * {
+    flex: 0 0 auto;
+  }
+
+  &:active {
+    background-color: $tint-active-color;
+  }
+
+  .android & {
+      display: block;
+  }
+}
+
+y-indicator, [is="y-indicator"] {
+  @extend y-icon;
+  width: 1rem; height: 1rem;
+  margin: auto;
+  padding: 0;
+
+  &:before {
+    padding: 0;
+    position: absolute;
+    top: -.5rem;
+    mask-image: url('../img/chevron-right-thick.png');
+    background-color: $tint-color;
+    @media #{$dp2} {
+      mask-image: url('../img/chevron-right-thick@2x.png');
+    }
+  }
+}

@@ -1,0 +1,53 @@
+y-widget-group, [is="y-widget-group"] {
+  margin: 0 0.25rem;
+  position: relative;
+  flex:0 0 auto;
+  display: flex;
+  align-items: stretch;
+  y-menu-glyph, [is="y-menu-glyph"] {
+    margin: 0 -0.5rem 0 -0.75rem;
+  }
+  * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  form {
+      display: flex;
+  }
+  label {
+    line-height: 1; // otherwise it increases the height by a few px
+    display: flex;
+  }
+  label input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    padding: 0; margin: auto 0;
+    min-height: 1rem;
+    background-color: transparent;
+    color: currentColor;
+    outline: 0;
+    min-width: 100px;
+    width: auto;
+    font-size: 1rem;
+    border-radius: 0;
+    font-family: inherit;
+  }
+}
+
+.y-group-align-left {
+  text-align: left !important;
+
+  y-svg:first-child, [is="y-svg"]:first-child {
+      margin-left: -0.75rem;
+  }
+}
+
+.y-group-align-right {
+  text-align: right !important;
+
+  y-svg:last-child, [is="y-svg"]:last-child {
+      margin-right: -0.75rem;
+  }
+}

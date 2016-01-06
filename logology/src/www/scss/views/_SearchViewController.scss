@@ -1,0 +1,42 @@
+.SearchViewController {
+    p.search-info {
+        font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+        font-style: italic;
+        font-size: 150%;
+        line-height: normal;
+        opacity: 0.66;
+        text-align: center;
+        padding: 2rem 0;
+    }
+    .fav-icon, .note-icon {
+        transition: fill 0.3s ease-in-out;
+        fill: $bar-light-color;
+    }
+    .fav-icon[data-fav=yes],
+    .note-icon[data-note=yes] {
+        fill: $tint-color-contrast;
+    }
+
+    y-widget-group label, [is="y-widget-group"] label {
+        &:before {
+            background-color: $nav-background-color-darker;
+            border-radius: 1rem;
+            content: '';
+            position: absolute;
+            top: 0.5rem;
+            left: 0;
+            right: 0;
+            bottom: 0.5rem;
+        }
+        input {
+            transition: width 0.4s ease-in-out;
+            width: 25vw;
+            min-width: 100px;
+            border: none;
+            position: relative;
+            &:focus {
+                width: 50vw;
+            }
+        }
+    }
+}

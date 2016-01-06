@@ -1,0 +1,31 @@
+y-root, [is="y-root"], .y-root,
+y-container, [is="y-container"], .y-container {
+  position: absolute;
+  top: 0; left: 0;
+  bottom: 0; right: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: $view-background-color;
+}
+/*
+y-container, [is="y-container"], .y-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}*/
+
+y-scroll-container, [is="y-scroll-container"], .y-scroll-container {
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+
+y-text-container, [is="y-text-container"], .y-text-container {
+    color: $text-color;
+    -webkit-hyphens: auto;
+    h1,h2,h3,h4,h5,h6,p,ul,ol {
+        margin: 1rem;
+        line-height: normal;
+    }
+}

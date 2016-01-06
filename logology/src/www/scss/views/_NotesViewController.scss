@@ -1,0 +1,17 @@
+.NotesViewController {
+    [is="y-text-container"] {
+        flex: 1 1 auto;
+        display: flex;
+        textarea {
+            flex: 1 1 auto;
+            user-select: text !important;
+            border: 0;
+            padding: 1rem;
+            font-size: 1rem;
+            font-family: inherit;
+            background-color: transparent;
+            color: currentColor;
+            -webkit-overflow-scrolling: touch;
+        }
+    }
+}

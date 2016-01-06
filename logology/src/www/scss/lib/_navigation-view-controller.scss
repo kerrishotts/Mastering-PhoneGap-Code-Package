@@ -1,0 +1,16 @@
+y-navigation-view-controller, [is="y-navigation-view-controller"], .y-navigation-view-controller {
+  @extend y-container;
+  overflow: hidden;
+
+  y-container, [is="y-container"], .y-container {
+      will-change: transform;
+  }
+}
+
+y-navigation-wrapper, [is="y-navigation-wrapper"], .y-navigation-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}

@@ -1,0 +1,24 @@
+y-nav, [is="y-nav"] {
+  position: relative;
+  background: $nav-background-color;
+  color: $nav-color;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  border-bottom: 2px solid $nav-border-color;
+  padding: 0 0.5rem;
+  z-index: 9;
+  //line-height: 3rem;
+  min-height: 3rem;
+}
+
+y-title, [is="y-title"] {
+  margin: auto 0; padding: 0;
+  line-height: normal;
+  font-size: 1.25rem;
+  font-weight: bold;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

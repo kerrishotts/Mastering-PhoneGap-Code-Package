@@ -1,0 +1,78 @@
+.theme-default {
+  $font-stack: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  $dp2: "only screen and (-webkit-min-device-pixel-ratio: 1.01), only screen and (min-resolution: 1.01dppx), only screen and (min-resolution: 191dpi)";
+  $tint-color: hsl(42, 87%, 50%); //#EA1;
+  $tint-color-contrast: hsl(281, 87%, 50%); // #AE1;
+  $tint-active-color: hsl(42, 28%, 90%); //#EEEAE1;
+  $tint-border-color: hsl(42, 28%, 85%);
+  $tint-active-color-darker: hsl(42, 28%, 78%); //#CECAC1;
+  $view-background-color: hsl(42, 28%, 90%);
+  $ui-text-color: #000000;
+  $text-color: hsl(42, 28%, 22.5%); //#3E3A31;
+  $lighter-text-color: hsl(42, 28%, 45%); //#6E6A61;
+  $alert-background-color: #FFF;
+  $bar-light-color: #FFF;
+  $list-heading-text-color: hsl(42, 28%, 45%); //#6E6A61;
+  $list-background-color: #FFFFFF;
+  $list-background-color-alt: hsl(42, 28%, 87.5%); //#FEFAF1;
+  $list-actions-background-color: #CECAC1;
+  $list-actions-color: #FFFFFF;
+  $nav-background-color: $tint-color;
+  $nav-background-color-darker: hsl(42, 87%, 40%);
+  $nav-color: #FFFFFF;
+  $nav-border-color: $tint-color / 1.25;
+
+  font-family: $font-stack;
+  color: $ui-text-color;
+  background-color: $view-background-color;
+
+    @import "../lib/button";
+    @import "../lib/container";
+    @import "../lib/bar";
+    @import "../lib/bar-navigation";
+    @import "../lib/glyphs";
+    @import "../lib/list";
+    @import "../lib/alert";
+    @import "../lib/svg";
+
+    @import "../lib/navigation-view-controller";
+    @import "../lib/split-view-controller";
+
+    .menu-icon, .back-icon {
+        margin-left: -0.75rem;
+    }
+
+    button {
+        font-family: inherit;
+    }
+
+    &.browser {
+        button, select, textarea {
+            &:focus::before {
+                border: 3px solid #a811ee;
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+            }
+        }
+    }
+
+    &.browser {
+        @import "./default-anims-browser";
+    }
+    &.ios {
+        @import "./default-anims-ios";
+    }
+    &.android {
+        @import "./default-anims-android";
+    }
+    @import "../views/AboutViewController";
+    @import "../views/SettingsViewController";
+    @import "../views/SearchViewController";
+    @import "../views/NotesViewController";
+    @import "../views/DefinitionViewController";
+
+}

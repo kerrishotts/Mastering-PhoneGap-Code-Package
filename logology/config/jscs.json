@@ -1,0 +1,13 @@
+{
+	"preset": "crockford",
+	"esnext": true,
+	"requireSpacesInAnonymousFunctionExpression": null,
+	"disallowDanglingUnderscores": null,
+	"validateLineBreaks": "LF",
+	"disallowMultipleLineBreaks": true,
+	"requireBlocksOnNewline": 1,
+	"requireAlignedMultilineParams": "firstParam",
+	"disallowMultipleVarDecl": null,
+	"requireMultipleVarDecl": null,
+	"requireVarDeclFirst": false
+}

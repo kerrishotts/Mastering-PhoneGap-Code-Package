@@ -1,0 +1,24 @@
+html {
+  font-size: 100%;
+  * {
+    box-sizing: border-box;
+    outline: none;
+    //backface-visibility: hidden;
+  }
+}
+body {
+  margin: 0; padding: 0;
+  font-family: $font-stack;
+  user-select: none;
+  -webkit-user-drag: none;
+  outline: none;
+  background-color: #ede8de;
+}
+
+[hidden] {
+  display: none;
+}
+
+.y-flex {
+  flex: 1 !important;
+}

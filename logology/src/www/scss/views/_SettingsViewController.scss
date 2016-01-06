@@ -1,0 +1,32 @@
+.SettingsViewController {
+    div.y-flex {
+        margin: auto auto;
+    }
+    label {
+        flex: 1 1 100%;
+    }
+    .name {
+    }
+    .value {
+        font-weight: bold;
+        text-align: right;
+        select {
+            -webkit-appearance: none;
+            border: 0;
+            font-weight: bold;
+            width: 100%;
+            font-size: 1rem;
+            background-color: transparent;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding-left: 50%;
+            padding-right: 1rem;
+            color: $tint-color-contrast;
+            font-family: inherit;
+            direction: rtl;
+        }
+    }
+}

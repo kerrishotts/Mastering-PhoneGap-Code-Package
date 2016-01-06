@@ -1,0 +1,41 @@
+.AboutViewController {
+    div.y-flex {
+        margin: auto auto;
+    }
+    .name {
+        font-weight: bold;
+        flex: 2 !important;
+        .android & {
+            display: table-cell;
+            width: 50vw;
+        }
+    }
+    .comment {
+        text-align: center;
+        .android & {
+            display: table-cell;
+            width: 25vw;
+        }
+    }
+    .licenseType {
+        text-align: right;
+        .android & {
+            display: table-cell;
+            width: 25vw;
+        }
+    }
+    [is="y-text-container"] {
+        h1 {
+            font-size: 150%;
+            font-weight: bold;
+        }
+        a {
+            &:link {
+                color: $tint-color-contrast;
+            }
+            &:active {
+                color: $text-color;
+            }
+        }
+    }
+}
