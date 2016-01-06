@@ -1,4 +1,8 @@
-require("babelify/polyfill");
+try {
+    require("babelify/polyfill");
+} catch (err) {
+    console.log(err);
+}
 
 if (typeof window === "undefined") {
     global.window = global;
@@ -7,9 +11,9 @@ if (typeof window === "undefined") {
     };
     let Storage = require("dom-storage");
     global.localStorage = new Storage(null, { strict: true });
-    indexedDB = require("fake-indexeddb");
+    let indexedDB = require("fake-indexeddb");
     global.indexedDB = indexedDB;
-    openDatabase = require("opendatabase");
+    let openDatabase = require("opendatabase");
     global.openDatabase = openDatabase;
 }
 
