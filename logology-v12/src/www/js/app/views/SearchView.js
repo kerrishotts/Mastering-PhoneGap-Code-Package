@@ -241,6 +241,13 @@ export default class SearchView extends View {
     }
 
     onListItemPanned(sender, notice, listItem, evt) {
+        if (typeof device !== "undefined") {
+            if (device && device.platform  && device.platform.toLowerCase() === "android") {
+                // we don't support swiping on Android for performance
+                // reasons.
+                return;
+            }
+        }
         switch (evt.type) {
             case "panstart":
                 panItemStart.call(this, listItem, evt);
