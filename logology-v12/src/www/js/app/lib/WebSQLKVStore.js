@@ -22,6 +22,12 @@ export default class WebSQLKVStore extends Emitter {
         return this[_db];
     }
 
+    close() {
+        if (this[_db].close) {
+            this[_db].close();
+        }
+    }
+
     get namespace() {
         return this[_namespace];
     }

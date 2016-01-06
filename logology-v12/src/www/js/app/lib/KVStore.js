@@ -31,6 +31,13 @@ export default class KVStore extends Emitter {
             this.emit("model:changed:" + key);
         });
     }
+
+    close() {
+        if (this[_backingStore].close) {
+            this[_backingStore].close();
+        }
+        return;
+    }
 }
 
 export function createKVStore(options = {}) {

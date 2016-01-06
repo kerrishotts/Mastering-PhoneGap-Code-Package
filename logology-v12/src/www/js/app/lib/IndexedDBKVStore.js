@@ -32,6 +32,10 @@ export default class IndexedDBKVStore extends Emitter {
         return this[_db];
     }
 
+    close() {
+        this[_db].close(() => {console.log("closed")});
+    }
+
     get namespace() {
         return this[_namespace];
     }

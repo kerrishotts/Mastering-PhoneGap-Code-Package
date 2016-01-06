@@ -76,6 +76,10 @@ export default class WebSQLDB {
     }
 
     close() {
+        if (this.db && this.db.close) {
+            console.log("closed");
+            this.db.close();
+        }
         this.db = null;
     }
 
