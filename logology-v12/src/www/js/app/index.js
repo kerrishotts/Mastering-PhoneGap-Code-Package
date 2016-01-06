@@ -299,12 +299,14 @@ class App extends Emitter {
     }
 
     applyDeviceProperties() {
-        document.body.classList.add((typeof device !== "undefined" ? device.platform.toLowerCase() : "browser"));
-        if (typeof orientation !== "undefined") {
-            document.body.classList.add(Math.abs(orientation) === 90 ? "landscape" : "portrait");
-        } else {
-            document.body.classList.add(window.innerWidth > window.innerHeight ? "landscape" : "portrait");
-        }
+        [document.body, document.body.parentElement].forEach( el => {
+            el.classList.add((typeof device !== "undefined" ? device.platform.toLowerCase() : "browser"));
+            if (typeof orientation !== "undefined") {
+                el.classList.add(Math.abs(orientation) === 90 ? "landscape" : "portrait");
+            } else {
+                el.classList.add(window.innerWidth > window.innerHeight ? "landscape" : "portrait");
+            }
+        });
     }
 
     applySettings() {
