@@ -6,6 +6,10 @@ y-list, [is="y-list"] {
   margin: 0;
   padding: 0;
   padding-bottom: 2rem;
+
+  .android & {
+      display: block;
+  }
 }
 
 y-list-item, [is="y-list-item"],
@@ -19,6 +23,9 @@ y-list-heading, [is="y-list-heading"] {
   overflow: hidden;
   //word-break: break-all;
   -webkit-hyphens: auto;
+  .android & {
+      display: block;
+  }
 }
 
 y-list-item-spacer, [is="y-list-item-spacer"],
@@ -56,6 +63,10 @@ y-list-actions, [is="y-list-actions"] {
     margin: 0;
     padding: 0 0.5rem;
   }
+
+  .android & {
+      display: none;
+  }
 }
 
 y-list-contents, [is="y-list-contents"] {
@@ -73,6 +84,10 @@ y-list-contents, [is="y-list-contents"] {
 
   &:active {
     background-color: $tint-active-color;
+  }
+
+  .android & {
+      display: block;
   }
 }
 

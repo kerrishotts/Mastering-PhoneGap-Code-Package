@@ -5,12 +5,24 @@
     .name {
         font-weight: bold;
         flex: 2 !important;
+        .android & {
+            display: table-cell;
+            width: 50vw;
+        }
     }
     .comment {
         text-align: center;
+        .android & {
+            display: table-cell;
+            width: 25vw;
+        }
     }
     .licenseType {
         text-align: right;
+        .android & {
+            display: table-cell;
+            width: 25vw;
+        }
     }
     [is="y-text-container"] {
         h1 {
