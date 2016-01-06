@@ -5,6 +5,7 @@ import Note from "../src/www/js/app/models/Note";
 import {getNotes} from "../src/www/js/app/models/Notes";
 
 describe("Note", () => {
+
     describe("#Create", () => {
         it("should be able to create a new Note object for a cat", () => {
             let note = new Note({lemma:"cat"});
