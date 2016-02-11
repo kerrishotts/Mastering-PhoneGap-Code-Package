@@ -8,11 +8,11 @@
     "ios": {
         "debug": {
             "codeSignIdentity": "iPhone Developer",
-            "provisioningProfile": "59b541ac-f492-4f96-88e9-4881e37dc66c"
+            "provisioningProfile": "919678cc-ba35-4355-be44-49aab10ee202"
         },
         "release": {
             "codeSignIdentity": "iPhone Distribution",
-            "provisioningProfile": "e75e6aa2-1e28-42be-afc7-ecc2e94f233a"
+            "provisioningProfile": "1f64e078-ddbd-4a6b-9716-5998eed0c082"
         }
     }
 }
