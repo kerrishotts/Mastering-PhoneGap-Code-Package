@@ -12,6 +12,9 @@ var gulp = require("gulp"),
     browserSync = require("browser-sync").get("www");
 
 function copySCSS() {
+    if (settings.NO_COPY) {
+        return;
+    }
     var isRelease = (settings.BUILD_MODE === "release");
     var includePaths = [];
     var includeModules = config.sass && config.sass.includeModules;

@@ -18,6 +18,9 @@ var cordovaTasks = require("../utils/cordova-tasks"),
     browserSync = require("browser-sync").get("www");
 
 function copyCode() {
+    if (settings.NO_COPY) {
+        return;
+    }
     var isRelease = (settings.BUILD_MODE === "release");
     var pm = config.aliases;
     return browserify(paths.makeFullPath(config.assets.code.src, paths.SRC), {
