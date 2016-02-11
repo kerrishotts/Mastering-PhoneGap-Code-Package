@@ -310,9 +310,9 @@ export default class View extends Emitter {
             [Hammer.Pinch, { enable: false }, ['rotate']],
             [Hammer.Swipe,{ direction: Hammer.DIRECTION_HORIZONTAL }],
             [Hammer.Pan, { direction: Hammer.DIRECTION_HORIZONTAL }, ['swipe']],
-            [Hammer.Tap, { threshold: 10 }],
+            [Hammer.Tap, { threshold: 44, time: 1500 }],
             [Hammer.Tap, { event: 'doubletap', taps: 2 }, ['tap']],
-            [Hammer.Press, { threshold: 44 }]
+            [Hammer.Press, { threshold: 44, time: 500 }]
         ]
     }
 
