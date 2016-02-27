@@ -1,31 +1,8 @@
-# Mastering PhoneGap Code Bundle
+# Mastering PhoneGap Mobile Application Development Code Bundle
 
-This repository stores the code for the book entitled Mastering PhoneGap Mobile Application Development published by Packt
-Publishing. You can purchase the book at [Packt's
-Site](https://www.packtpub.com/application-development/mastering-phonegap-mobile-application-development). If you obtained the code package from
-Packt, you should download the package from GitHub in order to receive the most recent changes. The package is available at
-<https://github.com/kerrishotts/Mastering-PhoneGap-Code-Package>
+This repository stores the code for the book entitled Mastering PhoneGap Mobile Application Development published by Packt Publishing. You can purchase the book at [Packt's Site](https://www.packtpub.com/application-development/mastering-phonegap-mobile-application-development). If you obtained the code package from Packt, you should download the package from GitHub in order to receive the most recent changes. The package is available at <https://github.com/kerrishotts/Mastering-PhoneGap-Code-Package>.
 
-> **NOTE:** This book is under active development. As such, the contents of this repository are not yet finalized.
-
-The demonstration app in this code package makes heavy use of Gulp -- a JavaScript task runner. In the book, we put everything in
-one large `gulpfile.js`, which serves as the project's Gulp cmonfiguration script. In real life this is hard to maintain and grok,
-and so we've made our Gulp configuration modular. The version of the Gulp configuration used in the book is present in each
-directory as `gulpfile.all.in.one.js`. The modular tasks live under the `gulp/` directory.
-
-The code herein is not a complete Cordova project. The build artifacts such as `build/`, `platforms/`, etc. are ignored. Only the
-`src` directory, `config.xml`, and other assets for each project are provided. In order to execute any of these projects, you'll need to
-ensure you have the appropriate prerequisites installed (see [requirements](./requirements.md)) and then execute the following to
-create the build artifacts, after which you can build as normal:
-
-```
-$ gulp init && gulp copy   // bash
-$ gulp init; and gulp copy // fish
-> gulp init                % 
-> gulp copy                % WINDOWS
-```
-
-# Table of Contents
+## Table of Contents
 
 * [Snippets](#snippets)
 * [Demo Application](#demo-application)
@@ -36,101 +13,44 @@ $ gulp init; and gulp copy // fish
 
 ## [Snippets](id:snippets)
 
-Most of the chapters in the book contain several code snippets. Most of these snippets can be run within a desktop environment so
-that you can play around with the snippets and get a feel for what happens when you change certain things. There are, however, some
-chapters that do **NOT** support snippets because the code isn't functional within a browser-based context.
+This code package includes an interactive playground you can use to play around with several of the code snippets included in the book. The interactive playground includes snippets from *most* but not *all* of the chapters.
 
-The following chapters have snippets available in a browser context:
+To learn more about the interactive playground, see [the interactive playground readme](./snippets/readme.md).
 
-* Chapter 1, Task Automation
-
-* Chapter 2, ES2015 and Browserify
-
-* Chapter 3, Sassy CSS
-
-* Chapter 4, More Responsive Design
-
-* Chapter 5, Accessibility
-
-* Chapter 7, IndexedDB
-
-* Chapter 8, SQLite
-
-* Chapter 9, File Transfer
-
-> NOTE: Chapters 10 through 12 do not have snippets available in a browser context.
-
-Assuming you already have Google Chrome installed, running the snippets requires the following steps:
-
-```
-$ cd snippets
-$ npm install
-$ npm start
-```
-
-At this point, an instance of Google Chrome should load. If it doesn't, you can start a fresh instance with the following
-command line arguments:
-
-```
-$ /path/to/chrome/chrome --no-first-run --no-default-browser-check --disable-translate --disable-default-apps
---disable-web-security --user-data-dir=tmp http://localhost:5000/
-```
-
-> **NOTE**: It is vital that you use the created instance of Chrome only for playing with snippets. The settings configure Chrome to
-> be less secure so that the snippets can work from your local machine, but by doing so, any other pages you visit in the same
-> Chrome instance would not receive the normal web security mechanisms.
-
-Once Chrome is available, you should see a JSBin-like page load. Give it a few seconds to finish loading (it's pulling in several
-megabytes of supporting code!), and once everything is ready, there should be two drop-downs in the navigation bar, along with
-several editors visible.
-
-Selecting your desired snippet is easy:
-
-* Select the chapter from the first dropdown
-
-* Select the desired snippet from the second dropdown
-
-* Wait a couple of seconds while the resources load and transpile. Results are visible on the right-hand pane and in the JavaScript
-  Console.
-
-> **NOTE**: Some snippets only generate content in the JavaScript Console.
-
-Each snippet comes with its own preferred layout, but you can enable or disable any of the editors as you like by clicking the
-`Toggle` items in the upper right corner of the page. 
-
-One last note: the snippets have occasionally been modified slightly to work better within the snippet environment. Due to the way
-the environment works, `console.log` behaves somewhat differently, for example, and so the snippets have been updated to reflect
-that. Sometimes multiple snippets are in one file, and so arrangements are made for each smaller example to co-exist within the same
-context.
-
-See the [LICENSE](./snippets/LICENSE) file for information on the various libraries used to build the snippets tool.
 
 ## [Demo Application](id:demoapplication)
 
-The demonstration application demonstrates many of the same techniques used in the book. The app itself is intended to be a simple
-dictionary app: the user can search for words and see associated definitions.
+The demonstration application demonstrates many of the same techniques used in the book. The app itself is intended to be a simple dictionary app: the user can search for words and see associated definitions.
 
-There are several versions of this project -- with each version change matching what was discussed in the corresponding chapter, except for chapters 9 and ten. The final version of the project is in the `logology-v12/` directory.
+![Logology, our demo app (iPad / Landscape)](./design/screenshots/iOS/2048x1536/SearchViewController.png)
+
+For an more in-depth discussion of the demonstration app, see [Logology's readme](./logology-readme.md).
+
+There are several versions of this project -- with each version change matching what was discussed in the corresponding chapter, except for chapters nine and ten. The final version of the project is in the `logology-v12/` directory. Development actually continues in the `logology` directory -- so if you wish to contribute to or watch further development, this is where it future changes will be made.
 
 Although the app is technically complete, there's a lot of ways you could improve it. Here's some ideas to get you started:
 
-* Search results are limited to a specific number of records (determined in the app's settings). Consider enabling infinite
-scrolling so that the number of returned results doesn't matter. As an added feature, allow the user to scroll through _all_ the
-words in the dictionary.
+* Search results are limited to a specific number of records (determined in the app's settings). Consider enabling infinite scrolling so that the number of returned results doesn't matter. As an added feature, allow the user to scroll through _all_ the words in the dictionary.
 
-* Within the DOM structure, the favorite, share, and edit action items are repeated for each word. This isn't necessary -- a new
-action item could instead be created when a swipe is initiated. As such, the DOM structure could be drastically simplified. Consider
-adding code to simplify the DOM structure while _not_ impacting performance (since changing the DOM will result in a reflow).
-
-* The WordNet database used for this project contains a _lot_ of information about the words and associated definitions. Consider
-adding this information into the app.
+* The WordNet database used for this project contains a _lot_ of information about the words and associated definitions. Consider adding this information into the app.
 
 * Create dictionaries for other languages and allow the app to install them.
+
+**NOTE**: The code herein is not a complete Cordova project. The build artifacts such as `build/`, `platforms/`, etc. are ignored. Only the `package.json` file and `src/`, `config/`, `gulp/`, `test/`, and `test-ui/` directories and other assets for each project are provided. In order to execute any of these projects, you'll need to ensure you have the appropriate prerequisites installed (see [requirements](./requirements.md)) and then execute the following to create the build artifacts, after which you can `gulp build` as normal:
+
+```sh
+$ gulp init && gulp copy   # bash
+$ gulp init; and gulp copy # fish
+> gulp init                % 
+> gulp copy                % WINDOWS
+```
+
 
 ## [Chapter/Project Lookup](id:chapterproject-lookup)
 
 |    Chapter | Title                              | Project Readme                            |
 |-----------:|:---------------------------------- |:------------------------------------------|
+|          - | Logology In-Depth                  | [Logology](./logology-readme.md) |
 |          1 | Task Automation                    | [Logology, v1](./logology-v01/readme.md)  |
 |          2 | ES2015 and Browserify              | [Logology, v2](./logology-v02/readme.md)  |
 |          3 | Sassy CSS                          | [Logology, v3](./logology-v03/readme.md)  |
@@ -143,45 +63,37 @@ adding this information into the app.
 |         10 | Performance                        | N/A                                       |
 |         11 | Graphical Assets                   | [Logology, v11](./logology-v11/readme.md) |
 |         12 | Deployment                         | [Logology, v12](./logology-v12/readme.md) |
+|          - | Logology Current Development       | [Logology, v13](./logology/readme.md) |
 
-## [Application Demos](id:application-demos)
+### [Application Demos](id:application-demos)
 
-Coming soon.
-<!--
-I've taken the time to upload the final version of Logology to both the Apple App Store and the Google Play Market. Links are as
-follows:
+I've taken the time to upload the final version of Logology to both the Apple App Store and the Google Play Market. Links are as follows:
 
-* [Apple App Store](#)
-* [Google Play Market](#)
--->
+* [Apple App Store](https://geo.itunes.apple.com/us/app/logology/id1068733478?mt=8)
+* [Google Play Market](https://play.google.com/store/apps/details?id=com.packtpub.logology)
+
+The app itself is available for free without advertisements.
 
 ## [Useful Directories](id:useful-directories)
 
 Other than the actual code for each project, the following directories may be of interest to you:
 
 * `design/`
-  * Contains icons and splash screen for each project. Also contains design documents for each project in PDF and
-    OmniGraffle format.
+  * Contains icons and splash screen for each project. Also contains design documents for each project in PDF and OmniGraffle format.
 * `blank/`
   * Contains the template we used to create each project (`cordova create ... --copy-from ./template`).
+* `logology/`
+  * Current development continues on Logology; this is where that development lives.
 
 ## [Using PhoneGap Build](id:using-phonegap-build)
 
-The projects as delivered are *Cordova* projects. In order to utilize them with PhoneGap build, you will need to follow these steps:
+The projects as delivered are *Cordova* projects. They are not designed to be utilized with PhoneGap Build, an in-the-cloud compilation service. You can, no doubt, make the appropriate changes to the project files if you wish, however. You would need to address the following:
 
-* Copy `config.xml` from the application root to the `www` directory.
-* Add the required plugins to `config.xml`, using the form:
-
-```
-<gap:plugin name="reverse.domain.id"/>
-```
-* If you want to add the icon and splash screen assets to the project, you'll need to copy the appropriate icons from the `design` directory into the project's `www` directory, and then update `config.xml` using [these directions](http://docs.build.phonegap.com/en_US/configuring_icons_and_splash.md.html#Icons%20and%20Splash%20Screens).
-* Upload the project to PhoneGap Build by using `phonegap remote build android` (or `ios`).
+* `config.xml` is generated dynamically as part of the initial build steps. Once you have a `build` directory generated, however, you could use that `config.xml` along with the `build/www` directory to upload to PhoneGap Build.
 
 ## [License](id:license)
 
-The code herein is licensed under the MIT license. You are free to do with it as you will, provided the
-requirements of said license are met.
+The code herein is licensed under the MIT license. You are free to do with it as you will, provided the requirements of said license are met.
 
 ```
 Copyright (c) 2015 Packt Publishing
