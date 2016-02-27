@@ -1,3 +1,32 @@
+/*****************************************************************************
+ *
+ * Logology
+ * Author: Kerri Shotts <kerrishotts@gmail.com> 
+ *         http://www.photokandy.com/books/mastering-phonegap
+ *
+ * Copyright (c) 2016 Packt Publishing, except where otherwise indicated. Dependencies
+ * are copyright their respective owners. For license information, see /LICENSE and the
+ * licenses of dependencies.
+ * 
+ * MIT LICENSED
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this
+ * software and associated documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+
 // parts from https://github.com/the-experimenters/appium-smoke-tester/blob/master/uat/hybrid/CanLogin.uat.js
 // and from: https://github.com/appium/sample-code/blob/master/sample-code/examples/node/helpers
 "use strict";
@@ -126,13 +155,28 @@ after(function() {
  * @return {Promise}
  */
 function tapElement(el, {xPct = 0.5, yPct = 0.5} = {}) {
+    let platformOffset = {
+        "iOS": 20,
+        "Android": 25
+    };
+    
     return Promise.all([(driver.getLocation(el)), (driver.getSize(el))])
                   .then((r) => {
                       let x = r[0].x + (r[1].width * xPct);
-                      let y = r[0].y + (r[1].height * yPct) + (profile.platformName === "iOS" ? 20 : 0);
+                      let y = r[0].y + (r[1].height * yPct) + (platformOffset[profile.platformName] ? platformOffset[profile.platformName] : 0);
+                      if (profile.pixelRatio) {
+                          [x, y] = [x, y].map(v => v*profile.pixelRatio);
+                      }
                       return switchToNativeContext()
-                             .then(() => (new wd.TouchAction(driver)).tap({x, y}).release()
-                                   .wait({ms:1000}).perform())
+                             .then(() => {
+                                 let action = new wd.TouchAction(driver);
+                                 action.tap({x, y});
+                                 if (profile.platformName === "iOS") {
+                                     action.release();
+                                 }
+                                 action.wait({ms:1000});
+                                 action.perform()
+                             })
                              .then(switchToWebViewContext);
                   });
 }
