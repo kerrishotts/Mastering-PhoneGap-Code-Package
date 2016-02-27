@@ -15,3 +15,4 @@ audit/
 dist/
 logology-v05-old
 *.all.in.one.js
+*.log
