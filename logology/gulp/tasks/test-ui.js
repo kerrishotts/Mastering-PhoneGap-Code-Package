@@ -34,7 +34,7 @@ function testUI() {
 }
 
 module.exports = {
-    deps: ["build"],
+    deps: ["build", "launch-appium"],
     task: testUI,
     desc: "Runs UI Automation tests",
     help: ["Executes UI Automation tests in ./test-ui using Mocha and Appium",
