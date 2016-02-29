@@ -1,3 +1,30 @@
+/*****************************************************************************
+ *
+ * Author: Kerri Shotts <kerrishotts@gmail.com> 
+ *         http://www.photokandy.com/books/mastering-phonegap
+ *
+ * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this
+ * software and associated documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+ 
 y-list, [is="y-list"] {
   display: flex;
   flex-wrap: wrap;
@@ -6,6 +33,10 @@ y-list, [is="y-list"] {
   margin: 0;
   padding: 0;
   padding-bottom: 2rem;
+
+  .android & {
+      display: block;
+  }
 }
 
 y-list-item, [is="y-list-item"],
@@ -14,9 +45,14 @@ y-list-heading, [is="y-list-heading"] {
   display: flex;
   border-bottom: 1px solid $tint-border-color;
   border-right: 1px solid $tint-border-color;
-  flex: 1 1 320px;
+  flex: 1 1 20rem; //320px;
   position: relative;
   overflow: hidden;
+  //word-break: break-all;
+  -webkit-hyphens: auto;
+  .android & {
+      display: block;
+  }
 }
 
 y-list-item-spacer, [is="y-list-item-spacer"],
@@ -52,7 +88,11 @@ y-list-actions, [is="y-list-actions"] {
 
   * {
     margin: 0;
-    padding: 0 1rem;
+    padding: 0 0.5rem;
+  }
+
+  .android & {
+      display: none;
   }
 }
 
@@ -69,8 +109,12 @@ y-list-contents, [is="y-list-contents"] {
     flex: 0 0 auto;
   }
 
-  &:active, &:focus {
+  &:active {
     background-color: $tint-active-color;
+  }
+
+  .android & {
+      display: block;
   }
 }
 

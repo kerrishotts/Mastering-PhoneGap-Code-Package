@@ -3,16 +3,37 @@
  * Logology V{{{VERSION}}}
  * Author: {{{AUTHOR.NAME}}} <{{{AUTHOR.EMAIL}}}> <{{{AUTHOR.SITE}}}>
  *
- * This is a very simple demonstration of using gulp + ES6; it obviously
- * doesn't do anything resembling the goal of the app yet.
+ * Author: Kerri Shotts <kerrishotts@gmail.com> 
+ *         http://www.photokandy.com/books/mastering-phonegap
  *
+ * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Packt Publishing
+ * Portions Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this
+ * software and associated documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
  *****************************************************************************/
 
 /*globals MobileAccessibility, setImmediate*/
 
 // we need to use the Fetch API (replaces XHR), but not available in all
 // instances, so we use a polyfill
-require("whatwg-fetch");
+require("whatwg-fetch-local");
 
 // inject SVG assets
 let SVGInjector = require("svg-injector");
@@ -47,6 +68,8 @@ import XHRDictionary from "./models/XHRDictionary";
 import SQLDictionary from "./models/SQLDictionary";
 let settings = getSettings();
 
+let animate = true;
+
 class App extends Emitter {
     constructor() {
         super();
@@ -73,6 +96,55 @@ class App extends Emitter {
         // zoom our text for accessibility
         if (typeof MobileAccessibility !== "undefined") {
             MobileAccessibility.usePreferredTextZoom(true);
+        }
+    }
+
+    screenReaderSpeak(s) {
+        MobileAccessibility.isScreenReaderRunning(active => {
+            if (active) {
+                MobileAccessibility.speak(s, 1);
+            }
+        });
+    }
+
+    notifyAccessibility() {
+        // when a view is pushed / popped, we need to notify accessibility
+        // that the view changed on iOS.
+        // We also need to focus the first navigable element.
+
+        function focusElement() {
+            MobileAccessibility.isScreenReaderRunning(active => {
+                if (active) {
+                    app.contentnvc.topView.elementTree.querySelector("[class*='icon']").focus();
+                }
+            });
+        }
+        if (typeof MobileAccessibility !== "undefined") {
+            let viewNameToSpeak = app.contentnvc.topView.elementTree.querySelector("h1").textContent;
+            if (device.platform === "iOS") {
+                setTimeout( () => {
+                    MobileAccessibility.postNotification(MobileAccessibilityNotifications.SCREEN_CHANGED,
+                        "", ({wasSuccessful} = {}) => {
+                            setTimeout( () => {
+                                MobileAccessibility.postNotification(MobileAccessibilityNotifications.ANNOUNCEMENT,
+                                    viewNameToSpeak, ({wasSuccessful} = {}) => {
+                                        if (!wasSuccessful) {
+                                            console.log("Couldn't speak view name");
+                                        } else {
+                                            focusElement();
+                                        }
+                                    });
+                            }, 10);
+                        });
+                }, 10);
+            } else {
+                MobileAccessibility.isScreenReaderRunning(active => {
+                    if (active) {
+                        MobileAccessibility.speak(viewNameToSpeak, 1);
+                        focusElement();
+                    }
+                });
+            }
         }
     }
 
@@ -108,8 +180,13 @@ class App extends Emitter {
                    .then(dictionary => {
                        this.settings.lastDictionary = dictionaryName;
                        let svc = createSearchViewController({model: dictionary});
-                       this.splitViewController.rightView.popToRoot()
-                           .then(() => this.splitViewController.rightView.push(svc, {animate: false}));
+                       this.contentnvc.popToRoot()
+                           .then(() => this.contentnvc.push(svc, {animate: false}))
+                           .then(() => this.notifyAccessibility())
+                           .then(() => GCS.emit("APP:DO:hideSplash")); // hide the splash screen, if necessary
+                   })
+                   .catch(err => {
+                       GCS.emit("APP:DO:viewDictionary", this.dictionaries.dictionaries[0]);
                    });
     }
 
@@ -119,52 +196,71 @@ class App extends Emitter {
                    .then(dictionary => {
                        let model = createDefinitions({dictionary, lemma});
                        let dvc = createDefinitionViewController({model});
-                       return this.splitViewController.rightView.push(dvc, {animate: false});
+                       //model.on("model:changed:entries", once(() => {
+                       return this.contentnvc.push(dvc, {animate})
+                                  .then(() => this.notifyAccessibility());
+                       //}), this);
                    });
     }
 
     viewNotes(lemma) {
         let model = createNote({lemma});
         let nvc = createNotesViewController({model});
-        return this.splitViewController.rightView.push(nvc, {animate: false});
+        return this.contentnvc.push(nvc, {animate})
+                   .then(() => this.notifyAccessibility());
     }
 
     showAbout() {
         let avc = createAboutViewController();
-        GCS.emit("APP:DO:menu");
-        return this.splitViewController.rightView.push(avc, {animate:false});
+        //GCS.emit("APP:DO:menu");
+        return this.contentnvc.push(avc, {animate})
+                   .then(() => this.notifyAccessibility());
     }
 
     showSettings() {
         let svc = createSettingsViewController();
-        GCS.emit("APP:DO:menu");
-        return this.splitViewController.rightView.push(svc, {animate:false});
+        //GCS.emit("APP:DO:menu");
+        return this.contentnvc.push(svc, {animate})
+                   .then(() => this.notifyAccessibility());
     }
 
     toggleFavorite(word) {
         let favorites = getFavorites();
         favorites.toggleFavorite(word)
                  .then(() => favorites.isWordAFavorite(word))
-                 .then(r => GCS.emit("APP:DID:favDefinition", word, r));
+                 .then(r => {
+                     GCS.emit("APP:DID:favDefinition", word, r);
+                     this.screenReaderSpeak(L.T(r ? "sr:word-favorited" : "sr:word-unfavorited"));
+                 });
     }
 
     openURL(url) {
+        // encode the URL; if not, iOS crashes with spaces
+        let encodedURL = encodeURI(url);
         function continueOpen() {
             if (typeof cordova !== "undefined" && cordova.inAppBrowser) {
-                cordova.inAppBrowser.open(url, "_blank", `location=no,closebuttoncaption=${L.T("browser:done")}`);
+                cordova.inAppBrowser.open(encodedURL, "_blank", `location=no,closebuttoncaption=${L.T("browser:done")}`);
             } else {
-                window.open(url, '_blank', 'location=yes');
+                window.open(encodedURL, '_blank', 'location=yes');
             }
         }
+        continueOpen();
+        return;
+        // the following is great, but SafariView Controller doesn't always want to re-appear ATM
         // can we use the Safari View Controller?
-        if (typeof SafariViewController !== "undefined") {
-            SafariViewController.isAvailable(available => {
-                if (available) {
-                    SafariViewController.show({url});
-                } else {
-                    continueOpen();
-                }
-            });
+        if (typeof SafariViewController !== "undefined" &&
+            typeof device !== "undefined") {
+            if (device.platform === "iOS") {
+                SafariViewController.isAvailable(available => {
+                    if (available) {
+                        SafariViewController.show({url: encodedURL});
+                    } else {
+                        continueOpen();
+                    }
+                });
+            } else {
+                continueOpen();
+            }
         } else {
             continueOpen();
         }
@@ -175,13 +271,14 @@ class App extends Emitter {
         let [, , command] = notice.split(":");
         switch (command) {
             case "menu":
-                this.splitViewController.toggleSidebar({animate: false});
+                this.splitViewController.toggleSidebar({animate});
                 break;
             case "back":
-                this.splitViewController.rightView.pop({animate: false});
+                this.contentnvc.pop({animate})
+                    .then(() => this.notifyAccessibility());
                 break;
             case "menuBack":
-                this.splitViewController.leftView.pop({animate: false});
+                this.sidenvc.pop({animate});
                 break;
             case "about":
                 this.showAbout();
@@ -210,16 +307,37 @@ class App extends Emitter {
             case "URL":
                 this.openURL(data[0]);
                 break;
+            case "hideSplash":
+                if (typeof navigator !== "undefined") {
+                    if (navigator.splashscreen) {
+                        setTimeout(() => navigator.splashscreen.hide(), 500);
+                    }
+                }
+                break;
             default:
                 console.log(["Couldn't handle a navigation request:", sender, notice, data]);
         }
     }
 
+    applyDeviceProperties() {
+        [document.body, document.body.parentElement].forEach( el => {
+            el.classList.add((typeof device !== "undefined" ? device.platform.toLowerCase() : "browser"));
+            if (typeof orientation !== "undefined") {
+                el.classList.add(Math.abs(orientation) === 90 ? "landscape" : "portrait");
+            } else {
+                el.classList.add(window.innerWidth > window.innerHeight ? "landscape" : "portrait");
+            }
+        });
+    }
+
     applySettings() {
+
+        animate = (settings.reduceMotion === "no");
+
         document.body.style.fontFamily = settings.fontFamily === "default" ? "" : settings.fontFamily;
 
         Array.from(document.styleSheets).forEach((ss) => {
-            if (ss.href && ss.href.indexOf("app.css")>-1) {
+            if (ss.href && ss.href.indexOf("app.css") > -1) {
                 Array.from(ss.rules).forEach((r) => {
                     if (r.selectorText === "html") {
                         r.style.fontSize = settings.fontSize == 0 ? "100%" : `${settings.fontSize}%`;
@@ -235,12 +353,22 @@ class App extends Emitter {
             this.themeManager.currentTheme = theme;
             if (typeof StatusBar !== "undefined") {
                 let barColor = {
-                    "Default": {color: "#EEAA11", bg: "styleLightContent"},
-                    "Light": {color: "#FFFFFF", bg: "styleDefault"},
-                    "Dark": {color: "#40566F", bg: "styleLightContent"}
+                    "iOS": {
+                        "Default": {color: "#eeac11", bg: "styleLightContent"},
+                        "Light": {color: "#FFFFFF", bg: "styleDefault"},
+                        "Dark": {color: "#40566F", bg: "styleLightContent"}
+                    },
+                    "Android": {
+                        "Default": {color: "#c68f0e", bg: "styleLightContent"},
+                        "Light": {color: "#CCCCCC", bg: "styleDefault"},
+                        "Dark": {color: "#212d3a", bg: "styleLightContent"}
+                    }
                 }
-                StatusBar.backgroundColorByHexString( barColor[settings.theme].color );
-                StatusBar[barColor[settings.theme].bg]();
+                if (typeof device !== "undefined") {
+                    let platform = device.platform;
+                    StatusBar.backgroundColorByHexString(barColor[platform][settings.theme].color);
+                    StatusBar[barColor[platform][settings.theme].bg]();
+                }
             }
         } catch (err) {
             console.log("couldn't change theme to ", settings.theme);
@@ -282,19 +410,25 @@ class App extends Emitter {
 
             if (typeof sqlitePlugin !== "undefined") {
                 // introduced ch8
-                this.dictionaries.addDictionary({name: "WordNet - SQL", Dictionary: SQLDictionary, options: {path: "wordnet.db"}});
+                this.dictionaries.addDictionary({name: "WordNet", Dictionary: SQLDictionary, options: {path: "wordnet.db"}});
             } else {
                 // introduced ch4
-                this.dictionaries.addDictionary({name: "WordNet - JSON", Dictionary: XHRDictionary, options: {path: "wordnet.json"}});
+                this.dictionaries.addDictionary({name: "WordNet", Dictionary: XHRDictionary, options: {path: "wordnet.json"}});
             }
 
-            let mvc = createMenuViewController({model: this.dictionaries});
             let rrv = createViewController();
-            let nvc = createNavigationViewController({subviews: [rrv]});
-            let mvnc = createNavigationViewController({subviews: [mvc]});
 
-            this.splitViewController = createSplitViewController( {subviews: [mvnc, nvc], themeManager: this.themeManager, renderElement: rootElement});
-            this.splitViewController.visible = true;
+            // if you want a split view:
+            // let mvc = createMenuViewController({model: this.dictionaries});
+            // let nvc = createNavigationViewController({subviews: [rrv]);
+            // let mvnc = createNavigationViewController({subviews: [mvc]});
+            // this.splitViewController = createSplitViewController({subviews: [mvnc, nvc], themeManager: this.themeManager, renderElement: rootElement});
+            // this.contentnvc = nvc;
+            // this.sidenvc = mvnc;
+
+            let nvc = createNavigationViewController({subviews: [rrv], themeManager: this.themeManager, renderElement: rootElement});
+            this.contentnvc = nvc;
+            this.contentnvc.visible = true;
 
             // logging, debug only
             // GCS.on("/.*/", (...args) => console.log(args));
@@ -310,12 +444,28 @@ class App extends Emitter {
             // and ask the app to go to the last dictionary
             GCS.emit("APP:DO:viewLastDictionary");
 
-            // hide splash screen if visible
-            if (typeof navigator !== "undefined") {
-                if (navigator.splashscreen) {
-                    navigator.splashscreen.hide();
+            // handle back button for Android
+            document.addEventListener("backbutton", (e) => {
+                e.preventDefault();
+                if (this.contentnvc.subviews.length < 3) {
+                    // quit instead
+                    navigator.app.exitApp();
+                } else {
+                    GCS.emit("APP:DO:back")
                 }
-            }
+            }, false);
+
+            // handle tap of status bar to scroll any view to top.
+            window.addEventListener("statusTap", (e) => {
+                Array.from(this.contentnvc.topView.elementTree.querySelectorAll('[is*=scroll], textarea')).forEach((el) => el.scrollTop=0);
+            });
+
+            // handle changes in orientation / etc
+            document.addEventListener("resume", this.applyDeviceProperties, false);
+            document.addEventListener("orientationchange", this.applyDeviceProperties, false);
+            document.addEventListener("resize", this.applyDeviceProperties, false);
+            GCS.on("APP:SETTINGS:changed", this.applyDeviceProperties, this);
+
         } catch (err) {
             GCS.emit("APP:startupFailure", err);
             this.emit("startupFailure", err);
