@@ -1,4 +1,31 @@
-/* @flow */
+/*****************************************************************************
+ *
+ * Author: Kerri Shotts <kerrishotts@gmail.com> 
+ *         http://www.photokandy.com/books/mastering-phonegap
+ *
+ * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this
+ * software and associated documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+ 
+ /* @flow */
 "use strict";
 
 /*globals cordova*/
@@ -104,7 +131,7 @@ export default class SoftKeyboard extends Emitter {
     init({selectors=[], useSmoothScrolling = true, smoothScrollDuration = 100,
           showElementUnderKeyboard = false} = {}) {
         // selectors: Array, useSmoothScrolling: boolean, smoothScrollDuration: number
-        if (typeof cordova !== "undefined" ) {
+        if (typeof cordova !== "undefined") {
             if (cordova.plugins && cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.disableScroll(true);
                 window.addEventListener("native.keyboardshow", this.keyboardShown.bind(this));
@@ -112,7 +139,7 @@ export default class SoftKeyboard extends Emitter {
             }
         }
         this[_selectors] = new Set();
-        selectors.forEach( sel => this.addSelector(sel) );
+        selectors.forEach(sel => this.addSelector(sel));
         this[_useSmoothScrolling] = useSmoothScrolling;
         this[_smoothScrollDuration] = smoothScrollDuration;
         this[_showElementUnderKeyboard] = showElementUnderKeyboard;
@@ -178,7 +205,7 @@ export default class SoftKeyboard extends Emitter {
             }
         }
         if (force) {
-            this.keyboardShown({keyboardHeight:240});
+            this.keyboardShown({keyboardHeight: 240});
         }
     }
 
@@ -204,6 +231,7 @@ export default class SoftKeyboard extends Emitter {
     keyboardShown(e)/*: void*/ {
         this.emit("keyboardShown", e);
         this.emit("willResize", e);
+        console.log ("keyboard shown", e.keyboardHeight);
         setTimeout(() => {
             let screenHeight = window.innerHeight; //(document.body.clientWidth === window.screen.height ? window.screen.width : window.screen.height);
             let scrollContainers = getScrollContainers(this.selectorString);
@@ -220,7 +248,11 @@ export default class SoftKeyboard extends Emitter {
                 // now that we know the top of the scroll container, the height of the
                 // the screen, and the height of the keyboard, we can calculate the
                 // appropriate max-height for the container.
-                sc.style.maxHeight = "" + (screenHeight - keyboardHeight - scTop) + "px";
+                let maxHeight = "" + (screenHeight - keyboardHeight - scTop);
+                console.log("New height", maxHeight);
+                if (maxHeight > 100) {
+                    sc.style.maxHeight = maxHeight + "px";
+                }
             });
             this.emit("didResize", e);
             // changing the height isn't sufficient: we need to scroll any focused

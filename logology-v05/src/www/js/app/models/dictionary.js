@@ -1,4 +1,32 @@
-"use strict";
+/*****************************************************************************
+ *
+ * Author: Kerri Shotts <kerrishotts@gmail.com> 
+ *         http://www.photokandy.com/books/mastering-phonegap
+ *
+ * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Packt Publishing
+ * Portions Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this
+ * software and associated documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+ 
+ "use strict";
 // jscs:disable
 import Emitter from "yasmf-emitter";
 import Definition from "./Definition";
@@ -39,7 +67,7 @@ export default class Dictionary extends Emitter {
         throw new Error("must override load()!");
     }
 
-    _addDefinition( definition ) {
+    _addDefinition(definition) {
         let {lemmas, wordNetRef} = definition;
         this[_definitions].set(wordNetRef, definition);
         for (let lemma of lemmas) {
@@ -83,12 +111,12 @@ export default class Dictionary extends Emitter {
         let arr = [], idx = 0, len = this[_sortedIndex].length, id;
         return new Promise((resolve, reject) => {
             id = setInterval(() => {
-                if (idx<len) {
+                if (idx < len) {
                     let nextLen = idx + per;
                     if (nextLen > len) {
                         nextLen = len;
                     }
-                    for (let i = idx;i < nextLen;i++) {
+                    for (let i = idx; i < nextLen; i++) {
                         if (this[_sortedIndex][i].indexOf(filter) === 0) {
                             arr.push(this[_sortedIndex][i]);
                         }
@@ -102,7 +130,7 @@ export default class Dictionary extends Emitter {
         });
     }
 
-    async getEntries( {lemma="", wordNetRef} ) {
+    async getEntries({lemma="", wordNetRef}) {
         if (!this.isLoaded) {
             return [];
         }

@@ -1,3 +1,31 @@
+/*****************************************************************************
+ *
+ * Author: Kerri Shotts <kerrishotts@gmail.com> 
+ *         http://www.photokandy.com/books/mastering-phonegap
+ *
+ * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Packt Publishing
+ * Portions Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this
+ * software and associated documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+
 .DefinitionViewController {
     .fav-icon, .note-icon {
         transition: fill 0.3s ease-in-out;
@@ -11,8 +39,15 @@
         display: flex;
         flex-direction: column;
         [is="y-text-container"] {
-            flex: 1 0 auto;
             user-select: text;
+            flex: 0 0 auto;
+        }
+        [is="y-text-container"]:nth-child(2) {
+            flex: 1 0 auto;
+        }
+        [is="y-list"] {
+            flex: 0 0 auto;
+            min-height: 5rem;
         }
     }
     ol {
@@ -23,25 +58,35 @@
             &:before {
                 content: counter(definition-list) '.';
                 counter-increment: definition-list;
-                font-weight: bold;
-                margin-left: -3rem;
                 display: inline-block;
-                width: 3rem;
+                min-width: 1.25rem;
                 text-align: right;
+                font-style: italic;
+                color: $tint-color-contrast;
             }
             color: $text-color;
-            margin: 1rem 2rem;
+            padding: 1rem 2rem;
+            margin: 0 auto;
+            max-width: 45rem;
             span.pos {
                 font-style: italic;
                 color: $lighter-text-color;
-                margin-left: 0.5rem;
-                display: inline-block;
+                margin: 0 0.5rem;
             }
             span.def {
-                display: inline-block;
-                margin-left: 1.5rem;
+            }
+
+            &:nth-child(even) {
+                background-color: $list-background-color-alt;
             }
         }
+    }
+    h2 {
+        font-weight: bold;
+        font-size: 200%;
+        margin: 1rem;
+        margin-bottom: 0;
+        color: $text-color;
     }
 }
 
