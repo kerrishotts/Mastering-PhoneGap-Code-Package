@@ -1,0 +1,206 @@
+/*****************************************************************************
+ *
+ * Author: Kerri Shotts <kerrishotts@gmail.com> 
+ *         http://www.photokandy.com/books/mastering-phonegap
+ *
+ * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Packt Publishing
+ * Portions Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this
+ * software and associated documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+
+// animations
+// in == push, out == pop
+// view        -100<----0 leaving    0<----100 entering
+//                          in                    in
+//             entering -100---->0   leaving 0---->100
+//                out                  out
+//
+// setup
+%animation-timing {
+    transition: transform .3s ease-out, filter .3s ease-out;
+    visibility: visible;
+}
+
+.anims-view-leave-in, .anims-view-leave-out,
+.anims-view-enter-in, .anims-view-enter-out {
+    @extend %animation-timing;
+
+    y-nav *, [is="y-nav"] * {
+        transition: opacity .3s ease-out;
+    }
+}
+
+.anims-split-enter, .anims-split-leave,
+.animd-split-enter, .animd-split-leave {
+    y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+        @extend %animation-timing;
+    }
+}
+
+.anims-view-leave-out, .anims-view-leave-in {
+    y-nav *, [is="y-nav"] * {
+        opacity: 1;
+    }
+}
+
+.anims-view-enter-in, .anims-view-enter-out {
+    y-nav *, [is="y-nav"] * {
+        opacity: 0.5;
+    }
+}
+
+.anims-view-enter-in {
+    transform: translate3d(100%, 0, 20px);
+}
+
+.anims-view-leave-out {
+    transform: translate3d(0, 0, 20px);
+}
+
+.anims-view-enter-out {
+    transform: translate3d(-0%, 0, 10px);
+    filter: brightness(0.75);
+}
+
+.anims-view-leave-in {
+    transform: translate3d(0, 0, 10px);
+    filter: brightness(1);
+}
+
+// split       stage       left            right
+//             enter       -240px --> 0    0 --> 240px
+//             leave       0 --> -240px    240px --> 0
+.anims-split-enter {
+    y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+        &:first-child { transform: translate3d(-240px, 0, 15px); }
+        &:last-child {
+            transform: translate3d(0, 0, 10px);
+            transition: filter 0.3s ease-in-out;
+            filter: brightness(1);
+        }
+    }
+}
+
+.anims-split-leave {
+    y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+        &:first-child { transform: translate3d(0, 0, 15px); }
+        &:last-child {
+            transform: translate3d(0, 0, 10px);
+            transition: filter 0.3s ease-in-out;
+            filter: brightness(0.75);
+        }
+    }
+}
+
+// perform/hold animation
+.animd-view-leave-out, .animd-view-leave-in, .animh-view-leave-out, .animh-view-leave-in {
+    y-nav *, [is="y-nav"] * {
+        opacity: 0.5;
+    }
+}
+
+.animd-view-enter-in, .animd-view-enter-out, .animh-view-enter-in, .animh-view-enter-out {
+    y-nav *, [is="y-nav"] * {
+        opacity: 1;
+    }
+}
+
+.animd-view-enter-in, .animh-view-enter-in {
+    transform: translate3d(0, 0, 20px);
+}
+
+.animd-view-leave-in, .animh-view-leave-in {
+    transform: translate3d(-0%, 0, 10px);
+    filter: brightness(0.75);
+}
+
+.animd-view-enter-out, .animh-view-enter-out {
+    transform: translate3d(0, 0, 10px);
+    filter: brightness(1);
+}
+
+.animd-view-leave-out, .animh-view-leave-out {
+    transform: translate3d(100%, 0, 20px);
+}
+
+.animh-view-enter-in, .animh-view-enter-out {
+    visibility: visible;
+}
+
+.animh-view-leave-in, .animh-view-leave-out {
+    visibility: hidden;
+}
+
+.animd-split-enter, .animh-split-enter {
+    y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+        &:first-child { transform: translate3d(0, 0, 15px); }
+        &:last-child {
+            transform: translate3d(0, 0, 10px);
+            transition: filter 0.3s ease-in-out;
+            filter: brightness(0.75);
+            &:after {
+                content: ' ';
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                z-index:2;
+                transform: translate3d(0,0,12px);
+            }
+        }
+    }
+}
+
+.animd-split-leave, .animh-split-leave {
+    y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+        &:first-child { transform: translate3d(-240px, 0, 15px); }
+        &:last-child {
+            transform: translate3d(0, 0, 10px);
+            transition: filter 0.3s ease-in-out;
+            filter: brightness(1);
+        }
+    }
+}
+
+.anims-split-enter, .anims-split-leave,
+.animd-split-enter, .animd-split-leave,
+.animh-split-enter, .animh-split-leave {
+    y-split-view-wrapper, [is="y-split-view-wrapper"], .y-split-view-wrapper {
+        &:first-child { position: absolute; }
+    }
+}
+
+// visibility
+.visible {
+    visibility: visible;
+}
+
+.not-visible {
+    visibility: hidden;
+}
+
+.displayed {
+    // no rules
+}
+
+.not-displayed {
+    display: none;
+}
+
+

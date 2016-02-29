@@ -1,3 +1,31 @@
+/*****************************************************************************
+ *
+ * Author: Kerri Shotts <kerrishotts@gmail.com> 
+ *         http://www.photokandy.com/books/mastering-phonegap
+ *
+ * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Packt Publishing
+ * Portions Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this
+ * software and associated documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+ 
 /* @flow */
 "use strict";
 
@@ -31,6 +59,7 @@ const _panningItem = Symbol("_panningItem"),
       _filter = Symbol("_filter"),
       _filteredItems = Symbol("_filteredItems"),
       _page = Symbol("_page"),
+      _dirty = Symbol("_dirty"),
       _actionsElement = Symbol("_actionsElement");
 //-----------------------------------------------------------------------------
 //endregion
@@ -76,7 +105,7 @@ function getInternalItems(listItem: Node): Array<Node> {
  * @return {number}
  */
 function getWidth(el: Node): number {
-    return el ? parseInt(window.getComputedStyle(el).getPropertyValue("width"),10) : 0;
+    return el ? parseInt(window.getComputedStyle(el).getPropertyValue("width"), 10) : 0;
 }
 
 /**
@@ -187,6 +216,8 @@ export default class SearchView extends View {
 
         // get one shared set of list actions
         this[_actionsElement] = listItemActions({contents: lemmaActions()});
+
+        this[_dirty] = true;
     }
 
     get page() {
@@ -206,9 +237,14 @@ export default class SearchView extends View {
     }
 
     template() {
+        if (!this[_dirty]) {
+            return this.elementTree;
+        }
+        this[_dirty] = false;
+
         let model = kp.get(this, "controller.model");
-        let dictionaryItems = model ? ((this[_filter] ? this[_filteredItems] : []).slice((this.page * settings.pageSize),settings.pageSize)) : [];
-        return scrollContainer({contents: [lemmaList(dictionaryItems)].concat(textContainer({contents:h.el("p.search-info",
+        let dictionaryItems = model ? ((this[_filter] ? this[_filteredItems] : []).slice((this.page * settings.pageSize), settings.pageSize)) : [];
+        return scrollContainer({contents: [lemmaList(dictionaryItems)].concat(textContainer({contents: h.el("p.search-info",
             this[_filter] ? (
                 this[_filteredItems].length === 0 ? L.T("search:no-results") : (
                     this[_filteredItems].length > settings.pageSize ? L.T("search:too-many-results") : ""
@@ -219,9 +255,9 @@ export default class SearchView extends View {
 
     get TARGET_SELECTORS() {
         return [
-            {selector: "tap:ul li > button", emit:"listItemTapped"},
-            {selector: "panstart panmove panend:ul li", emit:"listItemPanned"},
-            {selector: "tap:ul li div button", emit:"actionTapped"}
+            {selector: "tap spacepressed:ul li > button", emit: "listItemTapped"},
+            {selector: "panstart panmove panend:ul li", emit: "listItemPanned"},
+            {selector: "tap spacepressed:ul li div button", emit: "actionTapped"}
         ];
     }
 
@@ -233,6 +269,13 @@ export default class SearchView extends View {
     }
 
     onListItemPanned(sender, notice, listItem, evt) {
+        if (typeof device !== "undefined") {
+            if (device && device.platform  && device.platform.toLowerCase() === "android") {
+                // we don't support swiping on Android for performance
+                // reasons.
+                return;
+            }
+        }
         switch (evt.type) {
             case "panstart":
                 panItemStart.call(this, listItem, evt);
@@ -253,6 +296,7 @@ export default class SearchView extends View {
 
     onFilterChanged(_, notice, data) {
         this[_page] = 0;
+        this[_dirty] = true;
         this.elementTree.scrollTop = 0; // scroll the page back to the top
 
         let model = kp.get(this, "controller.model");

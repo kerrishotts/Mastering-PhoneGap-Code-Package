@@ -166,13 +166,13 @@
         },
         {
           "src": "res/splash/ios/Default-736h.png",
-          "w": 736,
+          "w": 1242,
           "h": 2208
         },
         {
           "src": "res/splash/ios/Default-Landscape-736h.png",
           "w": 2208,
-          "h": 736
+          "h": 1242
         }
       ],
       "android": [
@@ -188,8 +188,10 @@
       "stay-in-webview": "false",
       "ShowSplashScreenSpinner": "false",
       "SplashScreen": "res/splash/android/screen.9.png",
+      "FadeSplashScreen": "true",
+      "FadeSplashScreenDuration": "1.0",
       "SplashMaintainAspectRatio": "true",
-      "SplashScreenDelay":"1000",
+      "SplashScreenDelay": "1000",
       "AutoHideSplashScreen": "false",
       "disable-cursor": "false",
       "KeyboardDisplayRequiresUserAction": "false",
@@ -212,14 +214,15 @@
       "cordova-plugin-device@1.1.0",
       "cordova-plugin-network-information@1.1.0",
       "cordova-plugin-globalization@1.0.2",
-      "cordova-plugin-whitelist@1.1.0",
-      "https://github.com/phonegap/phonegap-mobile-accessibility",
+      "cordova-plugin-whitelist@1.2.0",
+      "https://github.com/kerrishotts/phonegap-mobile-accessibility#cordova-ios-4-0-0-fix",
       "ionic-plugin-keyboard@1.0.8",
       "cordova-sqlite-ext@0.8.0",
       "cordova-plugin-splashscreen@2.1.0",
       "cordova-plugin-statusbar@1.0.1",
-      "cordova-plugin-inappbrowser@1.0.1",
-      "cordova-plugin-safariviewcontroller@1.1.1"
+      "cordova-plugin-inappbrowser@1.1.1",
+      "cordova-plugin-safariviewcontroller@1.2.0",
+      "https://github.com/apache/cordova-plugins.git#master:wkwebview-engine-localhost"
     ]
   },
   "keywords": [
@@ -235,6 +238,7 @@
   "author": "Kerri Shotts <kerrishotts@gmail.com> (http://www.photokandy.com)",
   "license": "MIT",
   "devDependencies": {
+    "appium-running": "^0.1.3",
     "babel-eslint": "^4.1.1",
     "babelify": "^6.3.0",
     "browser-sync": "^2.9.6",
@@ -243,9 +247,9 @@
     "chai": "^3.2.0",
     "chai-as-promised": "^5.1.0",
     "colors": "^1.1.2",
-    "cordova-android": "^4.1.1",
-    "cordova-ios": "^3.9.2",
-    "cordova-lib": "^5.4.0",
+    "cordova-android": "^5.0.0",
+    "cordova-ios": "^4.0.1",
+    "cordova-lib": "^5.4.1",
     "cordova-tasks": "^0.2.0",
     "desassify": "^0.1.8",
     "dom-storage": "^2.0.1",
@@ -254,11 +258,12 @@
     "glob": "^6.0.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
+    "gulp-bg-ex": "0.0.1",
     "gulp-bump": "^0.3.1",
     "gulp-changed-in-place": "^2.0.3",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^1.0.0",
-    "gulp-jscs": "^2.0.0",
+    "gulp-jscs": "^3.0.2",
     "gulp-license-finder": "^0.3.2",
     "gulp-mocha": "^2.1.3",
     "gulp-notify": "^2.2.0",
@@ -266,9 +271,11 @@
     "gulp-rename": "^1.2.0",
     "gulp-replace-task": "^0.10.1",
     "gulp-sass": "^2.0.4",
+    "gulp-sequence": "^0.4.5",
     "gulp-sourcemaps": "^1.3.0",
     "gulp-uglify": "^1.4.0",
     "gulp-util": "^3.0.6",
+    "jscs": "^2.7.0",
     "licensify": "^2.0.1",
     "merge-stream": "^1.0.0",
     "q": "^1.4.1",
@@ -282,6 +289,7 @@
   "dependencies": {
     "babel": "^5.8.23",
     "cldr-data": "^28.0.2",
+    "debounce": "^1.0.0",
     "globalize": "^1.0.0-alpha.19",
     "hammerjs": "^2.0.4",
     "keypather": "^1.10.1",
@@ -294,7 +302,7 @@
     "svg-injector": "^1.1.3",
     "treo": "^0.5.1",
     "treo-websql": "^3.0.0",
-    "whatwg-fetch": "^0.10.1",
+    "whatwg-fetch-local": "git+https://github.com/kerrishotts/fetch.git",
     "yasmf-emitter": "^0.1.5",
     "yasmf-h": "^0.1.5",
     "yasmf-localization": "^0.0.2"

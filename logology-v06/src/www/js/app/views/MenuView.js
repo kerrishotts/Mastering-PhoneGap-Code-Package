@@ -1,3 +1,32 @@
+/*****************************************************************************
+ *
+ * Author: Kerri Shotts <kerrishotts@gmail.com> 
+ *         http://www.photokandy.com/books/mastering-phonegap
+ *
+ * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Packt Publishing
+ * Portions Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this
+ * software and associated documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+ 
+
 /* @flow */
 "use strict";
 
@@ -32,8 +61,8 @@ export default class MenuView extends View {
         return [/*
             {label: "nav:get-more-dictionaries", emit: "APP:DO:moreDictionaries"},
             {label: "nav:readability", emit:"APP:DO:readability"},*/
-            {label: "nav:settings", emit:"APP:DO:settings"},
-            {label: "nav:about", emit:"APP:DO:about"}];
+            {label: "nav:settings", emit: "APP:DO:settings"},
+            {label: "nav:about", emit: "APP:DO:about"}];
     }
 
     template() {
@@ -42,8 +71,8 @@ export default class MenuView extends View {
         // return a list of all the available dictionaries along with options for downloading
         // more and changing settings.
         return scrollContainer({contents: list({
-            contents: dictionariesList(model).concat(
-                listItemSpacer(),
+            contents: /*dictionariesList(model).concat(
+                listItemSpacer(),*/
                 this.MENU_ITEMS.map(item => {
                     return listItem({
                         contents: listItemContents({
@@ -51,17 +80,17 @@ export default class MenuView extends View {
                                 value: item.emit
                             },
                             contents: [
-                                h.el("div.y-flex",L.T(item.label) )
+                                h.el("div.y-flex", L.T(item.label))
                             ]
                         })
                     });
-                }))
-            })
-        });
+                }) /*)*/
+        })
+    });
     }
 
     onDictionaryItemTapped(sender: Object, notice: string, listItem: Node) {
-        GCS.emit("APP:DO:viewDictionary",listItem.value);   // select another dictionary
+        GCS.emit("APP:DO:viewDictionary", listItem.value);   // select another dictionary
         GCS.emit("APP:DO:menu");   // close the sidebar
     }
 
