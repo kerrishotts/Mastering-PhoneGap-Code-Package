@@ -4,12 +4,17 @@ This repository stores the code for the book entitled Mastering PhoneGap Mobile 
 
 ## Table of Contents
 
+* [Reporting Bugs / Issues / Errata](#bugs)
 * [Snippets](#snippets)
 * [Demo Application](#demo-application)
 * [Chapter/Project Lookup](#chapterproject-lookup)
 * [Useful Directories](#useful-directories)
 * [Using PhoneGap Build](#using-phonegap-build)
 * [License](#license)
+
+## [Reporting Bugs / Issues / Errata](id:bugs)
+
+If you find a bug or issue in the code package, please [file an issue](https://github.com/kerrishotts/Mastering-PhoneGap-Code-Package/issues). If you find an errata, you may report it as an issue, or report it at [Packt's site](https://www.packtpub.com/books/content/errata).
 
 ## [Snippets](id:snippets)
 
@@ -96,7 +101,10 @@ The projects as delivered are *Cordova* projects. They are not designed to be ut
 The code herein is licensed under the MIT license. You are free to do with it as you will, provided the requirements of said license are met.
 
 ```
-Copyright (c) 2015 Packt Publishing
+Copyright (c) 2016 Packt Publishing
+Portions Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+Portions Copyright various third parties where noted.
+
 Permission is hereby granted, free of charge, to any person obtaining a copy of this
 software and associated documentation files (the "Software"), to deal in the Software
 without restriction, including without limitation the rights to use, copy, modify,
