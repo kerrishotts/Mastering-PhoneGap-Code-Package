@@ -1,8 +1,34 @@
-/* @flow */
+/*****************************************************************************
+ *
+ * Author: Kerri Shotts <kerrishotts@gmail.com> 
+ *         http://www.photokandy.com/books/mastering-phonegap
+ *
+ * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this
+ * software and associated documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+ 
+ /* @flow */
 "use strict";
 
 import Emitter from "yasmf-emitter";
-import animationEnd from "animationend";
 
 const _name = Symbol(),
       _cssClass = Symbol(),
@@ -31,6 +57,13 @@ export default class Theme extends Emitter {
 
     get ANIMATION_TIMING()/*: milliseconds*/ {
         return 300; // milliseconds
+    }
+
+    get ANIMATION_TIMING_FUZZ() {
+        if (typeof device !== "undefined") {
+            return device.platform === "Android" ? 0 : 0;
+        }
+        return 0;
     }
 
 ///mark: CSS classes
@@ -68,8 +101,8 @@ export default class Theme extends Emitter {
     markElementVisibility(e/*: Node*/, visibility = false) {
         if (e) {
             if (visibility === undefined) {
-                e.classList.remove(this.CLASS_VIEW_VISIBLE);
-                e.classList.remove(this.CLASS_VIEW_NOT_VISIBLE);
+                e.classList.remove(this.CLASS_VIEW_VISIBLE, this.CLASS_VIEW_NOT_VISIBLE);
+                //e.classList.remove(this.CLASS_VIEW_NOT_VISIBLE);
             } else {
                 e.classList.remove(visibility ? this.CLASS_VIEW_NOT_VISIBLE : this.CLASS_VIEW_VISIBLE);
                 e.classList.add(visibility ? this.CLASS_VIEW_VISIBLE : this.CLASS_VIEW_NOT_VISIBLE);
@@ -101,18 +134,19 @@ export default class Theme extends Emitter {
         let existingClears = e.getAttribute("y-anim-clear-class");
         if (existingClears) {
             existingClears = existingClears.split(" ");
-            existingClears.forEach( c => {
-                e.classList.remove(c);
-            });
+            e.classList.remove.apply(e.classList, existingClears);
+            //existingClears.forEach(c => {
+            //    e.classList.remove(c);
+            //});
             e.removeAttribute("y-anim-clear-class");
         }
     }
 
-    animateElementWithAnimSequence ( [e, setup, doing, hold], { animate/*: boolean*/ = true } = {} ) {
+    animateElementWithAnimSequence ([e, setup, doing, hold], { animate/*: boolean*/ = true } = {}) {
         return new Promise((resolve) => {
             let finalAnimationStep = () => {
-                e.classList.remove(setup);
-                e.classList.remove(doing);
+                e.classList.remove(setup, doing);
+                //e.classList.remove(doing);
                 e.classList.add(hold);
                 this.addClearClassToElement(hold, e);
                 resolve();
@@ -120,10 +154,10 @@ export default class Theme extends Emitter {
             this.clearElementClasses(e);
             if (animate) {
                 e.classList.add(setup);
-                setTimeout( () => {
+                setTimeout(() => {
                     e.classList.add(doing);
                     this.addClearClassToElement(doing, e);
-                    setTimeout(finalAnimationStep, this.ANIMATION_TIMING);
+                    setTimeout(finalAnimationStep, this.ANIMATION_TIMING + this.ANIMATION_TIMING_FUZZ);
                 }, 10);
             } else {
                 finalAnimationStep();
@@ -133,15 +167,15 @@ export default class Theme extends Emitter {
 
     animateViewHierarchyPush({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/, options} = {})/*: Promise*/ {
         return Promise.all(
-            [ [ leavingViewElement, this.CLASS_VIEW_ANIMS_LEAVE_IN, this.CLASS_VIEW_ANIMD_LEAVE_IN, this.CLASS_VIEW_ANIMH_LEAVE_IN ],
-              [ enteringViewElement, this.CLASS_VIEW_ANIMS_ENTER_IN, this.CLASS_VIEW_ANIMD_ENTER_IN, this.CLASS_VIEW_ANIMH_ENTER_IN ] ]
-                .map( arr => this.animateElementWithAnimSequence(arr, options)));
+            [[leavingViewElement, this.CLASS_VIEW_ANIMS_LEAVE_IN, this.CLASS_VIEW_ANIMD_LEAVE_IN, this.CLASS_VIEW_ANIMH_LEAVE_IN],
+              [enteringViewElement, this.CLASS_VIEW_ANIMS_ENTER_IN, this.CLASS_VIEW_ANIMD_ENTER_IN, this.CLASS_VIEW_ANIMH_ENTER_IN]]
+                .map(arr => this.animateElementWithAnimSequence(arr, options)));
     }
     animateViewHierarchyPop({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/, options} = {})/*: Promise*/ {
         return Promise.all(
-            [ [ leavingViewElement, this.CLASS_VIEW_ANIMS_LEAVE_OUT, this.CLASS_VIEW_ANIMD_LEAVE_OUT, this.CLASS_VIEW_ANIMH_LEAVE_OUT ],
-              [ enteringViewElement, this.CLASS_VIEW_ANIMS_ENTER_OUT, this.CLASS_VIEW_ANIMD_ENTER_OUT, this.CLASS_VIEW_ANIMH_ENTER_OUT ] ]
-                .map( arr => this.animateElementWithAnimSequence(arr, options)));
+            [[leavingViewElement, this.CLASS_VIEW_ANIMS_LEAVE_OUT, this.CLASS_VIEW_ANIMD_LEAVE_OUT, this.CLASS_VIEW_ANIMH_LEAVE_OUT],
+              [enteringViewElement, this.CLASS_VIEW_ANIMS_ENTER_OUT, this.CLASS_VIEW_ANIMD_ENTER_OUT, this.CLASS_VIEW_ANIMH_ENTER_OUT]]
+                .map(arr => this.animateElementWithAnimSequence(arr, options)));
     }
     animateModalViewEnter({enteringViewElement/*: Node*/, leavingViewElement/*: Node*/} = {})/*: Promise*/ {
     }
@@ -153,17 +187,17 @@ export default class Theme extends Emitter {
     }
     animateSplitViewSidebarEnter({splitViewElement/*: Node*/, options})/*: Promise*/ {
         return Promise.all(
-            [ [ splitViewElement, this.CLASS_SPLIT_ANIMS_ENTER,
+            [[splitViewElement, this.CLASS_SPLIT_ANIMS_ENTER,
                                   this.CLASS_SPLIT_ANIMD_ENTER,
-                                  this.CLASS_SPLIT_ANIMH_ENTER ] ]
-                .map( arr => this.animateElementWithAnimSequence(arr, options)));
+                                  this.CLASS_SPLIT_ANIMH_ENTER]]
+                .map(arr => this.animateElementWithAnimSequence(arr, options)));
     }
     animateSplitViewSidebarLeave({splitViewElement/*: Node*/, options})/*: Promise*/ {
         return Promise.all(
-            [ [ splitViewElement, this.CLASS_SPLIT_ANIMS_LEAVE,
+            [[splitViewElement, this.CLASS_SPLIT_ANIMS_LEAVE,
                                   this.CLASS_SPLIT_ANIMD_LEAVE,
-                                  this.CLASS_SPLIT_ANIMH_LEAVE ] ]
-                .map( arr => this.animateElementWithAnimSequence(arr, options)));
+                                  this.CLASS_SPLIT_ANIMH_LEAVE]]
+                .map(arr => this.animateElementWithAnimSequence(arr, options)));
     }
 
 }

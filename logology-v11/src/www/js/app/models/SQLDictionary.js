@@ -1,4 +1,32 @@
-"use strict";
+/*****************************************************************************
+ *
+ * Author: Kerri Shotts <kerrishotts@gmail.com> 
+ *         http://www.photokandy.com/books/mastering-phonegap
+ *
+ * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Packt Publishing
+ * Portions Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this
+ * software and associated documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+ 
+ "use strict";
 import Dictionary from "./Dictionary";
 import Definition from "./Definition";
 import WebSQLDB from "$LIB/WebSQL";
@@ -21,13 +49,19 @@ export default class SQLDictionary extends Dictionary {
             createFromLocation: 1
         });
         let db = this[_db];
-        db.select({
-            fields: ["lemma"],
-            from: "lemmas",
-            orderBy: ["lemma"]
-        }).then((r) => {
-            this[_sortedIndex] = r.rows.map((r) => r.lemma);
-            this.loaded();
+        db.query({sql: "select count(*) as numLemmas from lemmas"})
+        .then((r) => {
+            const ITEMS_PER = 10000;
+            let numLemmas = r.rows[0].numLemmas;
+            let p = Promise.resolve();
+            for (let i = 0; i < numLemmas; i += ITEMS_PER) {
+                p = p.then(() => db.query({sql: "select lemma from lemmas order by lemma limit ?, ?", binds:[i, ITEMS_PER]}))
+                     .then((r) => this[_sortedIndex].push(...r.rows.map((r) => r.lemma)));
+            }
+            p = p.then(() => {
+                this.loaded();
+            });
+            return p;            
         });
 
     }
@@ -38,7 +72,7 @@ export default class SQLDictionary extends Dictionary {
         return this[_sortedIndex];
     }
 
-    getEntries( {lemma="", wordNetRef, per=10000} ) {
+    getEntries({lemma="", wordNetRef, per=10000}) {
         if (!this.isLoaded) {
             return Promise.resolve(() => []);
         }
@@ -61,7 +95,7 @@ export default class SQLDictionary extends Dictionary {
 
         return this[_db].exec({
             sql,
-            binds:[wordNetRef ? wordNetRef : lemma.toLowerCase().trim()]
+            binds: [wordNetRef ? wordNetRef : lemma.toLowerCase().trim()]
         }).then((r) => r.rows.map((d) => new Definition(d)));
     }
 }
