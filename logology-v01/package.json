@@ -111,6 +111,14 @@
         {
           "src": "res/icon/android/xhdpi.png",
           "d": "xhdpi"
+        },
+        {
+          "src": "res/icon/android/xxhdpi.png",
+          "d": "xxhdpi"
+        },
+        {
+          "src": "res/icon/android/xxhdpi.png",
+          "d": "xxxhdpi"
         }
       ]
     },
@@ -158,13 +166,13 @@
         },
         {
           "src": "res/splash/ios/Default-736h.png",
-          "w": 736,
+          "w": 1242,
           "h": 2208
         },
         {
           "src": "res/splash/ios/Default-Landscape-736h.png",
           "w": 2208,
-          "h": 736
+          "h": 1242
         }
       ],
       "android": [
@@ -207,8 +215,13 @@
       "fullscreen": "false",
       "orientation": "default",
       "stay-in-webview": "false",
-      "show-splash-screen-spinner": "false",
-      "auto-hide-splash-screen": "true",
+      "ShowSplashScreenSpinner": "false",
+      "SplashScreen": "res/splash/android/screen.9.png",
+      "FadeSplashScreen": "true",
+      "FadeSplashScreenDuration": "1.0",
+      "SplashMaintainAspectRatio": "true",
+      "SplashScreenDelay": "1000",
+      "AutoHideSplashScreen": "false",
       "disable-cursor": "false",
       "KeyboardDisplayRequiresUserAction": "false",
       "target-device": "universal",
@@ -221,12 +234,17 @@
       "SupressesIncrementalRendering": "true",
       "android-minSdkVersion": "14",
       "android-installLocation": "auto",
-      "android-windowSoftInputMode": "adjustResize"
+      "android-windowSoftInputMode": "adjustResize",
+      "StatusBarOverlaysWebView": "false",
+      "StatusBarBackgroundColor": "#EEAA11",
+      "StatusBarStyle": "darkcontent"
     },
     "plugins": [
-      "org.apache.cordova.device",
-      "org.apache.cordova.network-information",
-      "org.apache.cordova.globalization"
+      "cordova-plugin-device@1.1.0",
+      "cordova-plugin-network-information@1.1.0",
+      "cordova-plugin-globalization@1.0.2",
+      "cordova-plugin-whitelist@1.2.0",
+      "cordova-plugin-statusbar@1.0.1"
     ]
   },
   "keywords": [
@@ -239,32 +257,36 @@
     "javascript",
     "css"
   ],
-  "author": "Kerri Shotts <kerrishotts@gmail.com>",
+  "author": "Kerri Shotts <kerrishotts@gmail.com> (http://www.photokandy.com)",
   "license": "MIT",
   "devDependencies": {
-    "babel-eslint": "^4.1.1",
+    "babel-eslint": "^4.1.8",
     "browser-sync": "^2.9.6",
-    "cordova-android": "^4.1.1",
-    "cordova-ios": "^3.9.1",
-    "cordova-lib": "^5.2.0",
+    "cordova-android": "^5.0.0",
+    "cordova-ios": "^4.0.1",
+    "cordova-lib": "^5.4.1",
     "cordova-tasks": "^0.2.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.2.1",
     "gulp-bump": "^1.0.0",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^1.0.0",
-    "gulp-jscs": "^3.0.0",
+    "gulp-jscs": "^3.0.2",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.0",
-    "gulp-replace-task": "^0.11.0",
+    "gulp-replace-task": "^0.10.1",
     "gulp-sourcemaps": "^1.3.0",
     "gulp-uglify": "^1.4.0",
     "gulp-util": "^3.0.6",
     "merge-stream": "^1.0.0",
+    "require-all": "^1.1.0",
     "rimraf": "^2.4.3",
-    "jscs": "^2.7.0",
-    "require-all": "^2.0.0",
-    "sprintf-js": "^1.0.3"
+    "sprintf-js": "^1.0.3",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.0.0"
+  },
+  "dependencies": {
+    "babel": "^5.8.23"
   }
 }

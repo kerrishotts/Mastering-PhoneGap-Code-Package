@@ -217,7 +217,6 @@
       "cordova-plugin-whitelist@1.2.0",
       "https://github.com/kerrishotts/phonegap-mobile-accessibility#cordova-ios-4-0-0-fix",
       "ionic-plugin-keyboard@1.0.8",
-      "cordova-sqlite-ext@0.8.0",
       "cordova-plugin-splashscreen@2.1.0",
       "cordova-plugin-statusbar@1.0.1",
       "cordova-plugin-inappbrowser@1.1.1",
