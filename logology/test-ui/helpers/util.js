@@ -1,14 +1,15 @@
 /*****************************************************************************
  *
- * Logology
+ * UI Automation test utilities
+ * 
  * Author: Kerri Shotts <kerrishotts@gmail.com> 
  *         http://www.photokandy.com/books/mastering-phonegap
  *
- * Copyright (c) 2016 Packt Publishing, except where otherwise indicated. Dependencies
- * are copyright their respective owners. For license information, see /LICENSE and the
- * licenses of dependencies.
- * 
  * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Packt Publishing
+ * Portions Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -155,27 +156,42 @@ after(function() {
  * @return {Promise}
  */
 function tapElement(el, {xPct = 0.5, yPct = 0.5} = {}) {
+    
+    // iOS has a 20px status bar. ANdroid has a 25dp status bar. If your app doesn't use
+    // status bars, these will have to be removed, or an flag added to this method so that
+    // you can disable as needed.
     let platformOffset = {
         "iOS": 20,
         "Android": 25
     };
     
+    // in order to tap, we:
+    //    1. get the location of the element -- this returns the X and Y position
+    //    2. get the size of the element -- this returns the width and height
+    //    3. Pick a point in the middle of the element (defined by xPct and yPct).
+    //       a. Why? It's possible some portion of the element will be obscured by another.
+    //    4. Construct a tap gesture and pass it to the driver
     return Promise.all([(driver.getLocation(el)), (driver.getSize(el))])
                   .then((r) => {
                       let x = r[0].x + (r[1].width * xPct);
                       let y = r[0].y + (r[1].height * yPct) + (platformOffset[profile.platformName] ? platformOffset[profile.platformName] : 0);
                       if (profile.pixelRatio) {
+                          // iOS continues to use logical pixels, but Android doesn't. It reports the position
+                          // in logical pixels, but when we go to perform a touch gesture, we need to convert
+                          // back to physical pixels.
+                          //
+                          // The pixel ratio is defined in the profile; see profiles/android-5-1-0.js for an example                          
                           [x, y] = [x, y].map(v => v*profile.pixelRatio);
                       }
                       return switchToNativeContext()
                              .then(() => {
                                  let action = new wd.TouchAction(driver);
-                                 action.tap({x, y});
+                                 action = action.tap({x, y});
                                  if (profile.platformName === "iOS") {
-                                     action.release();
+                                     action = action.release();  // Android doesn't like this much
                                  }
-                                 action.wait({ms:1000});
-                                 action.perform()
+                                 action = action.wait({ms:1000});
+                                 return action.perform();
                              })
                              .then(switchToWebViewContext);
                   });

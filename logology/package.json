@@ -294,8 +294,7 @@
     "sprintf-js": "^1.0.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
-    "wd": "^0.3.12",
-    "whatwg-fetch-local": "git+https://github.com/kerrishotts/fetch.git"
+    "wd": "^0.3.12"
   },
   "dependencies": {
     "babel": "^5.8.23",
@@ -313,7 +312,7 @@
     "svg-injector": "^1.1.3",
     "treo": "^0.5.1",
     "treo-websql": "^3.0.0",
-    "whatwg-fetch": "^0.10.1",
+    "whatwg-fetch-local": "git+https://github.com/kerrishotts/fetch.git",
     "yasmf-emitter": "^0.1.5",
     "yasmf-h": "^0.1.5",
     "yasmf-localization": "^0.0.2"

@@ -8,11 +8,11 @@
  * Author: Kerri Shotts <kerrishotts@gmail.com> 
  *         http://www.photokandy.com/books/mastering-phonegap
  *
- * Copyright (c) 2016 Packt Publishing, except where otherwise indicated. Dependencies
- * are copyright their respective owners. For license information, see /LICENSE and the
- * licenses of dependencies.
- * 
  * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Packt Publishing
+ * Portions Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -34,12 +34,11 @@
 "use strict";
 require ("babel/register");
 
-var gulp = require("gulp");                         // Gulp itself
-var browserSync = require("browser-sync").create("www");
+var gulp = require("gulp");                                 // Gulp itself
+var browserSync = require("browser-sync").create("www");    // make things easy to test by
+                                                            // using the desktop browser
+var tasks = require("./gulp/tasks");                        // get all the tasks we support
 
-var tasks = require("./gulp/tasks");
-
-//
 // register tasks with gulp
 Object.keys(tasks).forEach(function(taskName) {
     var taskOpts = tasks[taskName];
