@@ -10,10 +10,23 @@
   <author email="{{{AUTHOR.EMAIL}}}" href="{{{AUTHOR.SITE}}}">
     {{{AUTHOR.NAME}}}
   </author>
-  <content src="index.html" />
+
+  <platform name="android">
+      <content src="index.html" />
+  </platform>
+  <platform name="ios">
+      <content src="http://localhost:49000"/>
+  </platform>
 
   <!-- local phonegap/cordova -->
   {{{PREFS}}}
+  <platform name="android">
+      <preference name="Orientation" value="default" />
+  </platform>
+  <platform name="ios">
+      <preference name="Orientation" value="all" />
+  </platform>
+
   {{{PLUGINS}}}
   {{{ICONS}}}
   {{{SPLASHES}}}

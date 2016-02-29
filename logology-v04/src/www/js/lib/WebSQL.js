@@ -1,8 +1,36 @@
-"use strict";
+/*****************************************************************************
+ *
+ * Author: Kerri Shotts <kerrishotts@gmail.com> 
+ *         http://www.photokandy.com/books/mastering-phonegap
+ *
+ * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Packt Publishing
+ * Portions Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this
+ * software and associated documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+ 
+ "use strict";
 /*eslint comma-spacing: 0, no-unused-vars: 0*/
 
 function stringOrArrayJoin(v, joinWith = " ") {
-return (v instanceof Array) ? v.join(joinWith) : v;
+    return (v instanceof Array) ? v.join(joinWith) : v;
 }
 
 function constructWhere(where) {
@@ -25,7 +53,7 @@ function constructWhere(where) {
 }
 
 export default class WebSQLDB {
-    constructor({name, version = "1", description, quota = (5 * 1024 * 1024),
+    constructor({name, version = "1", description, quota = (1 * 1024 * 1024),
                 location = 0, createFromLocation = 0,
                 androidDatabaseImplementation = 2, androidLockWorkaround = 1} = {}) {
         this.db = null;
@@ -59,7 +87,7 @@ export default class WebSQLDB {
                 }
             }
         } catch (err) {
-            throw new Error("No Web SQL Interface available, or failed to open database.");
+            throw new Error("No Web SQL Interface available, or failed to open database. Details:" + err.message);
         }
 
         if (!this.db) {
@@ -70,12 +98,16 @@ export default class WebSQLDB {
             this.supportsReadOnlyTransactions = true;
         }
 
-        this.db.error = function(err) {
+        this.db.error = function (err) {
             console.log(err.message);
         }
     }
 
     close() {
+        if (this.db && this.db.close) {
+            console.log("closed");
+            this.db.close();
+        }
         this.db = null;
     }
 
@@ -97,7 +129,7 @@ export default class WebSQLDB {
     }
 
     exec({transaction, sql, binds, readOnly = false} = {}) {
-        if (this.log) { console.log(`[WebSQL] exec ${sql}, ${JSON.stringify(binds,null,2)}, ${readOnly}`); }
+        if (this.log) { console.log(`[WebSQL] exec ${sql}, ${JSON.stringify(binds, null, 2)}, ${readOnly}`); }
         if (!transaction) {
             if (this.log) { console.log("[WebSQL] No transaction; wrapping."); }
             return this.transaction((transaction) => {
@@ -111,7 +143,7 @@ export default class WebSQLDB {
                     if (this.log) { console.log("[WebSQL] creating return result"); }
                     returnResults.rowsAffected = results && results.rowsAffected && results.rowsAffected;
                     returnResults.rows = [];
-                    if (results.rows && results.rows.length>0) {
+                    if (results.rows && results.rows.length > 0) {
                         if (this.log) { console.log("[WebSQL] iterating over rows"); }
                         for (let i = 0, l = results.rows.length; i < l; i++) {
                             returnResults.rows.push(results.rows.item(i));

@@ -25,49 +25,26 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  * 
  *****************************************************************************/
- 
- "use strict";
 
-import KVStore from "../lib/KVStore";
-import {createLocalStorageKVStore} from "../lib/LocalStorageKVStore";
+"use strict";
 
-// region private properties
+var gulp = require("gulp"),
+    gutil = require("gulp-util"),
+    notify = require("gulp-notify"),
+    config = require("../../config"),
+    settings = require("../../settings"),
+    paths = require("../../utils/paths"),
+    sequence = require("gulp-sequence");
 
-// endregion
-
-export default class Notes extends KVStore {
-    constructor({adapter} = {}) {
-        if (!adapter) {
-            adapter = createLocalStorageKVStore({namespace: "notes"});
-        }
-        super({adapter});
-    }
-
-    doesWordHaveANote(word) {
-        return this.exists(word);
-    }
-
-    saveNoteForWord(word, note) {
-        return this.set(word, note);
-    }
-
-    removeNoteFromWord(word) {
-        return this.remove(word);
-    }
-
-    getNoteForWord(word) {
-        return this.get(word);
-    }
-}
-
-export function createNotes(options = {}) {
-    return new Notes(options);
-}
-
-let notes;
-export function getNotes() {
-    if (!notes) {
-        notes = createNotes();
-    }
-    return notes;
+module.exports = function(done) {
+    gutil.env.profile = 'ios-simulator-9-2-ch4';
+    gutil.env.server = 'local';
+    gutil.env.udid = '';
+    settings.NO_COPY = true;
+    settings.NO_BUILD = true;
+    settings.TARGET_DEVICE = "--target=emulator";
+    settings.BUILD_PLATFORMS = ["ios"];
+    settings.PLATFORM = "ios"
+    
+    return sequence("test-ui", done);
 }

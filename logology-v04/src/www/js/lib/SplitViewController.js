@@ -1,3 +1,30 @@
+/*****************************************************************************
+ *
+ * Author: Kerri Shotts <kerrishotts@gmail.com> 
+ *         http://www.photokandy.com/books/mastering-phonegap
+ *
+ * MIT LICENSED
+ * 
+ * Copyright (c) 2016 Kerri Shotts (photoKandy Studios LLC)
+ * Portions Copyright various third parties where noted.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this
+ * software and associated documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following
+ * conditions:
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *****************************************************************************/
+ 
 /* @flow */
 "use strict";
 
@@ -22,7 +49,7 @@ export default class SplitViewController extends ViewController {
             invisibleClass = this.themeManager.currentTheme.CLASS_VIEW_NOT_DISPLAYED;
         }
         return h.el("main.SplitViewController?is=y-split-view-controller",
-            this.renderSubviews().map( elTree => h.el("div.y-split-view-wrapper?is=y-split-view-wrapper", {
+            this.renderSubviews().map(elTree => h.el("div.y-split-view-wrapper?is=y-split-view-wrapper", {
                 attrs: {
                     class: elTree.classList.contains(visibleClass) ? visibleClass : invisibleClass
                 }
@@ -98,10 +125,10 @@ export default class SplitViewController extends ViewController {
     hideSidebar(options = {}) {
         if (this.themeManager && this.themeManager.currentTheme) {
             return this.themeManager.currentTheme.animateSplitViewSidebarLeave({splitViewElement: this.elementTree, options})
-            .then( () => {
+            .then(() => {
                 this.firstView.visible = false;
                 this.firstView.displayed = false;
-            } );
+            });
         } else {
             return Promise.reject("No theme manager, or no current theme. Can't hide sidebar.");
         }
