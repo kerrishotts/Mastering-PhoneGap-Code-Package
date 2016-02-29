@@ -52,7 +52,7 @@ export default class IndexedDBKVStore extends Emitter {
         this[_indexedDB] = indexedDB;
         this[_db] = treo(namespace, kvSchema);
         if (!indexedDB) {
-            this.db.use(treoWebsql());
+            this.db.use(treoWebSql());
         }
     }
 
