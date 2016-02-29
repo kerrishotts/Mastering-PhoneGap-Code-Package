@@ -29,7 +29,6 @@
 "use strict";
 
 import Emitter from "yasmf-emitter";
-import animationEnd from "animationend";
 
 const _name = Symbol(),
       _cssClass = Symbol(),
